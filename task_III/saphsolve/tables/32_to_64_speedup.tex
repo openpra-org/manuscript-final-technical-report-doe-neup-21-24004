@@ -1,0 +1,40 @@
+\sisetup{ 
+  scientific-notation = true,
+  table-format        = 1.2e-2,
+  round-mode          = places,
+  round-direction     = up,
+  round-precision     = 2,
+  group-separator     = {,},
+  group-minimum-digits= 4,
+  table-number-alignment = center,
+}
+\begin{longtable}{l
+                  S
+                  S
+                  S[scientific-notation = false,table-format=1.2]}
+\caption{Runtimes for SAPHSOLVE \acrlong{srl}, 32-bit vs. 64-bit implementation.}
+\label{tbl:setlib_speedup}\\
+\toprule
+\textbf{Trunc.} & \multicolumn{2}{c}{\textbf{Runtime\,[s]}} & \textbf{Speed Up}\\
+\cmidrule(lr){2-3}
+& \textbf{\acrshort{srl}--32\,bit} & \textbf{\acrshort{srl}--64\,bit} &  \\ 
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\textit{Continued: Runtimes for SAPHSOLVE \acrlong{srl}, 32-bit vs. 64-bit implementation.}}\\
+\toprule
+\textbf{Cut Set Size} & \multicolumn{2}{c}{\textbf{Runtime\,[s]}} & \textbf{Speed Up}\\
+\cmidrule(lr){2-3}
+& \textbf{\acrshort{srl}--32\,bit} & \textbf{\acrshort{srl}--64\,bit} &  \\ 
+\midrule
+\endhead
+\midrule
+\endfoot
+\endlastfoot
+15 &  70.42 &  56.67 & 1.24\\
+16 & 259.35 & 179.03 & 1.45\\
+17 &1087.66 & 872.75 & 1.25\\
+18 &4497.45 &2963.55 & 1.52\\
+19 &20310.73 &12181.31 & 1.67\\
+20 &82783.48 &56220.37 & 1.47\\
+\bottomrule
+\end{longtable}

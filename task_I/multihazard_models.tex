@@ -1,0 +1,121 @@
+\subsection{Multi-Hazard PRA Models}
+\label{sec:multiHazardPRA}
+
+\subsubsection{Overview of Multi-Hazard PRA Models}
+\label{subsec:overviewMultiHazard}
+
+Concurrent and successive occurrences of more than one hazard are defined as multi-hazard \cite{47}. In the nuclear industry, multi-hazards are often overlooked in \acrshort{pra} since no general framework is available for such an analysis.
+
+Multi-hazard \acrshort{pra} became a topic after the Fukushima \acrshort{npp} accident in March 2011. According to the \acrshort{who} \cite{48}, the Great East Japan Earthquake was a 9.0-magnitude earthquake followed by a tsunami on the eastern coast. According to the \acrshort{ines} \cite{49}, this multi-hazard event led to a level~7 accident at the Fukushima Daiichi \acrshort{npp}, which is the highest severity level on the scale. While the Three Mile Island accident in the US highlighted the importance of \acrshort{pra}, the Fukushima Daiichi accident showed the necessity for multi-hazard \acrshort{pra}.
+
+Multi-hazard \acrshort{pra} is inherently more complex, and deciding whether it is essential for a given facility is more challenging than single-hazard analysis \cite{50}. As noted, significant nuclear accidents motivated the need for \acrshort{pra}, but additional factors such as climate change and population growth have amplified the frequency of local, regional, or global hazards. Such changes may lead to greater impacts on critical infrastructures---including \acrshort{npp}s---than originally anticipated at the design stage.
+
+Unlike single-hazard analysis, multi-hazard \acrshort{pra} requires different methods for different hazards, as each hazard has unique characteristics \cite{51}. A feasible approach could be to categorize multi-hazards and define standard parameters to better understand and find practical ways to quantify multi-hazard \acrshort{pra}.
+
+Although there are multiple ways to categorize multi-hazards, this work adopts the classification shown in Table~\ref{tab:MultiHazardCat} \cite{52}, which emphasizes how the order of events is just as important as the number of events when characterizing multi-hazards.
+
+\begin{table}[htbp]
+\centering
+\caption{Multi-hazard categorization \cite{52}}
+\label{tab:MultiHazardCat}
+\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Categories}                 & \textbf{Details}                                                             \\
+\midrule
+\multicolumn{2}{l}{\textit{Number of events and hazards}}  \\
+Number of events & \textbf{Single event:} one event and one hazard\newline
+\textbf{Multi-event:} two or more events, including a secondary event \\[6pt]
+Number of hazards & \textbf{Single hazard:} one hazard (may be caused by a multi-event)\newline
+\textbf{Multi-hazard:} two or more hazards (may be caused by a single event) \\[6pt]
+\multicolumn{2}{l}{\textit{Order of event}} \\
+Independent event [\textit{Independent}] & Two or more events that are independent of each other \\[6pt]
+Simultaneous event [\textit{Concurrent}] & Two or more events caused by a single source \\[6pt]
+Sequential event [\textit{Successive}] & Occurred by a secondary event \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% \begin{table}[htbp]
+% \centering
+% \caption{Multi-hazard categorization \cite{52}}
+% \label{tab:MultiHazardCat}
+% \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+% \toprule
+% \textbf{Categories}                 & \textbf{Details}                                                             \
+% \midrule
+% \multicolumn{2}{l}{\textit{Number of events and hazards}}  \
+% Number of events & \textbf{Single event:} one event and one hazard \newline
+% \textbf{Multi-event:} two or more events, including a secondary event \[6pt]
+% Number of hazards & \textbf{Single hazard:} one hazard (may be caused by a multi-event) \newline
+% \textbf{Multi-hazard:} two or more hazards (may be caused by a single event) \[6pt]
+% \multicolumn{2}{l}{\textit{Order of event}} \
+% Independent event
+% [\textit{Independent}]             & Two or more events that are independent of each other                       \[6pt]
+% Simultaneous event
+% [\textit{Concurrent}]              & Two or more events caused by a single source                                \[6pt]
+% Sequential event
+% [\textit{Successive}]              & Occurred by a secondary event                                               \ \bottomrule
+% \end{tabular}
+% \end{table}
+
+Multiple definitions for multi-hazard \acrshort{pra} appear in the literature. Hence, providing descriptive definitions helps interpret Table~\ref{tab:MultiHazardCat}:
+
+\begin{itemize}
+\item \textbf{Hazards:} Phenomena that challenge the safe operation of an \acrshort{npp} (e.g., seismic or high wind).
+\item \textbf{Hazard event:} An event caused by the occurrence of a specified hazard, described in terms of an intensity measure (e.g., peak ground acceleration for seismic hazards or wind speed for high wind hazards).
+\item \textbf{Initiating events:} Natural or human-made perturbations to the plant that can challenge control and safety systems. Failure of these systems can lead to undesired consequences, such as a radioactive material release. An initiating event can result from internal (e.g., hardware fault, flood, fire) or external hazards (e.g., earthquakes, high winds).
+\item \textbf{Hazard analysis:} Estimating the expected frequency of exceedance, over a specified time interval, of various levels of some characteristic measure of the hazard intensity (e.g., water level in a flood).
+\item \textbf{Secondary hazard:} A hazard induced by another hazard (e.g., landslide caused by an earthquake).
+\item \textbf{Multi-hazard:} A situation when one hazard occurs concurrently with another (e.g., seismic and flooding).
+\item \textbf{Multi-hazard (initiating) event:} The occurrence of two or more correlated or uncorrelated events (e.g., an earthquake of a specific peak ground acceleration and high winds at a specific wind speed).
+\end{itemize}
+
+Although not all definitions are standard and further highlight the need for a common understanding in multi-hazard \acrshort{pra}, correctly accounting for the relationships between hazards---which can significantly complicate the analysis---is essential in any approach.
+
+In multi-hazard \acrshort{pra}, both internal and external events must be considered. External events occur outside the \acrshort{npp}; their hazards may be natural (e.g., earthquakes, tsunamis) or man-made. However, multi-hazard \acrshort{pra} also addresses internal events when they are induced or exacerbated by external hazards. As an example, a large-break loss-of-coolant accident (LBLOCA) may occur during an earthquake~\cite{53}.
+
+A widely recognized example is the Fukushima Daiichi \acrshort{npp} accident, an internal accident initially caused by an external earthquake and tsunami. A key lesson from this accident is that \acrshort{pra} for external events---including combinations of events---and for external hazards capable of causing internal events must be revisited. In short, there is a pressing need for a framework that factors in (1) external events, (2) their combined likelihood and consequences, and (3) their interplay with internal events and plant-specific vulnerabilities.
+
+Hazard events can occur independently or in combination. Two hazard events combined can occur simultaneously or within a short duration and may also trigger an internal event (e.g., equipment failure). This mirrors precisely the Fukushima Daiichi accident scenario. Disconnecting these events by assuming independence may be an oversimplification, as it can ignore correlations between hazards and lead to inadequate risk assessments.
+
+Identifying individual hazards typically relies on screening analyses, plant design features, site characteristics, historical incident data, and hazard-impact experience \cite{54}. In general, hazards can be addressed systematically in four steps \cite{55}:
+
+\begin{enumerate}
+\item \textit{Initial data collection:} Site- or plant-specific data are gathered, providing source material for subsequent analyses.
+\item \textit{Identification of hazards:} Data are used to identify natural or man-made hazards relevant to the site.
+\item \textit{Hazard screening analysis:} Insignificant hazards or those with negligible effects on safety are screened out.
+\item \textit{Detailed hazards analysis:} Relevant hazards that pass screening are analyzed in-depth to determine their impact on plant structures, systems, or components.
+\end{enumerate}
+
+A common practice has been to treat two or more hazard events as independent, multiplying their individual frequencies to approximate a combined event frequency. While this can be computationally convenient, it is not always justified.
+
+Although multi-hazard \acrshort{pra} for nuclear applications remains an evolving field, several recent studies illustrate ongoing efforts. The NARSIS project \cite{56} seeks to review, analyze, and improve safety assessment methodologies. One study \cite{57} presented a practical approach for performing an earthquake-induced landslide \acrshort{pra} for \acrshort{npp}s. Another effort \cite{58} surveyed multi-hazard \acrshort{pra} methods using a \acrshort{bn} approach and Bayesian inference. An earlier study \cite{59} developed a systematic methodology to assess and rank multiple hazards in a community, and a final example \cite{60} describes the \acrshort{nrc}'s Office of Nuclear Regulatory Research's initial work to support, in part, a multi-hazard Level~2 \acrshort{pra} for \acrshort{lwr}s.
+
+\subsubsection{Multi‑Hazard PRA Model Quantification}
+\label{sec:multi_hazard_quantification}
+
+Multi‑hazard \acrshort{pra} quantification is crucial because approximation methods can introduce significant errors compared to exact failure‐probability calculations. Exact methods based on \acrshort{bdd}s often become infeasible due to their high memory requirements. Conversely, when basic‐event failure probabilities are large, approximation methods such as \acrshort{mcub} and \acrshort{rea} tend to overestimate top‐event failure probabilities. To balance accuracy and computational feasibility, we propose a quantification‐engine‑agnostic model pre‐processor that selects between exact and approximate solvers based on the distribution of basic‐event probabilities.
+
+\begin{algorithm}[htbp]
+\caption{Pseudocode for the proposed PRA model pre‐processor}
+\label{alg:preprocessor}
+\begin{algorithmic}[1]
+\Procedure{PreProcessModel}{input\_files, threshold $\theta$, percentage $p$}
+\State Parse each of the \texttt{input\_files}
+\State Gather all basic‐event failure probabilities into list $\mathcal{P}$
+\State Set counter $c \leftarrow 0$
+\ForAll{$r \in \mathcal{P}$}
+\If{$r < \theta$}
+\State $c \leftarrow c + 1$
+\EndIf
+\EndFor
+\If{$c > p \times |\mathcal{P}|$}
+\State \texttt{solve\_model("mocus mcub")}
+\Else
+\State \texttt{solve\_model("bdd")}
+\EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+As shown in Algorithm~\ref{alg:preprocessor}, the pre‐processor evaluates each input file independently, counts how many basic‐event probabilities fall below a predefined threshold $\theta$, and compares this count against a user‐specified percentage $p$. If the proportion of low‐probability events exceeds $p$, the approximate solver (\texttt{mocus mcub}) is invoked; otherwise, the exact BDD‑based method (\texttt{bdd}) is used. This strategy ensures exact quantification when failure probabilities are high, while leveraging faster approximate methods when most events are rare. In Section~\ref{sec:results}, we will demonstrate the choice of $\theta$ and $p$ on representative multi‑hazard models.

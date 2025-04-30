@@ -1,0 +1,91 @@
+\chapter{Task IV: Application to Multi-Hazard PRA Models}
+\label{cha:task_iv}
+
+\section{Generic PWR Model with Multi-Hazard Capabilities}
+\label{sec:PWR_model}
+A generic \acrshort{pwr} model was extended from a single-hazard configuration~\cite{Smith2021Generic} to incorporate hazard interactions.  The workflow comprises two sequential stages:
+
+\begin{enumerate}
+  \item \textbf{Model construction} with an in-house tool, OpenMHA~\cite{Batikh2024OpenMHA}, resulting in an updated \acrshort{mar-d} file containing combined fault-tree/event-tree logic and failure data.
+  \item \textbf{Model quantification} with SAPHIRE 8, performed either via the \acrshort{gui} or the \acrshort{dll}-based \acrshort{saphsolve} engine.
+\end{enumerate}
+
+\subsection{Model Building with OpenMHA}
+OpenMHA is a scenario-based framework that
+\begin{itemize}
+  \item stores layout, logic, and \acrshort{ssc} metadata in a MongoDB instance;
+  \item provides hazard-specific classes (\texttt{Fire}, \texttt{Flooding}, \texttt{Seismic}, \texttt{Tsunami}) that assemble fault-tree logic and call external physics simulators; and
+  \item exports a fully populated \acrshort{mar-d} file for downstream solvers.
+\end{itemize}
+The present study focuses on the \texttt{Seismic} class, which explicitly models main shocks and correlated aftershocks.
+
+\subsection{Model Quantification with SAPHIRE}
+\label{sec:saphire_quant}
+The \acrshort{mar-d} file is imported into SAPHIRE, followed by compilation of a linkage-rule file. Algorithm~\ref{alg:saphire_aftershock_linkage} shows an excerpt that assigns aftershock-dependent flags. Algorithm~\ref{alg:saphsolve_autoquantification} details automated invocation of the \acrshort{dll} solver. Probability truncation is applied at user-defined thresholds $P_{\text{cut}} \;=\;10^{-k}$, where $k\in\{7,20\}$ in this study.
+
+%----------- Linkage rules ---------------------------------------
+\begin{algorithm}[h!]
+\caption{Excerpt of SAPHIRE linkage rules for the aftershock model}
+\label{alg:saphire_aftershock_linkage}
+\begin{algorithmic}[1]
+\If{SLOCA\_EQ1\_FT \textbf{and} LOOP\_EQ1\_FT}
+  \State EVENTREE(EQK\_BIN1) $\gets$ FLAG(ETF\_EQ1\_SL)
+\ElsIf{LLOCA\_EQ1\_FT \textbf{and} LOOP\_EQ1\_FT}
+  \State EVENTREE(EQK\_BIN1) $\gets$ FLAG(ETF\_EQ1\_LL)
+\Else
+  \State EVENTREE(EQK\_BIN1) $\gets$ FLAG(ETF\_EQ1)
+\EndIf
+\If{INIT(IE\_EQ\_BIN1)}
+  \State EVENTREE(EQK\_BIN1) $\gets$ ENDSTATE(CD\_EQ)
+  \State EVENTREE(EQK\_BIN1) $\gets$ FLAG(T\_1)
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+%----------- Pseudocode listing ----------------------------------
+\begin{algorithm}[h!]
+\caption{High-level pseudocode for automated quantification via \acrshort{saphsolve}}
+\label{alg:saphsolve_autoquantification}
+\begin{algorithmic}[1]
+\State \textbf{import} \texttt{os, threading, ctypes, time}
+\State Load \texttt{solve.dll}; \textbf{exit} on failure
+\Function{SolveJSON}{$\textit{inFile},\,\textit{outDir}$}
+  \State Generate \textit{outFile}$\leftarrow$replaceExt(\textit{inFile},.JSCut)
+  \State \textit{t}$\gets$time.solveDLL(\textit{inFile})
+  \State \textbf{handle} exceptions
+\EndFunction
+\Function{SolveThread}{$\textit{files},\,\textit{inDir},\,\textit{outDir}$}
+  \ForAll{\textit{f} $\in$ \textit{files}} \Call{SolveJSON}{\textit{f}} \EndFor
+\EndFunction
+\Function{Main}{}
+  \State Enumerate *.JSInp files; build \textit{chunks} per CPU core
+  \State Serial timing $\gets$ \Call{SolveJSON}{\textit{each file}}
+  \State Parallel timing $\gets$ \textbf{spawn} \Call{SolveThread}{\dots}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Quantification Results and Discussion}
+
+%----------- Results table ---------------------------------------
+\begin{table}[h!]
+\centering
+\caption{Solve time for the generic \acrshort{pwr} aftershock model at two truncation levels.}
+\label{tab:solve_time_generic_pwr}
+\begin{tabular}{@{}lS[table-format=3.0]S[table-format=5.2]@{}}
+\toprule
+\textbf{Input / $P_{\text{cut}}$} & 
+\multicolumn{1}{c}{\textbf{\acrshort{gui} [s]}} & 
+\multicolumn{1}{c}{\textbf{\acrshort{dll} [s]}} \\
+\midrule
+EQK\_BIN1 / $10^{-7}$  & 643  & 14.97 \\
+EQK\_BIN1 / $10^{-20}$ & {---} & 11784.49 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The \acrshort{gui} requires extensive pre-processing, whereas the direct \acrshort{dll} invocation eliminates that overhead for already-generated JSON inputs (Table~\ref{tab:solve_time_generic_pwr}).  At $P_{\text{cut}}=10^{-20}$ the \acrshort{gui} timed out, yet the \acrshort{dll} solution completed in \SI{3.3}{h}.  This highlights the importance of optimizing pre-processing routines for users who rely solely on the graphical interface.
+
+Comparing the count and values of \acrfull{mcs} for $k=7$ and $k=20$, as shown in Table~\ref{tab:PWR-aftershock-trunc}, we observe a significant increase in the number of \acrshort{mcs} with the finer truncation value, as expected. However, discrepancies in probability results were also observed. In some cases, these discrepancies are unacceptably high.
+
+\input{task_IV/tables/quantification_aftershock}

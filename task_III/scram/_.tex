@@ -1,0 +1,24 @@
+\section{SCRAM Optimizations}
+
+Optimizations were made in the following areas:
+
+1. Optimizing data structure use:
+ 1.1 Migrated the ZBDD container holding the minimal cut sets from a custom, pointer-based representation, to STL containers.
+ 1.2 Migrated containers hold processed minimal cut sets to STL containers. Previous profiling had indicated that the solver time is dominated by postprocessing logic (reporter).
+ 
+2. Exploiting parallelism using OpenMP:
+ 2.1 probability calculation MCUB and REA approximations.
+ 2.2 importance analysis.
+ 2.3 uncertainty quantification.
+
+
+
+Limitations and Future Work:
+1. BDD data-structure remains custom. BDD probability calculation remains serial. Multicore BDD, and GPU BDD solvers can be used.
+
+\input{task_III/scram/tables/scram_prob_runtimes_aralia}
+
+\input{task_III/scram/tables/scram_reporter_runtimes_aralia}
+\input{task_III/scram/tables/scram_all_runtimes_aralia}
+
+\input{task_III/scram/tables/scram_all_speedups_aralia}

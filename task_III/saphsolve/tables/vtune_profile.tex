@@ -1,0 +1,186 @@
+% \sisetup{ 
+%   scientific-notation = true,
+%   table-format        = 1.2e-2,
+%   round-mode          = places,
+%   round-direction     = up,
+%   round-precision     = 2,
+%   group-separator     = {,},
+%   group-minimum-digits= 4,
+%   table-number-alignment = center,
+% }
+% \begin{longtable}{@{}llSS[scientific-notation=false,table-format=2.2]@{}}
+% \caption{\acrshort{cpu} timing profiles, \acrshort{saphsolve} \acrshort{srl}, 32-bit vs. 64-bit implementation.}%
+% \label{tbl:vTune_profile}\\
+% \toprule
+% \textbf{Trunc.} & \textbf{Function} & \textbf{CPU time [s]} & \textbf{Share [\%]}\\
+% \midrule
+% \endfirsthead
+% \multicolumn{4}{c}{\textit{Continued: \acrshort{cpu} timing profiles, \acrshort{saphsolve} \acrshort{srl}, 32-bit vs. 64-bit implementation.}}\\
+% \toprule
+% \textbf{Trunc.} & \textbf{Function} & \textbf{CPU time [s]} & \textbf{Share [\%]}\\
+% \midrule
+% \endhead
+% \endfoot
+% \bottomrule
+% \endlastfoot
+% 16 & \texttt{MergeInputs} &  197.64 & 58.7 \\*
+%    & \texttt{InternalSetIntersectionEmpty} &   34.70 & 10.3 \\
+% \midrule
+% 18 & \texttt{InternalSetIntersectionEmpty} & 1137.57 & 34.2 \\*
+%    & \texttt{MergeInputs} &  836.27 & 25.1 \\
+% \midrule   
+% 20 & \texttt{InternalSetIntersectionEmpty} &25000.02 & 57.8 \\*
+%    & \texttt{InternalSetAssignComplement} & 3459.04 &  8.0 \\*
+%    & \texttt{MergeInputs} & 2673.91 &  6.2 \\
+% \end{longtable}
+
+% \begin{longtable}{@{}llSS[scientific-notation=false,table-format=2.2]@{}}
+% \caption{\acrshort{cpu} timing profiles, \acrshort{saphsolve} \acrshort{srl}, initial 32-bit implementation.}%
+% \label{tbl:vTune_profile_initial}\\
+% \toprule
+% \textbf{Trunc.} & \textbf{Function} & \textbf{CPU time [s]} & \textbf{Share [\%]}\\
+% \midrule
+% \endfirsthead
+
+% \multicolumn{4}{c}{\textit{Continued: \acrshort{cpu} timing profiles, \acrshort{saphsolve} \acrshort{srl}, initial 32-bit implementation.}}\\
+% \toprule
+% \textbf{Trunc.} & \textbf{Function} & \textbf{CPU time [s]} & \textbf{Share [\%]}\\
+% \midrule
+% \endhead
+
+% \endfoot
+% \bottomrule
+% \endlastfoot
+% % ----------------------------------------------------------------
+% 16 & \texttt{MergeInputs}                  &    175.643 & 49.50 \\*
+%    & \texttt{InternalSetIntersectionEmpty} &     52.284 & 14.70 \\*
+%    & \texttt{CompareSortRec}               &     16.339 &  4.60 \\*
+%    & \texttt{BinaryLocateHandle}           &     14.414 &  4.10 \\*
+%    & \texttt{TCardTable.GotNextCutset}     &     13.147 &  3.70 \\*
+%    & \texttt{[Others]}                     &     83.156 & 23.40 \\
+% \midrule
+% 18 & \texttt{InternalSetIntersectionEmpty} &   1648.13  & 43.00 \\*
+%    & \texttt{MergeInputs}                  &    708.83  & 18.50 \\*
+%    & \texttt{WriteFile}                    &    209.027 &  5.50 \\*
+%    & \texttt{CompareSortRec}               &    169.204 &  4.40 \\*
+%    & \texttt{BinaryLocateHandle}           &    148.118 &  3.90 \\*
+%    & \texttt{[Others]}                     &    945.486 & 24.70 \\
+% \midrule
+% 20 & \texttt{InternalSetIntersectionEmpty} &  43893.54  & 72.20 \\*
+%    & \texttt{InternalSetAssignComplement}  &   3929.234 &  6.50 \\*
+%    & \texttt{MergeInputs}                  &   3580.815 &  5.90 \\*
+%    & \texttt{CompareSortRec}               &   1243.006 &  2.00 \\*
+%    & \texttt{BinaryLocateHandle}           &   1047.855 &  1.70 \\*
+%    & \texttt{[Others]}                     &   7061.715 & 11.60 \\
+% % ----------------------------------------------------------------
+% \end{longtable}
+
+% \sisetup{
+%   scientific-notation      = true,
+%   table-format             = 1.2e-2,
+%   round-mode               = places,
+%   round-direction          = up,
+%   round-precision          = 2,
+%   group-separator          = {,},
+%   group-minimum-digits     = 4,
+%   table-number-alignment   = center,
+% }
+
+% \begin{longtable}{@{}llSS[scientific-notation=false,table-format=2.2]@{}}
+% \caption{\acrshort{cpu} timing profiles, \acrshort{saphsolve} \acrshort{srl}, 64-bit implementation.}%
+% \label{tbl:vTune_profile}\\
+% \toprule
+% \textbf{Trunc.} & \textbf{Function} & \textbf{CPU time [s]} & \textbf{Share [\%]}\\
+% \midrule
+% \endfirsthead
+
+% \multicolumn{4}{c}{\textit{Continued: \acrshort{cpu} timing profiles, \acrshort{saphsolve} \acrshort{srl}, 64-bit implementation.}}\\
+% \toprule
+% \textbf{Trunc.} & \textbf{Function} & \textbf{CPU time [s]} & \textbf{Share [\%]}\\
+% \midrule
+% \endhead
+
+% \endfoot
+% \bottomrule
+% \endlastfoot
+% % ----------------------------------------------------------------
+% 16 & \texttt{MergeInputs}                  &   197.638 & 58.70 \\*
+%    & \texttt{InternalSetIntersectionEmpty} &    34.698 & 10.30 \\*
+%    & \texttt{TCardTable.GotNextCutset}     &    15.076 &  4.50 \\*
+%    & \texttt{TSolveHandle.AbortIt}         &    14.295 &  4.20 \\*
+%    & \texttt{ProcessSolvedGate}            &    10.759 &  3.20 \\*
+%    & \texttt{[Others]}                     &    63.959 & 19.00 \\
+% \midrule
+% 18 & \texttt{InternalSetIntersectionEmpty} &  1137.573 & 34.20 \\*
+%    & \texttt{MergeInputs}                  &   836.266 & 25.10 \\*
+%    & \texttt{WriteFile}                    &   195.235 &  5.90 \\*
+%    & \texttt{CompareSortRec}               &   148.109 &  4.50 \\*
+%    & \texttt{BinaryLocateHandle}           &   125.24  &  3.80 \\*
+%    & \texttt{[Others]}                     &   885.432 & 26.60 \\
+% \midrule
+% 20 & \texttt{InternalSetIntersectionEmpty} &   25000.019 & 57.80 \\*
+%    & \texttt{MergeInputs}                  &    3459.037 &  8.00 \\*
+%    & \texttt{InternalSetAssignComplement}  &    2673.911 &  6.20 \\*
+%    & \texttt{CompareSortRec}               &    2100.293 &  4.90 \\*
+%    & \texttt{TCacheObj.CAGet}              &    1537.196 &  3.60 \\*
+%    & \texttt{[Others]}                     &    8482.782 & 19.60 \\
+% % ----------------------------------------------------------------
+% \end{longtable}
+
+\begin{longtable}{@{}ll
+                    S[scientific-notation=false,table-format=6.3]
+                    S[scientific-notation=false,table-format=2.2]
+                    S[scientific-notation=false,table-format=6.3]
+                    S[scientific-notation=false,table-format=2.2]@{}}
+\caption{Combined \acrshort{cpu} timing profiles for \acrshort{saphsolve} \acrshort{srl}: 32-bit vs. 64-bit implementation.}%
+\label{tbl:vTune_profile_combined}\\
+\toprule
+\textbf{Trunc.} & \textbf{Function} &
+\multicolumn{2}{c}{\textbf{Initial 32-bit}} &
+\multicolumn{2}{c}{\textbf{64-bit}}\\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+ & & \textbf{CPU time [s]} & \textbf{Share [\%]} &
+     \textbf{CPU time [s]} & \textbf{Share [\%]}\\
+\midrule
+\endfirsthead
+
+\multicolumn{6}{c}{\textit{Continued: Combined \acrshort{cpu} timing profiles for \acrshort{saphsolve} \acrshort{srl}: 32-bit vs. 64-bit implementation.}}\\
+\toprule
+\textbf{Trunc.} & \textbf{Function} &
+\multicolumn{2}{c}{\textbf{32-bit}} &
+\multicolumn{2}{c}{\textbf{64-bit}}\\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+ & & \textbf{CPU time [s]} & \textbf{Share [\%]} &
+     \textbf{CPU time [s]} & \textbf{Share [\%]}\\
+\midrule
+\endhead
+
+\endfoot
+\bottomrule
+\endlastfoot
+% ----------------------------------------------------------------
+16 & \texttt{MergeInputs}                  &  175.643 & 49.50 &  197.638 & 58.70 \\*
+   & \texttt{InternalSetIntersectionEmpty} &   52.284 & 14.70 &   34.698 & 10.30 \\*
+   & \texttt{CompareSortRec}               &   16.339 &  4.60 & \multicolumn{1}{c}{\textemdash} & \multicolumn{1}{c}{\textemdash} \\*
+   & \texttt{BinaryLocateHandle}           &   14.414 &  4.10 & \multicolumn{1}{c}{\textemdash} & \multicolumn{1}{c}{\textemdash} \\*
+   & \texttt{TCardTable.GotNextCutset}     &   13.147 &  3.70 &   15.076 &  4.50 \\*
+   & \texttt{TSolveHandle.AbortIt}         & \multicolumn{1}{c}{\textemdash} & \multicolumn{1}{c}{\textemdash} &   14.295 &  4.20 \\*
+   & \texttt{ProcessSolvedGate}            & \multicolumn{1}{c}{\textemdash} & \multicolumn{1}{c}{\textemdash} &   10.759 &  3.20 \\*
+   & \texttt{[Others]}                     &   83.156 & 23.40 &   63.959 & 19.00 \\
+\midrule
+18 & \texttt{InternalSetIntersectionEmpty} & 1648.13  & 43.00 & 1137.573 & 34.20 \\*
+   & \texttt{MergeInputs}                  &  708.83  & 18.50 &  836.266 & 25.10 \\*
+   & \texttt{WriteFile}                    &  209.027 &  5.50 &  195.235 &  5.90 \\*
+   & \texttt{CompareSortRec}               &  169.204 &  4.40 &  148.109 &  4.50 \\*
+   & \texttt{BinaryLocateHandle}           &  148.118 &  3.90 &  125.24  &  3.80 \\*
+   & \texttt{[Others]}                     &  945.486 & 24.70 &  885.432 & 26.60 \\
+\midrule
+20 & \texttt{InternalSetIntersectionEmpty} & 43893.54 & 72.20 & 25000.019 & 57.80 \\*
+   & \texttt{InternalSetAssignComplement}  &  3929.234 &  6.50 &  2673.911 &  6.20 \\*
+   & \texttt{MergeInputs}                  &  3580.815 &  5.90 &  3459.037 &  8.00 \\*
+   & \texttt{CompareSortRec}               &  1243.006 &  2.00 &  2100.293 &  4.90 \\*
+   & \texttt{BinaryLocateHandle}           &  1047.855 &  1.70 & \multicolumn{1}{c}{\textemdash} & \multicolumn{1}{c}{\textemdash} \\*
+   & \texttt{TCacheObj.CAGet}              & \multicolumn{1}{c}{\textemdash} & \multicolumn{1}{c}{\textemdash} &  1537.196 &  3.60 \\*
+   & \texttt{[Others]}                     &  7061.715 & 11.60 &  8482.782 & 19.60 \\
+% ----------------------------------------------------------------
+\end{longtable}
