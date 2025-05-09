@@ -1,8 +1,92 @@
-\part{Future Work}
+\part{\color{blue}{Future Work}}
+
 \chapter{Directions for Ongoing and Future Research}
+
+Despite substantial progress in the development of an open-source, parallel, and distributed web-based PRA platform, several important features and research objectives outlined in the original project proposal remain only partially realized. This chapter details the major limitations of the current implementation and delineates a comprehensive road map for future research and development. The following sections identify methodological and implementation gaps and propose targeted features to move the platform toward its intended vision.
+
+\paragraph{User Collaboration Management}
+
+The current platform lacks mechanisms for collaborative model development. Specifically, there is limited support in the \textit{v2} app for inviting external users, assigning roles, or managing permissions within shared projects. Future work will focus on:
+
+\begin{itemize}
+    \item Implementing a complete user invitation and role assignment system to facilitate multi user collaboration.
+    \item Enabling real time collaborative editing and model sharing, with support for change tracking.
+\end{itemize}
+
+\paragraph{Version Control}
+
+While basic model updates are supported, the absence of a fully featured version control system impedes model auditing and rollback. Planned enhancements include:
+\begin{itemize}
+    \item Developing a revision history subsystem with support for branching, merging, and rollback.
+    \item Integrating version control with the user interface to allow users to compare, revert, and annotate model changes.
+\end{itemize}
+
+\paragraph{Extending the OpenPRA MEF Schema}
+
+Several PRA technical elements, such as internal flood/fire PRA, seismic PRA, and hazard screening, are not yet fully integrated in the OpenPRA MEF schema. Planned work includes:
+\begin{itemize}
+    \item Expanding the platform’s schema and analytical engines to cover all elements of the OpenPSA Model Exchange Format (MEF).
+    \item Ensuring interoperability across industry standard tools.
+\end{itemize}
+
+\paragraph{Multi Solver Support}
+
+At present, the platform is limited to the HCLA, \texttt{scram} and \texttt{Saphsolve} quantification engines. To accommodate diverse user needs and industry standards, future releases will:
+\begin{itemize}
+    \item Integrate additional solvers, such as \texttt{FTREX} and \texttt{XFTA}, into the distributed worker nodes.
+    \item Develop a solver interface to facilitate the addition of new quantification engines.
+\end{itemize}
+
+\paragraph{Guidance for Model Structure and Quantification}
+
+Although various model structures have been tested, optimal configurations for speed, accuracy, and memory usage remain undetermined. Future research will:
+\begin{itemize}
+    \item Develop and publish best practice guidelines for model construction, including recommendations for tree sizing, gate usage, and linkage strategies.
+    \item Establish acceptance criteria and truncation limits for multi-hazard models.
+\end{itemize}
+
+\paragraph{Adaptive Job Scheduling}
+
+The current distributed queue system lacks dynamic, resource aware scheduling. To improve cluster utilization and responsiveness, future work will implement an automated scheduler that dynamically allocates resources based on workload, queue priority, and hardware capabilities.
+
+\paragraph{Scalable Data Management}
+
+Handling very large models remains a challenge, particularly with respect to data persistence and network overhead. Planned improvements include:
+\begin{itemize}
+    \item Offloading bulk data (e.g., large models, cut sets) to scalable object storage solutions such as S3 buckets.
+    \item Optimizing data sharding and caching strategies to minimize latency and maximize throughput.
+\end{itemize}
+
+\paragraph{Monte Carlo Solver}
+
+The current Monte Carlo solver under-represents rare events and does not support correlated or dependent event sampling. Future research will focus on:
+
+\begin{itemize}
+    \item Developing variance reduction techniques to improve the accuracy of rare event quantification.
+    \item Implementing algorithms for sampling correlated and dependent events, with rigorous validation against analytical benchmarks.
+\end{itemize}
+
+\paragraph{Verification and Testing}
+
+The current verification framework does not yet provide best practice guidelines or optimal modeling strategies. Future work will:
+\begin{itemize}
+    \item Expand the automated test suite to cover a broader range of model types and quantification scenarios.
+    \item Develop and disseminate best practice guidelines for model construction, quantification, and uncertainty analysis.
+\end{itemize}
+
+\paragraph{Documentation and Community Adoption}
+
+To facilitate broader adoption and community engagement, future releases will provide user guides, tutorials, and example workflows for both novice and expert users.
+
+\paragraph{Interoperability and Standardization}
+
+To ensure compatibility with industry tools and standards, we will develop import/export utilities and enhance existing model converters to enable seamless data exchange with both commercial and open-source PRA platforms.
+
+Addressing the limitations outlined above is essential for realizing the full potential of the proposed PRA platform. The future work described in this chapter will not only close existing gaps but also position the platform as a industry ready solution for real time, risk informed decision support in nuclear power plant operations. Continued collaboration with industry partners, comprehensive benchmarking, and community driven development will be critical to achieving these objectives.
+
+\begin{comment}
 \section{Adaptive Scheduling for Real-Time PRA}
 \section{Advanced Uncertainty Propagation}
 \section{Variance Reduction Techniques}
 \section{Integration with Industry Tools and Standards}
-
-
+\end{comment}

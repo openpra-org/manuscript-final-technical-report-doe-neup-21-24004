@@ -1,7 +1,15 @@
 \begin{executivesummary}
-Executive Summary goes here.
+The increasing complexity of nuclear power plant operations and the demand for real time, risk-informed decision-making have highlighted the limitations of traditional probabilistic risk assessment (PRA) tools, particularly in terms of scalability, interoperability, and support for multi-hazard scenarios. In response, this project has developed an open source, parallel, and distributed web-based PRA platform that addresses these challenges through a modern, modular architecture.
 
-\section*{Assessment of Proposed Goals}
-\section*{Limitations}
-\subsection*{Future Work}
+The platform integrates a web-based client for model editing and visualization, RESTful backend APIs for data management and orchestration, and a distributed job queue system that enables high throughput risk quantification using a scalable pool of worker nodes. These workers can be configured to utilize both CPU and GPU resources, supporting a range of quantification engines including SAPHIRE, SCRAM, and a custom data-parallel Monte Carlo solver. Model representation is standardized using the OpenPRA schema, which is designed for extensibility and compatibility with the OpenPSA Model Exchange Format (MEF), facilitating model exchange and interoperability with industry-standard tools.
+
+Comprehensive benchmarking has demonstrated that the platform achieves substantial improvements in computational efficiency and scalability, particularly for large and complex PRA models. Automated benchmarking and model translation workflows have been implemented, and the platform supports both single and multi-hazard PRA models, including recent advances in multi-hazard/aftershock modeling. The open architecture enables integration of additional solvers and supports transparent, reproducible risk quantification.
+
+Despite these advances, several important features remain under development. These include a fully featured version control system, real time collaborative editing, adaptive job scheduling, and comprehensive support for all elements of the OpenPSA MEF schema. The current Monte Carlo solver is being extended to improve rare event quantification and support for correlated event sampling. Future work will also focus on scalable data management, best practice guidelines for model construction, and enhanced verification and documentation to support community adoption.
+
+In summary, the platform represents a significant step forward in PRA technology, providing an extensible, transparent, and strong foundation for real time, risk-informed operational decision support in the nuclear industry. Ongoing research and development will continue to address remaining gaps, with the goal of delivering a comprehensive, industry ready solution for PRA practitioners and stakeholders.
 \end{executivesummary}
+
+% \section*{Assessment of Proposed Goals}
+% \section*{Limitations}
+% \subsection*{Future Work}

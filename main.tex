@@ -4,15 +4,19 @@
 
 \title{An Open Source, Parallel, and Distributed Web-Based Probabilistic Risk Assessment Platform to Support Real Time Nuclear Power Plant Risk-Informed Operational Decisions}
 
-\def \docid{NEUP 21-24004}
-\def \doctype{Final Technical Report}
-\def \docrevision{1}
+\def \docsubtitle{Final Technical Report}
+
+\def \docid{DOE-NEUP 21-24004}
+\def \docrev{v0.0.1}
+\def \docsrc{https://zenodo.org/doi/10.5281/zenodo.15313673}
+\def \docdoi{10.5281/zenodo.15313673}
 
 \author{
   Arjun Earthperson, \acrfull{ncsu} \and \\
   Hasibul H. Rasheeq, \acrshort{ncsu} \and \\
   Egemen M. Aras, \acrshort{ncsu} \and \\
   Asmaa S. Farag, \acrshort{ncsu} \and \\
+  Kirill D. Shumilov, \acrshort{ncsu} \and \\
   Stephen T. Wood, \acrfull{inl} \and \\
   Jordan T. Boyce, \acrshort{inl} \and \\
   Mihai A. Diaconeasa, \acrshort{ncsu}
@@ -23,7 +27,7 @@
 %%  and citations.  Based on feedback from the NCSU thesis editor, 
 %%  the links are not visually distinct from normal text (i.e. no change
 %%  in color or extra boxes).
-\def \authors {Arjun Earthperson, Hasibul H. Rasheeq, Egemen M. Aras, Asmaa S. Farag, Stephen T. Wood, Jordan T. Boyce, Mihai A. Diaconeasa}
+\def \authors {Arjun Earthperson, Hasibul H. Rasheeq, Egemen M. Aras, Asmaa S. Farag,   Kirill D. Shumilov, Stephen T. Wood, Jordan T. Boyce, Mihai A. Diaconeasa}
 \usepackage[
   pdfauthor={\authors},
   pdftitle={\thetitle},
@@ -45,6 +49,8 @@
 
 \usepackage{bytefield}
 \usepackage{rotating}
+
+\usepackage{float}
 
 \usepackage[inkscapelatex=false]{svg}
 
@@ -70,7 +76,7 @@
 
 \mainmatter
 \input{1_introduction/_}
-% \input{2_foundations/_}
+\input{2_foundations/_}
 \input{3_identifying_gaps/_}
 
 \input{4_proposed_solution/_}
@@ -86,14 +92,6 @@ title={References}
 
 \backmatter
 
-% \printglossary[title=Definitions, toctitle=List of Definitions]
-
-%\lstlistoflistings
-% \input{problem_statement}
-% \input{report}
-% \input{p2/p2}
-% \input{p3/p3}
-% \input{appendix}
-
-
+% \section*{Listing the \texttt{LatexMk} file}
+% \verbatiminput{./LatexMk}
 \end{document}

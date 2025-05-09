@@ -1,0 +1,106 @@
+\subsection{\color{blue}{Decision Diagrams}}
+
+\subsubsection{\color{blue}{Binary Decision Diagrams}}
+\acrfull{bdd}s provide a compact graphical representation of Boolean functions. A \acrshort{bdd} is a rooted, directed, acyclic graph (DAG) consisting of decision nodes and terminal nodes. Each non-terminal decision node represents a variable test with two outgoing edges labeled 'then' and 'else', corresponding to the outcomes of the test. The terminal nodes represent the Boolean constants 1 (true) and 0 (false).
+
+A \acrshort{bdd} can be formally defined as a five-tuple $B = (N, n_0, V, E, T)$, where:
+- $N$ is a finite set of nodes,
+- $n_0 \in N$ is the root node,
+- $V$ is the set of variables associated with the decision nodes,
+- $E \subseteq N \times \{0, 1\} \times N$ is a set of directed edges, where each edge is associated with a binary outcome of a decision node,
+- $T: \{n \in N | \text{ n is a terminal node}\} \rightarrow \{0, 1\}$ is a function mapping terminal nodes to Boolean constants.
+
+\acrfull{robdd}s are a normalized form of \acrshort{bdd} that adhere to two additional constraints:
+\begin{enumerate}
+    \item {Ordering: Variables are ordered and appear at most once along any path from the root to a terminal node. This order is fixed and consistent across the diagram.}
+    \item {Reduction: Redundant nodes (nodes that have identical 'then' and 'else' edges) and isomorphic subgraphs are merged.}
+\end{enumerate}
+
+The canonical property of \acrshort{robdd}s ensures that for a given Boolean function and variable ordering, there is a unique \acrshort{robdd} representation. This uniqueness is crucial for the equivalence checking of Boolean functions and simplifies the manipulation of \acrshort{bdd}s in logical operations.
+
+To illustrate the concept with a three-variable Boolean function, let us consider $f(a, b, c) = a \land (b \lor c)$. The corresponding \acrshort{bdd} and Zero-Suppressed \acrshort{robdd} (\acrshort{zdd}) representations are depicted in \ref{fig:bdd} and \ref{fig:robdd}, respectively.
+
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{intersections}
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+% \acrshort{bdd} representation
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+  \node[main node] (1) {$a$};
+  \node[main node] (2) [below left of=1] {$b$};
+  \node[main node] (3) [below right of=1] {$c$};
+  \node[main node] (4) [below of=2] {1};
+  \node[main node] (5) [below of=3] {0};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge node [left] {1} (2)
+        edge node {0} (3)
+    (2) edge node [left] {1} (4)
+        edge node {0} (4)
+    (3) edge node [right] {1} (4)
+        edge node {0} (5);
+\end{tikzpicture}
+\caption{\acrfull{bdd} representation of $a \land (b \lor c)$}
+\label{fig:bdd}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+% \acrshort{robdd} representation
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+  \node[main node] (1) {$a$};
+  \node[main node] (2) [below right of=1] {$b$};
+  \node[main node] (3) [below left of=2] {$c$};
+  \node[main node] (4) [below of=3] {1};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge node [left] {1} (2)
+        edge [bend right] node {0} (4)
+    (2) edge node [left] {1} (3)
+        edge [bend left] node {0} (4)
+    (3) edge node [left] {1} (4)
+        edge node {0} (4);
+\end{tikzpicture}
+\caption{\acrfull{zdd} representation of $a \land (b \lor c)$}
+\label{fig:robdd}
+\end{minipage}
+\end{figure}
+
+In diagrams \ref{fig:bdd} and \ref{fig:robdd}, the decision nodes are represented by circles labeled with the corresponding variable, and the terminal nodes are squares with the value of the Boolean constant. The edges are directed and labeled to indicate the outcome of the variable test. The \acrshort{bdd} includes all possible outcomes, while the \acrshort{zdd} diagram has been reduced by merging isomorphic subgraphs and eliminating redundant nodes.
+
+\subsubsection{\color{blue}{Zero-Suppressed Decision Diagrams}}
+
+\subsubsection{\color{blue}{Sentential Decision Diagrams}}
+% \subsubsection{Binary Decision Diagrams}
+% \label{subsubsec:bdd}
+
+% A \acrfull{bdd} is a rooted, acyclic graph that represents a Boolean function in canonical form\,\cite{bryant1986bdd}.  Internal nodes correspond to decision variables, whereas the two terminal nodes \emph{0} and \emph{1} encode the function’s Boolean valuation.
+
+% \begin{figure}[htbp]
+%   \centering
+%   %\includegraphics[width=0.6\linewidth]{figures/bdd_example.pdf}
+%   \caption{Reduced ordered \acrshort{bdd} for $f(a,b,c)=a\,\bar{b}\vee \bar{a}\,c$.}
+%   \label{fig:bdd_example}
+% \end{figure}
+
+% Table~\ref{tab:bdd_truth} provides the truth table underlying the \acrshort{bdd} in Figure~\ref{fig:bdd_example}.  Because reduced ordered BDDs are canonical, reliability metrics such as minimal cut sets can be extracted in polynomial time compared with the potentially exponential enumeration required by MOCUS\,\cite{kavaler2019bddft}.  Modern FT quantifiers therefore frequently combine BDD-based pruning with MOCUS-style expansion to balance memory consumption and run-time efficiency.
+
+% \begin{table}[htbp]
+%   \centering
+%   \caption{Truth table for the Boolean function represented in Figure~\ref{fig:bdd_example}.}
+%   \label{tab:bdd_truth}
+%   \begin{tabular}{@{}ccccc@{}}
+%     \toprule
+%     $a$ & $b$ & $c$ & $f$ \\ \midrule
+%     0 & 0 & 0 & 0 \\
+%     0 & 0 & 1 & 1 \\
+%     0 & 1 & 0 & 0 \\
+%     0 & 1 & 1 & 1 \\
+%     1 & 0 & 0 & 1 \\
+%     1 & 0 & 1 & 1 \\
+%     1 & 1 & 0 & 0 \\
+%     1 & 1 & 1 & 0 \\ \bottomrule
+%   \end{tabular}
+% \end{table}

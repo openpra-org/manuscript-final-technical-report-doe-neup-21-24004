@@ -1,0 +1,89 @@
+\begin{landscape}
+\begin{longtable}{@{}lll@{}}
+\caption{Main REST API entrypoints exposed by the OpenPRA backend.}
+\label{tab:openpra-backend-endpoints}\\
+\toprule
+\textbf{Endpoint} & \textbf{Methods} & \textbf{Description} \\
+\midrule
+\endfirsthead
+\multicolumn{3}{c}{\textit{Continued: Main REST API entrypoints exposed by the OpenPRA backend.}}\\
+\toprule
+\textbf{Endpoint} & \textbf{Methods} & \textbf{Description} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+%
+\multicolumn{3}{@{}l}{\textbf{Authentication}}\\
+\midrule
+\texttt{/api/auth/token-obtain} & POST & Issue JWT token (user login) \\
+\texttt{/api/auth/verify-password} & POST & Verify user credentials/password \\
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Collaboration (Users)}}\\
+\midrule
+\texttt{/api/collab/user} & GET, POST & List users; create new user \\
+\texttt{/api/collab/user/\{user\_id\}} & GET, PUT & Get or update a user by ID \\
+\texttt{/api/collab/user/\{user\_id\}/preferences} & GET, PUT & Get or update user preferences \\
+\texttt{/api/collab/validateEmail} & POST & Check email availability/validity \\
+\texttt{/api/collab/validateUsername} & POST & Check username uniqueness \\
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Collaboration (Invites \& Roles)}}\\
+\midrule
+\texttt{/api/collab/invite} & POST, PUT & Create or update an invitation \\
+\texttt{/api/collab/invites} & GET & List all invitations \\
+\texttt{/api/collab/invite/\{id\}} & GET, DELETE & Get or cancel invite by ID \\
+\texttt{/api/collab/verify-invite} & POST & Verify/redeem an invite token \\
+\texttt{/api/collab/roles} & GET, POST, PUT & List, create, or update access roles \\
+\texttt{/api/collab/roles/\{roleId\}} & DELETE & Delete a role by ID \\
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Model Graphs}}\\
+\midrule
+\texttt{/api/model/fault-tree-graph} & GET, POST & Create or retrieve fault-tree graph structure \\
+\texttt{/api/model/event-tree-graph} & GET, POST & Create or retrieve event-tree graph structure \\
+\texttt{/api/model/event-sequence-diagram-graph} & GET, PATCH & Get or update event-sequence diagram graph \\
+\texttt{/api/model/event-sequence-diagram-graph/update-label} & PATCH & Update labels on the event-sequence graph \\
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{\acrfull{fmea}}}\\
+\midrule
+\texttt{/api/model/fmea/\{id\}} & GET & Retrieve FMEA table by ID \\
+\texttt{/api/model/fmea/\{id\}/row} & PUT & Add or update a row in the FMEA \\
+\texttt{/api/model/fmea/\{id\}/column} & PUT & Add or update a column in the FMEA \\
+\texttt{/api/model/fmea/\{id\}/cell} & PUT & Update a cell value in the FMEA \\
+\texttt{/api/model/fmea/\{id\}/dropdown} & PUT & Update dropdown options in the FMEA \\
+\texttt{/api/model/fmea/\{id\}/delete} & PUT & Delete the entire FMEA table \\
+\texttt{/api/model/fmea/\{id\}/column/updateName} & PUT & Rename a FMEA column \\
+\texttt{/api/model/fmea/\{id\}/column/updateType} & PUT & Change a column’s type \\
+\texttt{/api/model/fmea/\{fmeaid\}/\{rowid\}/delete} & DELETE & Delete a specific FMEA row \\
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Typed Models (Hazard Tables)}}\\
+\midrule
+\texttt{/api/model/internal-events} & GET, POST, DELETE & Manage internal-event entries \\
+\texttt{/api/model/internal-events/\{id\}} & GET, PATCH & Get or update an internal-event by ID \\
+\texttt{/api/model/internal-hazards} & GET, POST, DELETE & Manage internal-hazard entries \\
+\texttt{/api/model/internal-hazards/\{id\}} & GET, PATCH & Get or update an internal-hazard by ID \\
+\texttt{/api/model/external-hazards} & GET, POST, DELETE & Manage external-hazard entries \\
+\texttt{/api/model/external-hazards/\{id\}} & GET, PATCH & Get or update an external-hazard by ID \\
+\texttt{/api/model/full-scope} & GET, POST, DELETE & Manage full-scope analysis entries \\
+\texttt{/api/model/full-scope/\{id\}} & GET, PATCH & Get or update a full-scope entry by ID \\
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Other PRA Components}}\\
+\midrule
+\texttt{/api/model/initiating-events} & POST & Add initiating events to a model \\
+\texttt{/api/model/markov-chains} & POST & Add Markov chain models \\
+\texttt{/api/model/weibull-analysis} & POST & Add Weibull failure-rate data \\
+\texttt{/api/model/risk-integration} & POST & Add risk integration parameters \\
+\texttt{/api/model/radiological-consequence-analysis} & POST & Add consequence-model data \\
+\texttt{/api/model/mechanistic-source-term} & POST & Add source-term model data \\
+\texttt{/api/model/event-sequence-quantification-diagram} & POST & Add event-sequence quantification diagrams \\
+\texttt{/api/model/data-analysis} & POST & Add data-analysis entries \\
+\texttt{/api/model/human-reliability-analysis} & POST & Add HRA entries \\
+\texttt{/api/model/systems-analysis} & POST & Add systems analysis entries \\
+\texttt{/api/model/success-criteria} & POST & Add success-criteria entries \\
+\texttt{/api/model/event-sequence-analysis} & POST & Add event-sequence analysis entries \\
+\texttt{/api/model/operating-state-analysis} & POST & Add operating-state analysis entries \\
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Quantification}}\\
+\midrule
+\texttt{/api/quantify/with-scram-binary} & POST & Submit a model to the SCRAM engine via job queue \\
+\end{longtable}
+\end{landscape}

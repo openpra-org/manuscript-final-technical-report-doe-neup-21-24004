@@ -1,4 +1,9 @@
-\chapter{A Distributed Queuing System}
+{
+\cleardoublepage
+\let\clearpage\relax
+\include{4_proposed_solution/overview/_}
+
+\chapter{Designing a Distributed Queuing System}
 
 \section{Worker-Pool and Queue Management Concepts}
 
@@ -16,7 +21,7 @@ The broker implements idempotent operations, meaning duplicate or repeated actio
 
 \section{REST APIs for Parallel Task Coordination}
 
-The platform provides a RESTful \acrshort{api} layer that orchestrates the entire lifecycle of \acrshort{pra} quantification tasks, from submission and monitoring to cancellation and result retrieval. An \acrshort{api} is a set of rules that lets different software systems exchange data programmatically over the internet. A RESTful \acrshort{api} implements these rules using standard \acrshort{http} methods (GET, POST, PUT, DELETE) and resource-oriented \acrshort{url}s to ensure stateless communication. The REST \acrshort{api}s handles client authentication and payload validation, translating task definitions (\acrshort{pra} models and solver parameters) into messages dispatched to the publisher component of the distributed system. Upon successful POST, clients receive a unique task identifier, which they use to subscribe to status endpoints to get real-time execution updates (queued, running, completed, failed). Batch submission endpoints accept arrays of quantification tasks with optional metadata for target solver selection (\acrshort{mocus}/\acrshort{bdd}/\acrshort{zbdd}/Monte Carlo), priority levels, and estimated resource requirements. Result endpoints expose completed outputs and solver performance metrics in \acrshort{json} format via secure download \acrshort{url}s pointing to the distributed databases. To ensure fair usage, the \acrshort{api}s implement idempotent POST semantics and rate limiting to prevent duplicate requests and resource starvation. Figure \ref{fig:rest-api-architecture} shows a simplified workflow of the REST API layer.
+The platform provides a RESTful \acrshort{api} layer that orchestrates the entire life cycle of \acrshort{pra} quantification tasks, from submission and monitoring to cancellation and result retrieval. An \acrshort{api} is a set of rules that lets different software systems exchange data programmatically over the internet. A RESTful \acrshort{api} implements these rules using standard \acrshort{http} methods (GET, POST, PUT, DELETE) and resource-oriented \acrshort{url}s to ensure stateless communication. The REST \acrshort{api}s handles client authentication and payload validation, translating task definitions (\acrshort{pra} models and solver parameters) into messages dispatched to the publisher component of the distributed system. Upon successful POST, clients receive a unique task identifier, which they use to subscribe to status endpoints to get real-time execution updates (queued, running, completed, failed). Batch submission endpoints accept arrays of quantification tasks with optional metadata for target solver selection (\acrshort{mocus}/\acrshort{bdd}/\acrshort{zdd}/Monte Carlo), priority levels, and estimated resource requirements. Result endpoints expose completed outputs and solver performance metrics in \acrshort{json} format via secure download \acrshort{url}s pointing to the distributed databases. To ensure fair usage, the \acrshort{api}s implement idempotent POST semantics and rate limiting to prevent duplicate requests and resource starvation. Figure \ref{fig:rest-api-architecture} shows a simplified workflow of the REST API layer.
 
 \input{4_proposed_solution/dist_queues/plots/plot_dist_rest_api}
 
@@ -161,6 +166,7 @@ Beyond 100 jobs, speed-up saturates owing to:
 \end{itemize}
 
 These findings validate that the combined architecture of Docker-Swarm and RabbitMQ delivers near-linear scaling for practical PRA workloads up to the tested concurrency and provides an order-of-magnitude reduction in wall-clock time compared with serialized execution.
+}
 
 % \section{Handling Multi-Hazard Models in Parallel}
 % \subsection{Integration of Hazard Modules}

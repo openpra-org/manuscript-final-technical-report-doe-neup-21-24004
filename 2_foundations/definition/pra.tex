@@ -1,5 +1,3 @@
-\section{The Triplet Definition of Risk}
-\label{sec:triplet_definition_of_risk}
 A central goal of risk analysis in nuclear engineering is to enable sound decision-making under large uncertainties. To achieve this, risk must be defined in a way that is both rigorous and practically quantifiable. One widely accepted definition, tracing back to seminal work in \cite{kaplan_quantitative_1981, garrick_quantifying_2008}, frames risk as a \emph{set of triplets}. Each triplet captures three essential dimensions:
 
 \begin{enumerate}
@@ -29,7 +27,7 @@ where \(R\) denotes the overall risk for a given system or activity, and the sub
 
 The notation \(\{\cdot\}_{c}\) in Eq.~\eqref{eq:risk_triplets} stresses that \emph{all} substantial risk scenarios must be included. Omitting a significant scenario might severely underestimate total risk. One might ask, ``What are the uncertainties?'' In this report, uncertainties are embedded in each \(L_i\) (and sometimes \(X_i\)) via probability distributions.
 
-\section{Scenario Approach to PRA}
+\section{A Scenario-Based Approach}
 \label{sec:scenario_approach_to_pra}
 
 A practical way to enumerate each triplet \(\langle S_i, L_i, X_i\rangle\) is through logical decomposition of potential failures or disruptions, a process referred to as \emph{scenario structuring}. Scenario structuring helps answer the question ``\textit{What can go wrong?}'' in greater detail by dividing possible scenarios into commonly recognized classes. Each of these categories corresponds to a distinct family of \emph{initiating events} (IE) that can trigger a chain of subsequent events or failures. At each node in the success scenario, we identify the IEs, which branch off from the initial success path \(S_0\) into new pathways that may lead to undesirable states. Thus, each \emph{scenario} \(S_i\) can be interpreted as a distinct departure from the baseline success path, triggered by some IE that occurs at node \(i\). From that point onward, a sequence of \emph{conditional events} or barriers may succeed or fail, culminating in an end-state \(ES_i\).

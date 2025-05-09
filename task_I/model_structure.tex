@@ -2,12 +2,12 @@
 % Section: Probabilistic Risk Assessment Model Structure
 %----------------------------------------
 
-\subsection{Probabilistic Risk Assessment Model Structure}
+\subsection{\color{yellow}{Probabilistic Risk Assessment Model Structure}}
 \label{sec:pra_model_structure}
 
 Probabilistic Risk Assessment (PRA) model generation is a crucial step in the design, operation, and decommissioning phases of a nuclear power plant (NPP). Different PRA software tools implement distinct methods for model generation, storage, and exchange. Understanding these methods is essential for enhancing interoperability and advancing tool capabilities. In this work, we focus on two representative tools: SAPHIRE (via its SAPHSOLVE solver) and SCRAM (via the Open‑PSA Model Exchange Format).
 
-\subsubsection{SAPHSOLVE Models}
+\subsubsection{\color{yellow}{SAPHSOLVE Models}}
 \label{sec:saphsolve_models}
 
 SAPHIRE’s quantification engine, SAPHSOLVE, exposes two primary solvers—Fault Tree Solver and Event Tree/Sequence Solver—via a JSON‑based remote interface. Below we outline SAPHIRE’s background and the structure of its input/output files.
@@ -74,13 +74,13 @@ The output file (\texttt{.jsonc}) returns:
   \label{fig:saphsolve_output}
 \end{figure}
 
-\subsubsection{Open‑PSA Model Exchange Framework}
+\subsubsection{\color{yellow}{Open‑PSA Model Exchange Framework}}
 \label{sec:openpsa_mef}
 
-The Open‑PSA Model Exchange Format (MEF) \cite{36} was developed to enable software‑independent PRA model sharing. It uses Extensible Markup Language (XML) for its explicit, hierarchical representation of model constructs.
+The Open‑PSA \acrshort{mef} \cite{36} was developed to enable software‑independent PRA model sharing. It uses \acrshort{xml} for its explicit, hierarchical representation of model constructs.
 
 \paragraph{Overview of SCRAM}
-SCRAM is an open‑source PRA quantification engine under development at North Carolina State University \cite{39}. It operates via a command‑line interface, performing fault‑tree and event‑tree quantification, cut‑set generation, importance measures, and uncertainty analyses.
+It operates via a command‑line interface, performing fault‑tree and event‑tree quantification, cut‑set generation, importance measures, and uncertainty analyses.
 
 \paragraph{SCRAM Model Structure}
 SCRAM adheres to a five‑layer XML architecture (Figure~\ref{fig:openpsa_arch}):

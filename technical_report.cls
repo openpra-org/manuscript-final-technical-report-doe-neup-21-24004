@@ -34,6 +34,11 @@
 %% left-aligned
 % \usepackage[document]{ragged2e}
 
+\usepackage{xcolor}
+
+\usepackage{verbatim,shellesc}
+\ShellEscape{cp /usr/local/share/latexmk/LatexMk ./LatexMk}
+
 %% paragraph spacing
 \usepackage[skip=8pt]{parskip}
 %% No paragraph indenting
@@ -64,6 +69,7 @@
 \usepackage{setspace}
 
 \usepackage{pgfplots}
+\usepackage{comment}
 \pgfplotsset{compat=1.18}
 
 \usepackage{wrapfig}
@@ -80,6 +86,7 @@
 \RequirePackage{setspace}
 \RequirePackage{sectsty}
 \RequirePackage{titling}
+
 
 %% glossaries
 \RequirePackage[xindy,toc,acronym]{glossaries}
@@ -102,6 +109,9 @@
   \makeglossaries
   \newacronym[see={[Glossary:]{gls-#3}},#2]{#3}{#4}{#5\glsadd{gls-#3}}
 }
+
+%% for reviewing documents
+% \usepackage{easyReview}
 
 %%----------------------------------------------------------------------------%%
 %%---------------------------- Formatting Options ----------------------------%%
@@ -151,7 +161,7 @@
 %                 footskip=\ncsu@footskip]{geometry}
 
 % January 2023 Update - Just set all margins to 1in
-\usepackage[margin=1in,showframe=true]{geometry}
+\usepackage[margin=1in,showframe=false]{geometry}
 % \usepackage[margin=0.5in, bottom=1in, top=1in]{geometry}
 
 \dispositionformat{\bfseries}            % bold and serif
@@ -188,6 +198,8 @@
 \input{acronyms}
 \input{definitions}
 
+\usepackage{environ}
+
 % Subtitle
 \newcommand{\subtitle}[1]{%
   \posttitle{%
@@ -202,30 +214,11 @@
      \fancyhf{} % sets both header and footer to nothing
      \renewcommand{\headrulewidth}{0pt}
      \lhead{\includegraphics[height=2.4em]{assets/logos/ncstate-brick-4x1-red-rgb.eps}}
-     \rhead{\docid \\ Revision \docrevision}
+     \rhead{\docid \\ Revision \docrev}
 
      \setlength{\headheight}{28pt}
      \setlength{\headsep}{1.5in}
-     % \begin{flushright}
-     % {
-     %    Revision \docrevision
-     % }
-     % \end{flushright}
-     % {
-     %     % \includegraphics{assets/logos/ncstate-brick-2x2-blk-rgb.eps}
-     %     \hfill
-     %     \docid\\
-     % }
-     % \begin{flushleft}
-     %    \includegraphics{assets/logos/ncstate-brick-2x2-blk-rgb.eps}
-     % \end{flushleft}
-     % \begin{flushright}
-     %    \docid\\
-     %    Revision \docrevision
-     % \end{flushright}
-     
-      % \noindent\rule{\textwidth}{1pt}
-      
+     \vspace*{6em}
       \begin{flushleft}
             % \vfill
         {\huge\bfseries{
@@ -233,24 +226,21 @@
             }
         }
         \vspace{4em}
-        {\Large\doctype\par}
+        {\Large\docsubtitle\par}
         % \vfill
         \vspace{2em}
         Manuscript Completed: \monthyeardate\today\par
-        % \vfill
-        \vspace{6em}
+        \vfill
         Prepared by:\\
         \theauthor\par
-        \vspace{6em}
+        \vfill
         \acrlong{pra} Group\\
         Department of Nuclear Engineering\\
-        \acrlong{ncsu}
+        \acrlong{ncsu}\par
       \end{flushleft}
       \noindent\rule{\textwidth}{4pt}
-      \clearpage
       \ncsu@defaultspacing
       \setlength{\headsep}{0in}
-      % \setlength{\footskip}{60pt}
 }
 
 %% -------------------------------------------------------------------------- %%
@@ -267,20 +257,39 @@
 {\ncsu@dedbioack{\executivesummarytitle}}
 {\clearpage}
 
-%%  versioncontrol
 \newcommand{\makeversioncontrolpage}{%
-{\ncsu@dedbioack{Version Control Information}}
-  % \thispagestyle{empty}%
+  \clearpage
+  \thispagestyle{empty}%
+  % \vspace*{\fill}
   \begin{center}
-    
-    \vspace{2cm}
-    {\large
-      This document was typeset using \TeX{} under \texttt{git} version control. Sources and revision history can be accessed from 
-      \par
-    }
-    % You can add placeholder for future git info here
+    {\large\normalfont\bfseries\MakeUppercase{Configuration Control}\par}
+    \vspace{1em}
+    {\parbox{0.50\linewidth}{
+        \hrule \vspace{1em}
+        \begin{flushleft}
+          \ifdefined\docid
+            \textbf{Document ID:} \docid\par
+          \fi
+          \ifdefined\docrev
+            \textbf{Revision:} \docrev\par
+          \fi
+          \ifdefined\docsrc
+              \ifdefined\docdoi
+                \textbf{Source Repository:} \href{\docsrc}{\docdoi}\par
+              \fi
+          \fi
+        \end{flushleft}
+        \vspace{1em}
+        \hrule \vspace{1em}
+        \footnotesize{
+            This \texttt{git} version-controlled document was typeset using \TeX{}.
+            \ifdefined\docdoi
+                A complete revision history, with sources, is available from the repository link.
+            \fi
+        }
+    }}
   \end{center}
-  \vfill
+  \vspace*{\fill}
 }
 
 %%  Acknowledgments
@@ -290,21 +299,34 @@
 {\clearpage}
 
 %%  gai_declaration
-\newcommand{\declarationtitle}{Declaration on the use of Artificial Intelligence}
-\newenvironment{aideclaration}
-{\ncsu@dedbioack{\declarationtitle}}
-% {%
-%   \clearpage
-%   \vspace*{\fill} % push content vertically to center
-%   \begin{center} % horizontally center content
-%     {\Large\bfseries \declarationtitle\par} % title formatting
-%    \end{center}
-% }
-{%
-  % \end{center}
-  % \vspace*{\fill} % push content vertically to center
-  \clearpage
+
+\NewEnviron{aideclaration}{
+  \clearpage 
+  \vspace*{\fill}
+  \begin{center}
+    {\large\normalfont\bfseries\MakeUppercase{Declaration on the use of Artificial Intelligence}\par}
+    \vspace{1em}
+    \parbox{0.75\linewidth}{\small\BODY}
+  \end{center}
+  \vspace*{\fill}
 }
+
+
+
+% \newenvironment{aideclaration}
+% {\ncsu@dedbioack{\declarationtitle}}
+% % {%
+% %   \clearpage
+% %   \vspace*{\fill} % push content vertically to center
+% %   \begin{center} % horizontally center content
+% %     {\Large\bfseries \declarationtitle\par} % title formatting
+% %    \end{center}
+% % }
+% {%
+%   % \end{center}
+%   % \vspace*{\fill} % push content vertically to center
+%   \clearpage
+% }
 
 
 % \newcommand{\declarationtitle}{Declaration on the use of Generative Artificial Intelligence}
@@ -341,6 +363,8 @@
 \RequirePackage{tocloft}
 \RequirePackage{listings}
 
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3} %<--------
 \renewcommand{\contentsname}{Table of Contents}
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
 \newcommand{\reporttableofcontents}{%
