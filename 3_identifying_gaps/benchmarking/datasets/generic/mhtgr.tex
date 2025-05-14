@@ -1,0 +1,62 @@
+\subsection{The Generic Modular High Temperature Gas Cooled Reactor Model}
+\label{subsec:generic_mhtgr_dataset}
+
+The Modular High Temperature Gas Cooled Reactor (MHTGR) represents a class of advanced nuclear reactor designs that emphasize inherent safety features and modular construction. To support risk-informed operational decision-making and benchmarking, a generic MHTGR Probabilistic Risk Assessment (PRA) model has been developed in both SAPHIRE and CAFTA formats. This model is structured to capture the unique failure modes and system interactions characteristic of high temperature gas-cooled reactor technology.
+
+The MHTGR PRA model encompasses a comprehensive set of initiating events, event trees, and fault trees, reflecting a broad spectrum of internal and external hazards. The principal event trees modeled include:
+
+\begin{itemize}
+    \item Primary coolant leaks
+    \item Small steam generator leaks
+    \item Moderate steam generator leaks
+    \item Loss of HTS cooling (HTS)
+    \item Loss of offsite power (LOOP)
+    \item Control rod withdrawal (CRW)
+    \item Anticipated transients requiring scram (ATRS)
+\end{itemize}
+
+The event trees are linked to a set of fault trees representing the major safety and support systems, including:
+
+\begin{itemize}
+    \item Control rod withdrawal (CRW)
+    \item Shutdown cooling system (SCS)
+    \item Automatic steam generator dump
+    \item Reaccor trip
+    \item Moisture monitor detection
+    \item Automatic steam generator isolation
+    \item Steam generator relief train response
+    \item Reactor cavity cooling system
+    \item HPS pumpdown
+\end{itemize}
+
+Each fault tree is defined by a top event, which typically corresponds to a critical system or component failure. The top events modeled include:
+
+\begin{itemize}
+    \item Loss of HTS cooling
+    \item Turbine building closed cooling water subsystem failure
+    \item Reactor plant cooling water subsystem failure
+    \item Loss of Class IE 120 VAC uninterruptible power supply
+    \item SCS failure in at least one module where HTS failed
+    \item Failure of SCS when one module requires cooling
+    \item Loss of SCS cooling when four modules require cooling
+    \item Heater failure
+    \item Demineralizer failures
+    \item Circulating water subsystem failure
+    \item Service water subsystem failure
+\end{itemize}
+
+The model includes an extensive set of basic events and corresponding repair actions, covering a wide range of mechanical, electrical, and control system failures. These basic events are parameterized with mean failure frequencies or probabilities, and are mapped to specific subsystems such as helium circulators, pumps, valves, instrumentation, and support systems. Repair actions are similarly detailed, ensuring that the model can support both fault and repair analysis.
+
+A summary of the basic event and repair data is provided in the supplementary material. The model files are available in both SAPHIRE and CAFTA formats to facilitate interoperability and benchmarking across PRA software tools.
+
+\begin{center}
+\begin{tabular}{ll}
+\textbf{Model Format} & \textbf{Description} \\
+\hline
+SAPHIRE & Full PRA model, including event trees, fault trees, basic events, and repairs \\
+CAFTA   & Equivalent model for cross-tool benchmarking \\
+CSV     & Tabulated basic event and repair data \\
+\end{tabular}
+\end{center}
+
+This generic MHTGR PRA model provides a foundation for advanced risk analysis, tool benchmarking, and research into the unique safety characteristics of modular high temperature gas-cooled reactors.

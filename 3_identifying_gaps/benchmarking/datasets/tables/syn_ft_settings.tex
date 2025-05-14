@@ -4,7 +4,7 @@
 \toprule
 \textbf{Argument} &
   \textbf{Option} &
-  \textbf{\begin{tabular}[c]{@{}l@{}}Option\\ Type\end{tabular}} &
+  \textbf{\begin{tabular}[c]{@{}l@{}}Type\end{tabular}} &
   \textbf{Default} &
   \textbf{\begin{tabular}[c]{@{}l@{}}Applied\\ Option\end{tabular}} \\* \midrule
 \endfirsthead
@@ -31,7 +31,8 @@ Avg. number of gate arguments            & --num-args  & +ve float       & 3.0  
 Weights {[}AND, OR, VOT, NOT, \acrshort{xor}{]} & --weights-g     & +ve float{[}{]}      & {[}1,1,1,1,1{]}  & {[}1,1,1,0,0{]}         \\
 Avg. \% of common \acrshort{be}s per gate     & --common-b  & +ve float       & 0.3     &             \\
 Avg. \% of common gates per gate            & --common-g  & +ve float       & 0.1     &             \\
-Avg. \% of parents for common \acrshort{be}s  & --parents-b & +ve float       & 2       &             \\
+Avg. number parents for common \acrshort{be}s  & --parents-b & +ve float       & 2       &             \\
+Average number of parents for common gates  & --parents-g & +ve float           & 2       &             \\
 Number of gates (\textless{}= 0 means auto) & --num-gate  & int             & 0       &             \\
 Maximum probability of \acrshort{be}s         & --max-prob & float {[}0,1{]} & 0.5     & 0.05        \\
 Minimum probability of \acrshort{be}s         & --min-prob  & float {[}0,1{]} & 0.5     & 0.01        \\

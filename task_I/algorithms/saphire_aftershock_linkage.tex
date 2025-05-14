@@ -1,0 +1,17 @@
+\begin{algorithm}[H]
+\caption{Excerpt of SAPHIRE linkage rules for the aftershock model}
+\label{alg:saphire_aftershock_linkage}
+\begin{algorithmic}[1]
+\If{SLOCA\_EQ1\_FT \textbf{and} LOOP\_EQ1\_FT}
+  \State EVENTREE(EQK\_BIN1) $\gets$ FLAG(ETF\_EQ1\_SL)
+\ElsIf{LLOCA\_EQ1\_FT \textbf{and} LOOP\_EQ1\_FT}
+  \State EVENTREE(EQK\_BIN1) $\gets$ FLAG(ETF\_EQ1\_LL)
+\Else
+  \State EVENTREE(EQK\_BIN1) $\gets$ FLAG(ETF\_EQ1)
+\EndIf
+\If{INIT(IE\_EQ\_BIN1)}
+  \State EVENTREE(EQK\_BIN1) $\gets$ ENDSTATE(CD\_EQ)
+  \State EVENTREE(EQK\_BIN1) $\gets$ FLAG(T\_1)
+\EndIf
+\end{algorithmic}
+\end{algorithm}

@@ -1,0 +1,75 @@
+\begin{longtable}{llll}
+\caption{Summary of benchmarked datasets, tools, measured metrics, and analysis types.}
+\label{tab:what_was_benchmarked}\\
+\toprule
+\textbf{Dataset} & \textbf{Tool (Algorithm)} & \textbf{Metrics} & \textbf{Analysis Type} \\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\textit{Continued: Summary of benchmarked datasets, tools, measured metrics, and analysis types.}}\\
+\toprule
+\textbf{Dataset} & \textbf{Tool-Algorithm} & \textbf{Metrics} & \textbf{Analysis Type} \\
+\midrule
+\endhead
+%
+\bottomrule
+\endfoot
+%
+\endlastfoot
+
+100\_to\_100k\_voter
+    & SCRAM-MOCUS & Wall clock time & Probability \\
+    & SCRAM-BDD & & \\
+    & SCRAM-ZBDD & & \\
+\midrule
+1\_to\_4k
+    & SCRAM-MOCUS-REA & Wall clock time & Probability \\
+    & SCRAM-MOCUS-MCUB & CPU time  &  \\
+    & SCRAM-BDD &  Memory usage &  \\
+    & XFTA (unknown) &  &  \\
+    & SAPHSOLVE-MOCUS-MCUB &  &  \\
+\midrule
+1\_to\_50k
+    & SAPHSOLVE-MOCUS-MCUB & Wall clock time & Probability (truncation $1 \times 10^{-14}$) \\
+    & XFTA (unknown) &  CPU time &  Probability (truncation $1 \times 10^{-20}$) \\
+    &  & Memory Usage & \\
+\midrule
+1\_to\_5k
+    & SCRAM-MOCUS-REA & Wall clock time & Probability \\
+    & SCRAM-MOCUS-MCUB & CPU time &  \\
+    & SCRAM-BDD & Memory usage &  \\
+    & XFTA (unknown) &  &  \\
+    & SAPHSOLVE-MOCUS-MCUB &  &  \\
+\midrule
+2\_to\_100k
+    & SCRAM-MOCUS & Wall clock time & Probability \\
+    & SCRAM-BDD & CPU time &  \\
+    & SCRAM-ZBDD & Memory usage &  \\
+    & XFTA (unknown) &  &  \\
+\midrule
+500\_to\_750
+    & SCRAM-MOCUS & Wall clock time & Probability \\
+    & SCRAM-BDD & CPU time &  Common cause failure \\
+    & SCRAM-ZBDD & Memory usage &  Importance measure \\
+    & & & Uncertainty (10,000 samples) \\
+\midrule
+Non-CCF models  & SCRAM-MOCUS-REA & Wall clock time & Probability \\
+                & SCRAM-MOCUS-MCUB & CPU time & \\
+                & SCRAM-BDD & Memory Usage & \\
+                & SCRAM-ZBDD & & \\
+                & XFTA (unknown) &  &  \\
+                & SAPHSOLVE-MOCUS-MCUB &  &  \\
+                & FTREX-BDD (Name/ID) &  &  \\
+                & FTREX-ZBDD (Name/ID) &  & \\
+\midrule
+CCF models  & SCRAM-MOCUS-REA & Wall clock time & Common cause failure \\
+            & SCRAM-MOCUS-MCUB & CPU time & \\
+            & SCRAM-BDD & & \\
+            & SCRAM-ZBDD & & \\
+            & XFTA (unknown) & &  \\
+            & SAPHSOLVE-MOCUS-MCUB &  &  \\
+\midrule
+Generic PWR (EQK-BIN1) & SAPHSOLVE-GUI & Wall clock time & MCS \\ 
+                       & SAPHSOLVE-DLL & & Probability \\
+                       & & & Multi-hazard quantification \\
+\bottomrule
+\end{longtable}

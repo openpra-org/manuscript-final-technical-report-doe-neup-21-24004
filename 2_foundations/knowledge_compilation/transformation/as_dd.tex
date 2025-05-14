@@ -1,106 +1,144 @@
-\subsection{\color{blue}{Decision Diagrams}}
+\subsection{Decision Diagrams}
+\label{sec:decision_diagrams}
 
-\subsubsection{\color{blue}{Binary Decision Diagrams}}
-\acrfull{bdd}s provide a compact graphical representation of Boolean functions. A \acrshort{bdd} is a rooted, directed, acyclic graph (DAG) consisting of decision nodes and terminal nodes. Each non-terminal decision node represents a variable test with two outgoing edges labeled 'then' and 'else', corresponding to the outcomes of the test. The terminal nodes represent the Boolean constants 1 (true) and 0 (false).
+Decision diagrams provide a powerful, directed-graph-based representation of logical or Boolean functions. Their roots can be traced back to branching program ideas explored by Lee and Akers in the 1950s–1970s, but major refinement and widespread adoption occurred after Bryant's seminal work on \emph{Ordered Binary Decision Diagrams (OBDDs)} in 1986. In reliability analysis, formal verification, and combinational circuit design, decision diagrams frequently offer more computationally tractable methods than naïve enumeration of all input patterns.
 
-A \acrshort{bdd} can be formally defined as a five-tuple $B = (N, n_0, V, E, T)$, where:
-- $N$ is a finite set of nodes,
-- $n_0 \in N$ is the root node,
-- $V$ is the set of variables associated with the decision nodes,
-- $E \subseteq N \times \{0, 1\} \times N$ is a set of directed edges, where each edge is associated with a binary outcome of a decision node,
-- $T: \{n \in N | \text{ n is a terminal node}\} \rightarrow \{0, 1\}$ is a function mapping terminal nodes to Boolean constants.
+This section introduces the basic concepts of \emph{Binary Decision Diagrams (BDDs)} and \emph{Zero-Suppressed Decision Diagrams (ZDDs)}, along with the special class of \emph{Ordered} and \emph{Reduced} BDDs that guarantee a canonical (unique) form under fixed conditions. We emphasize:
+\begin{itemize}
+\item The structure and interpretation of BDDs as directed acyclic graphs (DAGs).
+\item The notion of an \emph{ordered} BDD, imposing a strict arrangement on variable testing.
+\item Techniques for \emph{reducing} BDDs into smaller yet equivalent graphs by merging or removing redundant parts.
+\item The main principles of Zero-Suppressed Decision Diagrams, designed for efficiently encoding sparse sets or combinatorial families.
+\end{itemize}
 
-\acrfull{robdd}s are a normalized form of \acrshort{bdd} that adhere to two additional constraints:
+Earlier, we saw that \emph{event trees} and \emph{fault trees} can be merged into a single directed acyclic graph to represent complex system dependencies. BDDs and ZDDs, by contrast, focus more narrowly on Boolean functions, providing specialized node-splitting and merging operations to systematically capture logical behavior. Despite differing motivations, both families of DAG-based representations benefit from the avoidance of cycles and the ability to encode large models in a structured form.
+
+\subsubsection{Binary Decision Diagrams (BDD)}
+\label{sec:bdd}
+
+Let $f: \{0,1\}^n \to \{0,1\}$ be an $n$-variable Boolean function. A \emph{Binary Decision Diagram} (BDD) is a directed acyclic graph whose internal nodes represent decisions on a single Boolean variable, and whose terminal (sink) nodes represent constant outputs ($0$ or $1$).
+
+\begin{definition}[Binary Decision Diagram]
+\label{def:bdd}
+A \emph{Binary Decision Diagram} for $f$ is a tuple $B =\bigl(N,n_0,V,E,T\bigr)$ with the following components:
 \begin{enumerate}
-    \item {Ordering: Variables are ordered and appear at most once along any path from the root to a terminal node. This order is fixed and consistent across the diagram.}
-    \item {Reduction: Redundant nodes (nodes that have identical 'then' and 'else' edges) and isomorphic subgraphs are merged.}
+\item $N$ is a finite set of nodes, partitioned into \emph{internal} nodes and \emph{terminal} nodes.
+\item $n_0 \in N$ is the \emph{root node}, where evaluations begin.
+\item $V={x_1,x_2,\dots,x_n}$ is the set of Boolean variables associated with the internal nodes.
+\item $E \subseteq N \times {0,1} \times N$ is the edge set. Each internal node $u$ has two labeled edges, $(u,0,v_0)$ and $(u,1,v_1)$, indicating the next node in the diagram if $x_i=0$ or $x_i=1$ at node $u$.
+\item $T$ is a mapping that assigns the value $0$ or $1$ to each terminal node of $B$.
 \end{enumerate}
+For any input $a = (a_1,a_2,\dots,a_n)\in\{0,1\}^n$ one identifies a unique path from $n_0$ to a terminal node by at each internal node following the edge labeled by the tested variable’s value in $a$. The value of $f(a)$ is given by the terminal node reached, as encoded by $T$.
+\end{definition}
 
-The canonical property of \acrshort{robdd}s ensures that for a given Boolean function and variable ordering, there is a unique \acrshort{robdd} representation. This uniqueness is crucial for the equivalence checking of Boolean functions and simplifies the manipulation of \acrshort{bdd}s in logical operations.
+\noindent\textbf{Interpretation.} Each internal node corresponds to a variable test: if the variable is $0$ (i.e.\ $\text{false}$), follow the \emph{0-edge}, and if it is 1 $(\text{true})$, follow the \emph{1-edge}. Eventually, one reaches a sink node labeled $\text{false}=0$ or $\text{true}=1$.
 
-To illustrate the concept with a three-variable Boolean function, let us consider $f(a, b, c) = a \land (b \lor c)$. The corresponding \acrshort{bdd} and Zero-Suppressed \acrshort{robdd} (\acrshort{zdd}) representations are depicted in \ref{fig:bdd} and \ref{fig:robdd}, respectively.
+\paragraph{Example.} For the three-variable function
+$f(a,b,c)=a \land \bigl(b \lor c\bigr)$,
+Figure~\ref{fig:example_bdd} shows a small BDD. Each circular node tests one variable $a$, $b$, or $c$; the dashed and solid edges denote the 0- and 1-branches, respectively. Terminal nodes (squares) contain a 0 or 1 label.
 
 \usetikzlibrary{shapes,arrows}
 \usetikzlibrary{intersections}
 \begin{figure}[htbp]
 \centering
-\begin{minipage}[b]{0.45\linewidth}
-\centering
-% \acrshort{bdd} representation
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
-  \node[main node] (1) {$a$};
-  \node[main node] (2) [below left of=1] {$b$};
-  \node[main node] (3) [below right of=1] {$c$};
-  \node[main node] (4) [below of=2] {1};
-  \node[main node] (5) [below of=3] {0};
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.1cm,thick,
+main node/.style={circle,draw,font=\sffamily\small\bfseries},
+terminal node/.style={rectangle,draw,font=\sffamily\small\bfseries}]
 
-  \path[every node/.style={font=\sffamily\small}]
-    (1) edge node [left] {1} (2)
-        edge node {0} (3)
-    (2) edge node [left] {1} (4)
-        edge node {0} (4)
-    (3) edge node [right] {1} (4)
-        edge node {0} (5);
-\end{tikzpicture}
-\caption{\acrfull{bdd} representation of $a \land (b \lor c)$}
-\label{fig:bdd}
-\end{minipage}
-\hfill
-\begin{minipage}[b]{0.45\linewidth}
-\centering
-% \acrshort{robdd} representation
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
-  \node[main node] (1) {$a$};
-  \node[main node] (2) [below right of=1] {$b$};
-  \node[main node] (3) [below left of=2] {$c$};
-  \node[main node] (4) [below of=3] {1};
+\node[main node] (A) {a};
+\node[main node] (B) [below left=1.6cm and 0.6cm of A] {b};
+\node[main node] (C) [below right=1.6cm and 0.6cm of A] {c};
+\node[terminal node] (T1) [below of=B,node distance=1.8cm] {1};
+\node[terminal node] (T0) [below of=C,node distance=1.8cm] {0};
 
-  \path[every node/.style={font=\sffamily\small}]
-    (1) edge node [left] {1} (2)
-        edge [bend right] node {0} (4)
-    (2) edge node [left] {1} (3)
-        edge [bend left] node {0} (4)
-    (3) edge node [left] {1} (4)
-        edge node {0} (4);
+\path[every node/.style={font=\sffamily\scriptsize}]
+(A) edge[dashed] node[left]  {0} (C)
+edge[solid]  node[right] {1} (B)
+(B) edge[dashed] node[left]  {0} (T1)
+edge[solid]  node[right] {1} (T1)
+(C) edge[dashed] node[left]  {0} (T0)
+edge[solid]  node[right] {1} (T1);
+
 \end{tikzpicture}
-\caption{\acrfull{zdd} representation of $a \land (b \lor c)$}
-\label{fig:robdd}
-\end{minipage}
+\caption{A BDD for $f(a,b,c)=a \land \bigl(b \lor c\bigr)$.}
+\label{fig:example_bdd}
 \end{figure}
 
-In diagrams \ref{fig:bdd} and \ref{fig:robdd}, the decision nodes are represented by circles labeled with the corresponding variable, and the terminal nodes are squares with the value of the Boolean constant. The edges are directed and labeled to indicate the outcome of the variable test. The \acrshort{bdd} includes all possible outcomes, while the \acrshort{zdd} diagram has been reduced by merging isomorphic subgraphs and eliminating redundant nodes.
+\paragraph{Ordered and Reduced BDDs}
+In practice, BDDs may experience large variations in size depending on how variables are tested as one traverses the graph. The \textit{ordered} and \textit{reduced} variants of BDDs are especially important, as they yield canonical forms for fixed variable orderings.
 
-\subsubsection{\color{blue}{Zero-Suppressed Decision Diagrams}}
+\begin{definition}[Ordered BDD]
+\label{def:obdd}
+An \emph{Ordered BDD (OBDD)} imposes a strict ordering $\pi$ on the variables ${x_1,\dots,x_n}$. For every path from the root to a terminal node, if the path encounters variables $x_i$ and $x_j$, then $x_i$ is tested before $x_j$ whenever $i<j$ with respect to $\pi$. Equivalently, no path may test a higher-indexed variable and later test a lower-indexed one.
+\end{definition}
 
-\subsubsection{\color{blue}{Sentential Decision Diagrams}}
-% \subsubsection{Binary Decision Diagrams}
-% \label{subsubsec:bdd}
+Ordered BDDs are also known as \emph{read-once branching programs with an ordering restriction.} Bryant showed that under a particular variable order, the representation is often more compact than arbitrary BDDs and that many operations (e.g., equivalence checking, conjunction, disjunction) can be carried out efficiently.
 
-% A \acrfull{bdd} is a rooted, acyclic graph that represents a Boolean function in canonical form\,\cite{bryant1986bdd}.  Internal nodes correspond to decision variables, whereas the two terminal nodes \emph{0} and \emph{1} encode the function’s Boolean valuation.
+\begin{definition}[Reduced BDD]
+\label{def:reducedobdd}
+A BDD (or OBDD) is said to be \emph{reduced} if it contains no isomorphic subgraphs and no node whose 0- and 1-branches lead to the exact same child. Equivalently, one applies two \textit{reduction rules}:
+\begin{enumerate}
+\item \textbf{Elimination Rule:} If, for a given node $v$, the 0-edge and 1-edge both point to the same successor, remove $v$ and connect its incoming edges directly to that successor.
+\item \textbf{Merging Rule:} If two distinct nodes $u$ and $v$ test the same variable and have identical 0- and 1-successors, merge them into a single node.
+\end{enumerate}
+A \emph{Reduced Ordered BDD (ROBDD)} respects a global variable order $\pi$ and has been minimized via these rules.
+\end{definition}
 
-% \begin{figure}[htbp]
-%   \centering
-%   %\includegraphics[width=0.6\linewidth]{figures/bdd_example.pdf}
-%   \caption{Reduced ordered \acrshort{bdd} for $f(a,b,c)=a\,\bar{b}\vee \bar{a}\,c$.}
-%   \label{fig:bdd_example}
-% \end{figure}
+\textbf{Canonical Representation.} One of the principal advantages of $\mathrm{ROBDD}$s is that, for a fixed variable ordering, every Boolean function has a unique representation. Consequently, checking whether two functions are identical reduces to testing whether their $\mathrm{ROBDD}$s coincide as node- and edge-labeled graphs.
 
-% Table~\ref{tab:bdd_truth} provides the truth table underlying the \acrshort{bdd} in Figure~\ref{fig:bdd_example}.  Because reduced ordered BDDs are canonical, reliability metrics such as minimal cut sets can be extracted in polynomial time compared with the potentially exponential enumeration required by MOCUS\,\cite{kavaler2019bddft}.  Modern FT quantifiers therefore frequently combine BDD-based pruning with MOCUS-style expansion to balance memory consumption and run-time efficiency.
+\begin{theorem}[Canonical Form of ROBDDs (cf.\ Bryant)]
+\label{thm:canonical}
+Let $\pi$ be a fixed ordering on the variables ${x_1,\dots,x_n}$. Then for any Boolean function $f$ of $n$ variables, its reduced OBDD with respect to $\pi$ is unique.
+\end{theorem}
 
-% \begin{table}[htbp]
-%   \centering
-%   \caption{Truth table for the Boolean function represented in Figure~\ref{fig:bdd_example}.}
-%   \label{tab:bdd_truth}
-%   \begin{tabular}{@{}ccccc@{}}
-%     \toprule
-%     $a$ & $b$ & $c$ & $f$ \\ \midrule
-%     0 & 0 & 0 & 0 \\
-%     0 & 0 & 1 & 1 \\
-%     0 & 1 & 0 & 0 \\
-%     0 & 1 & 1 & 1 \\
-%     1 & 0 & 0 & 1 \\
-%     1 & 0 & 1 & 1 \\
-%     1 & 1 & 0 & 0 \\
-%     1 & 1 & 1 & 0 \\ \bottomrule
-%   \end{tabular}
-% \end{table}
+A direct consequence is that striving for reduced ordered forms both shrinks redundant structure and supports robust equivalence checks.
+
+\subsubsection{Zero-Suppressed Decision Diagrams (ZDD)}
+\label{sec:zdd}
+
+For certain applications, notably combinatorial itemset enumeration and other \emph{sparse} set representations, Zero-Suppressed Decision Diagrams (ZDDs) can be more compact than standard BDDs. Although ZDDs adhere to similar principles of node-based variable testing, they selectively \emph{omit} many zero-branches that do not yield new information.
+
+\paragraph{Key Distinctions.}
+While ZDDs also enforce an ordering and can be reduced via isomorphism checks, the core difference lies in the zero-suppression mechanism:
+\begin{itemize}
+\item If following a 0-edge provides no meaningful distinction in the final outcome, that 0-edge and its corresponding node are pruned.
+\item The 1-branches are retained but merged where possible, much as in ROBDDs.
+\end{itemize}
+By removing portions of the diagram where “nothing interesting” (i.e.\ no new sets or subsets) occurs, the diagram remains compact.
+
+\paragraph{Illustrative Example}
+Revisiting $f(a,b,c)=a \land \bigl(b \lor c\bigr)$ from above, Figure~\ref{fig:zdd} sketches a plausible ZDD. Note here:
+\begin{itemize}
+\item Node (a) splits into a 0-edge that immediately goes to a node (or directly to a \texttt{0}-terminal) that is pruned if it carries no unique set representation.
+\item The 1-edge leads to further variable tests ($b$ or $c$), but many 0-branches are again suppressed if they do not alter the final outcome distinct from an already-represented path.
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,thick,
+main node/.style={circle,draw,font=\sffamily\small\bfseries},
+terminal node/.style={rectangle,draw,font=\sffamily\small\bfseries}]
+
+\node[main node] (A) {$a$};
+\node[main node] (B) [below right of=A] {$b$};
+\node[main node] (C) [below left of=B] {$c$};
+
+\node[terminal node] (Z1) [below of=C] {1};
+\node[terminal node] (Z0) [right of=Z1,node distance=2.8cm] {0};
+
+\path[every node/.style={font=\sffamily\scriptsize}]
+(A) edge[dashed] node[left]  {0} (Z0)
+edge[solid]  node[right] {1} (B)
+(B) edge[dashed] node[left]  {0} (C)
+edge[solid]  node[right] {1} (Z1)
+(C) edge[dashed] node[left]  {0} (Z0)
+edge[solid]  node[right] {1} (Z1);
+
+\end{tikzpicture}
+\caption{A ZDD for $f(a,b,c)=a \land \bigl(b \lor c\bigr)$. Many zero-branches are pruned.}
+\label{fig:zdd}
+\end{figure}
+
+In general, ZDDs apply much the same merging rules as reduced BDDs and can yield similarly unique structures for a given variable order. They tend to excel in representing large but sparsely populated families of subsets (e.g., all minimal cut sets in a reliability system) because superfluous 0-edges are systematically suppressed.
+
+\subsubsection{Probabilistic Sentential Decision Diagrams (PSDD)}

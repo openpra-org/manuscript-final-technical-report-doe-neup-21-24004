@@ -37,18 +37,55 @@ Under the assumption that failures are sufficiently rare and interactions among 
 \end{equation}
 In practice, computing $(\Delta(T))$ or its bound usually requires identifying and evaluating all minimal cut sets outside $(\mathrm{MCS}(T))$, which may still be tractable if the omitted sets are large, unlikely, or both. Consequently, choosing a suitable truncation parameter $(T)$ (by size or probability threshold) ensures that the unaccounted failure modes contribute negligibly to the overall system unreliability.
 
-\subsubsection{\color{blue}{The Min-Cut Upper Bound}}
-Another method for bounding an event's probability interprets the system failure as the union of all minimal cut set (MCS) failures. By applying the union bound, one obtains
+\subsubsection{The Min-Cut Upper Bound}
+Another method for bounding the probability of a top event interprets system failure as the union of all minimal cut set (MCS) failures. The most direct upper bound is obtained by applying the union bound (Boole's inequality), which states that the probability of the union of events is no greater than the sum of their individual probabilities. For a set of minimal cut sets $\mathcal{C} = \{C_1, C_2, \ldots, C_m\}$, where each $C_i$ is a set of basic events, the union bound yields:
+\begin{equation}
+\label{eq:union_bound}
+\Pr\left[X_t = 1\right] \leq \sum_{C \in \mathrm{MCS}} \prod_{b \in C} p(b),
+\end{equation}
+where $p(b)$ is the probability of basic event $b$.
+
+However, most modern PRA tools, including SAPHIRE, implement a slightly tighter upper bound, known as the \emph{minimal cut set upper bound}, which is given by:
 \begin{equation}
 \label{eq:mcub}
-\Pr\bigl[X_t=1\bigr]
-;\le;
-\sum_{C,\in,\mathrm{MCS}}
-;\prod_{b \in C} p(b),
+\Pr\left[X_t = 1\right] \leq 1 - \prod_{C \in \mathrm{MCS}} \left[1 - \prod_{b \in C} p(b)\right].
 \end{equation}
-known as the \emph{min-cut upper bound}. Unlike the rare-event approximation—which treats these cut-set failures as nearly disjoint when probabilities are small—this bound remains valid even when event probabilities are not negligible. Indeed, the min-cut expression is a conservative overestimate because shared components among multiple MCS cause double-counting of overlapping failure modes. Consequently, for systems where basic-event failures are not exceedingly rare or cut sets exhibit strong overlap, the min-cut upper bound may significantly overestimate $(\Pr[X_t=1])$. Nevertheless, its simplicity and its guaranteed correctness as an upper bound make it a valuable tool in reliability analysis, especially for quick assessments or when exact methods are intractable.
+This expression accounts for the fact that the system fails if \emph{any} cut set fails, and thus computes the probability that at least one cut set occurs, assuming independence between cut sets. It is always at least as large as the true probability, and is generally less conservative than the simple union bound, especially when cut sets overlap.
 
-\subsubsection{\color{blue}{The Min-Max Method}}
+The min-cut upper bound is exact if and only if all minimal cut sets are mutually disjoint (i.e., share no basic events). In practice, cut sets often overlap, leading to double counting of shared failure modes and thus a conservative overestimate. This bound remains valid regardless of the magnitude of the basic event probabilities, unlike the rare-event approximation, which assumes that cut set failures are nearly disjoint and probabilities are small.
+
+For illustration, consider a fault tree with three minimal cut sets: $C_1 = \{\text{A}, \text{B}\}$, $C_2 = \{\text{B}, \text{C}\}$, and $C_3 = \{\text{D}\}$, with $p(\text{A}) = p(\text{B}) = p(\text{C}) = 0.7$ and $p(\text{D}) = 0.5$. The min-cut upper bound is:
+\begin{align}
+\Pr(X) &\leq 1 - \left[1 - p(\text{A})p(\text{B})\right]\left[1 - p(\text{B})p(\text{C})\right]\left[1 - p(\text{D})\right] \\
+&= 1 - (1 - 0.49)(1 - 0.49)(1 - 0.5) \\
+&= 1 - (0.51)(0.51)(0.5) \\
+&= 1 - 0.13005 = 0.86995.
+\end{align}
+This value is a conservative estimate of the true top event probability.
+
+\subsubsection{\color{green}{The Min-Max Method}}
+The \emph{Min-Max method}, also known as the inclusion-exclusion principle, provides an exact calculation of the probability of the union of minimal cut sets. This approach systematically accounts for all overlaps among cut sets, thereby eliminating the double counting inherent in the min-cut upper bound.
+
+For $m$ minimal cut sets $C_1, C_2, \ldots, C_m$, the probability that at least one cut set occurs is given by:
+\begin{equation}
+\label{eq:inclusion_exclusion}
+\Pr\left[X_t = 1\right] = \sum_{i=1}^{m} P(C_i) - \sum_{1 \leq i < j \leq m} P(C_i \cap C_j) + \sum_{1 \leq i < j < k \leq m} P(C_i \cap C_j \cap C_k) - \cdots + (-1)^{m+1} P\left(\bigcap_{i=1}^{m} C_i\right),
+\end{equation}
+where $P(C_i)$ is the probability that all basic events in $C_i$ occur, and $P(C_i \cap C_j)$ is the probability that all basic events in both $C_i$ and $C_j$ occur, and so on. The alternating sum continues for all possible intersections of the cut sets.
+
+This method is exact, but its computational complexity grows exponentially with the number of cut sets, as it requires evaluating all $2^m - 1$ non-empty intersections. In practice, the number of terms can be reduced by exploiting the idempotent law of Boolean algebra ($A \cap A = A$) and by truncating the expansion after a fixed number of passes (i.e., limiting the order of intersections considered).
+
+For illustration, consider again the fault tree with cut sets $C_1 = \{\text{A}, \text{B}\}$, $C_2 = \{\text{B}, \text{C}\}$, $C_3 = \{\text{D}\}$. The basic event probabilities $p(\text{A}) = p(\text{B}) = p(\text{C}) = 0.7$, $p(\text{D}) = 0.5$. The inclusion-exclusion expansion is as follows:
+
+$P(C_1) = p(\text{A})p(\text{B}) = 0.49$, $P(C_2) = p(\text{B})p(\text{C}) = 0.49$, and $P(C_3) = p(\text{D}) = 0.5$.
+The pairwise intersections are $P(C_1 \cap C_2) = p(\text{A})p(\text{B})p(\text{C}) = 0.343$, $P(C_1 \cap C_3) = p(\text{A})p(\text{B})p(\text{D}) = 0.245$, and $P(C_2 \cap C_3) = p(\text{B})p(\text{C})p(\text{D}) = 0.245$.
+The triple intersection is $P(C_1 \cap C_2 \cap C_3) = p(\text{A})p(\text{B})p(\text{C})p(\text{D}) = 0.1715$.
+
+Substituting these values, the probability is $0.49 + 0.49 + 0.5 - (0.343 + 0.245 + 0.245) + 0.1715 = 1.48 - 0.833 + 0.1715 = 0.8185$.
+
+The Min-Max method yields the exact probability, as it fully accounts for all overlaps among cut sets. In the example above, the min-cut upper bound (Eq.~\ref{eq:mcub}) gives $0.87$, while the exact Min-Max result is $0.8185$. The difference arises from the double counting of shared basic events in the upper bound.
+
+In practice, the Min-Max method is computationally feasible only for systems with a modest number of cut sets. For large systems, the number of terms in the inclusion-exclusion expansion explodes, and approximate or bounding methods (such as the min-cut upper bound) are preferred. Some tools allow the user to specify the number of passes (i.e., the maximum order of intersections considered), trading off accuracy for computational efficiency.
 
 \subsection{Probability Estimation using Monte Carlo Sampling}
 Monte Carlo methods provide a versatile framework for approximating expectations, probabilities, and other quantities of interest by simulating random observations from an underlying distribution. At its core, a Monte Carlo estimator uses repeated random draws to approximate quantities such as

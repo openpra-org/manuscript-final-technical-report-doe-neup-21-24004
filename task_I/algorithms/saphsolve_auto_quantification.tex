@@ -1,0 +1,21 @@
+\begin{algorithm}[H]
+\caption{High-level pseudocode for automated quantification via \acrshort{saphsolve}}
+\label{alg:saphsolve_autoquantification}
+\begin{algorithmic}[1]
+\State \textbf{import} \texttt{os, threading, ctypes, time}
+\State Load \texttt{solve.dll}; \textbf{exit} on failure
+\Function{SolveJSON}{$\textit{inFile},\,\textit{outDir}$}
+  \State Generate \textit{outFile}$\leftarrow$replaceExt(\textit{inFile},.JSCut)
+  \State \textit{t}$\gets$time.solveDLL(\textit{inFile})
+  \State \textbf{handle} exceptions
+\EndFunction
+\Function{SolveThread}{$\textit{files},\,\textit{inDir},\,\textit{outDir}$}
+  \ForAll{\textit{f} $\in$ \textit{files}} \Call{SolveJSON}{\textit{f}} \EndFor
+\EndFunction
+\Function{Main}{}
+  \State Enumerate *.JSInp files; build \textit{chunks} per CPU core
+  \State Serial timing $\gets$ \Call{SolveJSON}{\textit{each file}}
+  \State Parallel timing $\gets$ \textbf{spawn} \Call{SolveThread}{\dots}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}

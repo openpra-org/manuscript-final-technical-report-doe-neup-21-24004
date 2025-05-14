@@ -28,6 +28,20 @@
 \ProcessOptions
 \LoadClass{book}
 
+
+%% process authors and affiliations
+% \newcommand{\authors}[1]{%
+%   \author{\processauthors#1\relax}
+% }
+% \def\processauthors#1, #2\relax{%
+%   \ifx\relax#2\relax
+%     #1%
+%   \else
+%     #1 \and \\%
+%     \processauthors#2\relax
+%   \fi
+% }
+
 %% fonts
 % ----------------------------------
 % ----------------------------------
@@ -36,8 +50,8 @@
 
 \usepackage{xcolor}
 
-\usepackage{verbatim,shellesc}
-\ShellEscape{cp /usr/local/share/latexmk/LatexMk ./LatexMk}
+% \usepackage{verbatim,shellesc}
+% \ShellEscape{cp /usr/local/share/latexmk/LatexMk ./LatexMk}
 
 %% paragraph spacing
 \usepackage[skip=8pt]{parskip}
@@ -48,6 +62,7 @@
 \RequirePackage{siunitx}
 \RequirePackage{booktabs}
 \RequirePackage{longtable}
+\RequirePackage{ragged2e}
 \RequirePackage{tabularx}
 \RequirePackage{multirow} 
 \RequirePackage{pdflscape}

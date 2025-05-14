@@ -1,0 +1,19 @@
+\subsection{Distributed Databases}
+
+Distributed, \acrshort{nosql} document databases provide a scalable and flexible backend for storing and managing both the structure of \acrshort{pra} models and the results of risk analyses. These databases (e.g.\ MongoDB containers deployed through Docker swarm) allow complex hierarchical model data including fault trees, event trees, Markov chains, initiating event analyses, component reliability parameters, and quantification results to be stored as \acrshort{bson} documents. By replicating data across multiple nodes, the database ensures high availability and fault tolerance for critical risk information. Through indexing and querying, users can search and aggregate model components (e.g.\ summarizing risk metrics across scenarios). In this way,the distributed database orchestrates the entire data management layer of the application, enabling large-scale \acrshort{pra} models to be persistently stored and quickly accessed by web clients and analysis engines.
+
+\subsubsection{OpenPRA \acrshort{mef} Persistence}
+
+OpenPRA uses MongoDB to persist structured model data according to the OpenPRA \acrshort{mef} \acrshort{json} schema. MongoDB’s document model naturally represents nested \acrshort{pra} data: for instance, an entire fault tree or its branches can be stored as an embedded document, and arrays of events or transitions can be stored directly within a model document. \acrshort{crud} operations are efficiently handled by MongoDB’s native \acrshort{api}. For example, when a user edits a model (e.g., by adding a gate to a fault tree), the application atomically updates the corresponding MongoDB document without sending the entire fault tree structure. Indexed fields in the database ensure that queries (such as looking up a specific event by its ID) are executed quickly.
+
+\subsubsection{Version Control and Revision History}
+
+The database enables version control of models. Every change to a model can be tagged with a revision identifier, timestamp, and author, and full snapshots of the model state can be recorded in the database. OpenPRA can store each committed version of a model as a separate document, allowing users to roll back to any previous state and inspect differences between revisions.
+
+\subsubsection{Sharding for Scalability}
+
+Sharding partitions a collection across multiple servers based on a shard key (for example, a model ID). This means, different parts a model such as different sub-trees of a model can reside on different shards. Queries targeting a particular model are routed to the correct shard, distributing the query load. This horizontal partitioning allows storage and processing of very large structures (such as nested event trees or high order Markov chains) beyond what a single MongoDB document can hold.
+
+\subsubsection{Support for Dynamic Schema}
+
+MongoDB does not require a fixed data structure, so different documents can have different data types and fields. OpenPRA leverages this by storing varying technical elements and analyses results as distinct document types under a unified database. Validation rules can still be applied per collection to ensure that each document type conforms to an expected structure and data types. This means if new data fields or \acrshort{pra} elements are defined, the database can accommodate those changes seamlessly while still ensuring data validation.
