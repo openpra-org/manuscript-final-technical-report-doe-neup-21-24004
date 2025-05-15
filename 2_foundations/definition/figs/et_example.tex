@@ -1,24 +1,6 @@
-% \usetikzlibrary {shapes.multipart}
-
-% \def \EventTreeHeaderBackgroundFill {none}
-% \def \EventTreeHeaderLabelBackgroundFill {black!5}
-% \tikzset{
-%     headlabel/.style={
-%         % font=\tiny,
-%     },
-% }
-
-% \newcommand{\HeaderNode}[2]{#1 \nodepart[headlabel]{two}#2}
-
-% \usetikzlibrary{graphs,graphdrawing,trees}
-% \usetikzlibrary{calc,positioning}
-
 \begin{figure}[ht!]
 \centering
 \begin{tikzpicture}
-% \tikzset{grow'=right,level distance=48pt}
-% \tikzset{execute at begin node=\strut}
-% \tikzset{every tree node/.style={anchor=base west}}
 \tikzset{
     grow'=right,
     level distance=48pt,
@@ -35,54 +17,8 @@
     every level 0 node/.style={circle, font=\small\bfseries, draw, fill=blue!30, inner sep=0pt},
     every internal node/.style={font=\small, inner sep=4pt},
     every leaf node/.style={rectangle, draw, fill=blue!30, minimum width=2.5cm, text centered},
-    % frontier/.style={distance from root=400pt},
     frontier/.style={distance from root=\textwidth-20pt-100pt},
 }
-% \tikzset{
-%     grow'=right,
-%     level distance=50pt,
-%     sibling distance=10pt,
-%     execute at begin node=\strut,
-%     every tree node/.style={anchor=base west},
-%     edge from parent/.style={
-%         draw,
-%         edge from parent path={
-%             (\tikzparentnode.east) -| ($(\tikzparentnode.east)!0.5!(\tikzchildnode.west)$) |- (\tikzchildnode.west)
-%         },
-%     },
-%     every node/.style={
-%         % anchor=base north,
-%         font=\small,
-%         text centered, 
-%         inner sep=1pt,
-%         % anchor=base west,
-%     },
-%     every level 0 node/.append style={
-%         circle,
-%         fill=blue!40,
-%         % minimum size=4pt,
-%         draw,
-%         % xshift=-4pt,
-%         % inner sep=0pt,
-%         % outer sep=0pt,
-%         % text depth=0pt,
-%         % text width=0pt,
-%         % text height=0pt,
-%     },
-%     % every internal node/.style={
-%     %     inner xsep=0pt,
-%     %     outer xsep=0pt,
-%     %     minimum size=0pt,
-%     %     text width=0pt,
-%     % },
-%     % every leaf node/.style={
-%     %     rectangle, 
-%     %     fill=black!5,
-%     %     align=center,
-%     %     text width=43pt,
-%     % },
-%     frontier/.style={distance from root=\textwidth-20pt-100pt},
-% }
 \Tree [.\(I\)
     [.\(F_1^{\text{succ}}\)
         [.\(F_2^{\text{succ}}\)
@@ -97,96 +33,6 @@
     ]
 ]
 \end{tikzpicture}
-% \begin{tikzpicture}
-% \begin{scope}
-% \graph[
-%         grow right=50pt,
-%         nodes={
-%             anchor=south,
-%             minimum width=48pt,
-%             minimum height=40pt,
-%             text width=42pt,
-%             text depth=28pt,
-%             line width=0pt,
-%             align=flush left,
-%             outer sep=0pt,
-%             inner xsep=4pt,
-%             inner ysep=5pt,
-%         },
-%         edge={draw=none},
-%         ] {
-%   %     % Functional Events Header
-%     {
-%        [
-%         nodes={
-%             shape=rectangle split,
-%             rectangle split parts=2,
-%             rectangle split part fill={\EventTreeHeaderBackgroundFill, \EventTreeHeaderLabelBackgroundFill},
-%             rectangle split ignore empty parts=true,
-%             draw,
-%             font=\small,
-%             },
-%         ]
-%       "\HeaderNode{Initiating Event}{IE}" --
-%       "\HeaderNode{Functional Event 1}{$F_1$}" --
-%       "\HeaderNode{Functional Event 2}{$F_2$}" -- 
-%       "\HeaderNode{Functional Event 3}{$F_3$}" --
-%       "\HeaderNode{End State}{ES}"
-%   };
-% };
-% \end{scope}
-% \begin{scope}[yshift=-61pt]
-% \tikzset{
-%     grow'=right,
-%     level distance=50pt,
-%     sibling distance=0pt,
-%     execute at begin node=\strut,
-%     every tree node/.style={anchor=base west},
-%     edge from parent/.style={
-%         draw,
-%         thick,
-%         edge from parent path={
-%             (\tikzparentnode.east) -| ($(\tikzparentnode.east)!0.5!(\tikzchildnode.west)$) |- (\tikzchildnode.west)
-%         },
-%     },
-%     every node/.append style={
-%         anchor=base west,
-%     },
-%     every level 0 node/.style={
-%         circle,
-%         fill=blue!40,
-%         minimum size=4pt,
-%         draw,
-%         xshift=-4pt,
-%         inner sep=0pt,
-%         outer sep=0pt,
-%         text depth=0pt,
-%         text width=0pt,
-%         text height=0pt,
-%     },
-%     every internal node/.style={
-%         inner xsep=0pt,
-%         outer xsep=0pt,
-%         minimum size=0pt,
-%         text width=0pt,
-%     },
-%     every leaf node/.style={
-%         rectangle, 
-%         fill=black!5,
-%         align=center,
-%         text width=43pt,
-%     },
-%     frontier/.style={distance from root=\textwidth-20pt-100pt},
-% }
-% \Tree [.{I} 
-%         [.{} [.{} [.{}  {IE•LD•LI•FCA} ]
-%                     [.{} {IE•LD•LI•FCA'} ]]
-%               [.{} {IE•LD•LI'} ]]
-%         [.{} [.{} {IE•LD'•LI} ]
-%                [.{} [.{} {IE•LD'•LI'•FCA} ]
-%                       [.{} [.{} {IE•LD'•LI'•FCA'•SEO} ] [.{} {IE•LD'•LI'•FCA'•SEO'} ] ] ] ] ]
-% \end{scope}
-% \end{tikzpicture}
 \caption{Illustrative event tree with an initiating event \(I\), two functional events \(F_1\) and \(F_2\), and three end-states \(X_1, X_2, X_3\).}
 \label{fig:event_tree_example}
 \end{figure}

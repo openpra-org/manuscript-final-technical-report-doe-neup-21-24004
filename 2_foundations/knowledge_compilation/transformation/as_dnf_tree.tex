@@ -1,5 +1,49 @@
-\subsection{\color{blue}{DNF}}
+\subsection{Disjunctive Normal Form (DNF)}
 \label{sec:event_trees_as_2_lvl_circuits}
+
+\subsubsection{Definition and Properties}
+\acrfull{dnf} is a classical representation language for propositional theories. A \acrshort{dnf} formula is a disjunction of terms, with each term being a conjunction of literals (variables or their negations). Formally, a \acrshort{dnf} formula has the form ( $T_1 \vee T_2 \vee \cdots \vee T_m$ ), where each ( $T_i = l_{i1} \wedge l_{i2} \wedge \cdots \wedge l_{ik}$ ), with $l_{ij}$ --- a literal. \acrshort{dnf} is a subset of \acrshort{nnf} and more specifically, a \acrfull{f-nnf}. It is universal: any propositional theory has a \acrshort{dnf} representation. \acrshort{dnf} is not canonical; equivalent functions may have different \acrshort{dnf} syntactic forms. Every \acrshort{dnf} formula is also a \acrshort{dnnf} but is not in general deterministic (and thus not always a \acrshort{d-dnnf}).
+
+\subsubsection{Construction}
+To construct a \acrshort{dnf}, rewrite the propositional theory as a disjunction of conjunctions of literals, with each term representing a possible partial assignment that satisfies the theory. Mechanical conversion from other forms (such as  \acrshort{cnf}) to \acrshort{dnf} can require exponential space in the worst case.
+Applications \acrshort{dnf} appears in:
+\begin{enumerate}
+\item Model-based diagnosis, where explicit representation of models is useful for enumerative reasoning.
+\item Knowledge compilation pipelines as a source or target language and as an intermediary form in bottom-up compilation to tractable representations.
+\item Problems requiring efficient model enumeration, such as explanation generation or solution space exploration.
+\end{enumerate}
+
+\subsubsection{Compilers and Implementations}
+\paragraph{Bottom-Up Compilation from \acrshort{dnf} to  \acrshort{obdd}/ \acrshort{sdd}}
+Each \acrshort{dnf} term (conjunction of literals) is individually compiled into the target structure ( \acrshort{obdd} or  \acrshort{sdd}). Terms are then combined using the ``Apply'' (disjunction) function, which is polynomial-time in the size of the operands.
+\begin{enumerate}
+    \item  \acrshort{obdd} Implementations: The CUDD package is a widely used library supporting  \acrshort{obdd} construction and manipulation, including efficient Apply operations.
+    \item  \acrshort{sdd} Implementations: The  \acrshort{sdd} package, by the authors of  \acrshort{sdd}, is the primary implementation for Sentential Decision Diagrams, fully supporting bottom-up compilation and "Apply".
+\end{enumerate}
+
+\paragraph{Top-Down Compilation}
+Compilation algorithms initially designed for  \acrshort{cnf}, such as Decision- \acrshort{sdd} compilers, can also be used directly on \acrshort{dnf} input. These compilers operate recursively using principles from SAT solving, caching, and structural decomposition.
+\begin{enumerate}
+    \item Actual Implementations: The  \acrshort{sdd} package and other SAT-based compilers (e.g., c2d for  \acrshort{dnnf} compilation) can process \acrshort{dnf} input, although their performance is generally tuned for  \acrshort{cnf}.
+\end{enumerate}
+
+No sources identify compilers specific to \acrshort{dnf}-to- \acrshort{cnf} conversion or tailored \acrshort{dnf}-to-\acrshort{dnf} simplification outside of general boolean function minimization algorithms (such as Quine-McCluskey or Espresso), which are not the focus of knowledge compilation pipelines.
+
+\subsubsection{Polynomial-Time Queries and Complexities}
+\paragraph{Consistency (CO)} ( $O(\lvert \Delta\rvert)$ ). Satisfiability is determined by checking that at least one term contains no complementary literals.
+\paragraph{Model Enumeration (ME)} Polynomial delay per model ( $\mathcal{O}(\lvert T_i\rvert)$ ) per model for term ( $T_i$ ). All models can be enumerated efficiently by expanding the terms.
+\paragraph{Others} All other standard queries (e.g., Validity [VA], Clausal Entailment [CE], Model Counting [CT], Equivalence [EQ], etc.): Intractable unless ( $P=NP$ ) or $\#P=FP$ (e.g., Model Counting is $\#P$-hard).
+\begin{enumerate}
+    \item Validity (VA): co-NP-complete;
+    \item Clausal Entailment (CE): co-NP-complete;
+    \item Model Counting (CT): \#P-hard.
+\end{enumerate}
+
+p
+\subsubsection{Summary}
+\acrshort{dnf} is a flat, non-canonical, universal language supporting tractable consistency checking and model enumeration. It is commonly used as a source or intermediate representation in compilation pipelines targeting  \acrshort{obdd},  \acrshort{sdd}, or related languages, with mainstream libraries like CUDD and the  \acrshort{sdd} package implementing practical bottom-up compilation from \acrshort{dnf}. All other semantic queries, including entailment and model counting, are computationally intractable.
+
+Despite the aforementioned intractability, however, \acrshort{dnf} find a unique place in PRA analysis. A pure Even-Tree Diagrams can be represented as sum-or-products boolean formulas.
 
 \subsubsection{Event Tree Structures as Sum-Product Networks}
 Consider a specific branch \(\omega_j\) leading to the end-state \(X_j\).  By definition, \(\omega_j\) occurs if and only if:

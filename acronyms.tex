@@ -3,12 +3,10 @@
 \newacronym{abi}{ABI}{Application Binary Interface}
 \newacronym{afw}{AFW}{Auxiliary Feedwater}
 \newacronym{api}{API}{Application Programming Interface}
-\newacronym{anf}{ANF/RNF}{Algebraic/Ring Normal Form}
 \newacronym{ans}{ANS}{American Nuclear Society}
 \newacronym{ars}{ARS}{Advanced Reactor Safety}
 \newacronym{asme}{ASME}{American Society of Mechanical Engineers}
 
-\newacronym{bdd}{BDD}{Binary Decision Diagram}
 \newacronym{be}{BE}{Basic Event}
 \newacronym{bics}{BICS}{Boolean Indicated Cut Sets}
 \newacronym{bis}{BIS}{Boolean Indicated Sets}
@@ -24,15 +22,16 @@
 \newacronym{ci-cd}{CI/CD}{Continuous Integration &\ Deployment}
 \newacronym{cli}{CLI}{Command-Line Interface}
 \newacronym{clt}{CLT}{Central Limit Theorem}
-\newacronym{cnf}{CNF}{Conjunctive Normal Form}
 \newacronym{cpu}{CPU}{Central Processing Unit}
 \newacronym{crud}{CRUD}{Create-Read-Update-Delete}
 \newacronym{csn}{CSN}{Spanish Regulatory Body}
+\newacronym{cudd}{CuDD}{Colorado University Decision Diagram Package}
 
 \newacronym{dag}{DAG}{Directed Acyclic Graph}
 \newacronym{devops}{DevOps}{Development and Operations}
 \newacronym{dll}{DLL}{Dynamic Link Library}
-\newacronym{dnf}{DNF}{Disjunctive Normal Form}
+
+
 \newacronym{dom}{DOM}{Document Object Model}
 \newacronym{dpmc}{DPMC}{Data-Parallel Monte Carlo}
 \newacronym{dppl}{DPPL}{Delphi Parallel Programming Library}
@@ -61,6 +60,7 @@
 \newacronym{gpl}{GPL}{GNU General Public License}
 \newacronym{gpu}{GPU}{Graphics Processing Unit}
 \newacronym{gpwr}{G\textendash PWR}{Generic \acrlong{pwr}}
+\newacronym{gscfr}{G\textendash SCFR}{Generic \acrlong{scfr}}
 \newacronym{gui}{GUI}{Graphical User Interface}
 \newacronym{he}{HE}{Flag/House Event}
 \newacronym{html}{HTML}{Hypertext Markup Language}
@@ -72,6 +72,7 @@
 \newacronym{http}{HTTP}{Hypertext Transfer Protocol}
 \newacronym{https}{HTTPs}{Secure \acrlong{http}}
 
+\newacronym{ie}{IE}{Initiating Event}
 \newacronym{iid}{i.i.d.}{independent and identically distributed}
 \newacronym{ines}{INES}{International Nuclear Event Scale}
 \newacronym{inl}{INL}{Idaho National Laboratory}
@@ -110,7 +111,6 @@
 \newacronym{narsis}{NARSIS}{Natural External Hazards Including Seismic}
 \newacronym{nand}{NAND}{Negated AND}
 \newacronym{ncsu}{NCSU}{North Carolina State University}
-\newacronym{nnf}{NNF}{Negation Normal Form}
 \newacronym{nosql}{NoSQL}{No \acrlong{sql}}
 \newacronym{npp}{NPP}{Nuclear Power Plant}
 \newacronym{nrc}{NRC}{\acrshort{us} Nuclear Regulatory Commission}
@@ -137,13 +137,14 @@
 \newacronym{regexp}{RegEx}{Regular Expression}
 \newacronym{rest}{REST}{Representational State Transfer}
 \newacronym{rhr}{RHR}{Residual Heat Removal}
-\newacronym{robdd}{RoBDD}{Reduced Order \acrlong{bdd}}
-\newacronym{rnf}{RNF/ANF}{Ring/Algebraic Normal Form}
+
 \newacronym{rng}{RNG}{Random Number Generator}
 
 \newacronym{saphire}{SAPHIRE}{Systems Analysis Programs for Hands-On Integrated Reliability Evaluations}
 \newacronym{saphsolve}{SAPHSOLVE}{SAPHIRE Solve Engine}
 \newacronym{sara}{SARA}{System Analysis and Risk Assessment}
+\newacronym{sat}{SAT}{Boolean Satisfiability}
+\newacronym{scfr}{SCFR}{Sodium Cooled Fast Reactor}
 \newacronym{sdp}{SDP}{Sum of Disjoint Products}
 \newacronym{sets}{SETS}{Set Equation Transformation Systems}
 \newacronym{sis}{SIS}{Safety Injection System}
@@ -170,4 +171,41 @@
 \newacronym{xor}{XOR}{Exclusive-Or}
 \newacronym{xml}{XML}{Extensible Markup Language}
 \newacronym{xnor}{XNOR}{Negated \acrlong{xor}}
+
+
+
+\newacronym{aig}{AIG}{And-Inverter Graph}
+\newacronym{xag}{XAG}{\acrshort{xor}-\acrlong{aig}}
+
+% boolean forms
+\newacronym{bcf}{BCF}{Blake Canonical Form}
+\newacronym{cnf}{CNF}{Conjunctive Normal Form}
+\newacronym{dnf}{DNF}{Disjunctive Normal Form}
+
+
+\newacronym{anf}{ANF/RNF}{Algebraic/Ring Normal Form}
+\newacronym{rnf}{ANF/RNF}{Algebraic/Ring Normal Form}
+\newacronym{fprm}{FPRM}{Fixed Polarity Reed-Muller}
+\newacronym{pprm}{PPRM}{Positive Polarity Reed-Muller}
+
+\newacronym{nnf}{NNF}{Negation Normal Form}
+\newacronym{f-nnf}{f-NNF}{Flat \acrlong{nnf}}
+\newacronym{dnnf}{DNNF}{Decomposable \acrlong{nnf}}
+\newacronym{d-nnf}{d-NNF}{Deterministic \acrlong{nnf}}
+\newacronym{d-dnnf}{d-DNNF}{Deterministic \acrlong{dnnf}}
+\newacronym{s-dnnf}{s-DNNF}{Smooth/Structured \acrlong{dnnf}}
+\newacronym{sd-dnnf}{sd-DNNF}{Smooth/Structured \acrlong{d-dnnf}}
+
+
+\newacronym{pi}{PI}{Prime Implicate}
+\newacronym{epi}{EPI}{Essential \acrlong{pi}}
+\newacronym{ip}{IP}{Prime Implicant}
+\newacronym{eip}{EIP}{Essential \acrlong{ip}}
+
+\newacronym{sdd}{SDD}{Sentential Decision Diagram}
+\newacronym{psdd}{PSDD}{Probabilistic \acrlong{sdd}}
+\newacronym{bdd}{BDD}{Binary Decision Diagram}
+\newacronym{robdd}{RoBDD}{Reduced Ordered \acrlong{bdd}}
+\newacronym{f-bdd}{f-BDD}{Free/Read-Once \acrlong{bdd}}
+\newacronym{obdd}{OBDD}{Ordered \acrlong{bdd}}
 \newacronym{zdd}{ZDD}{Zero-Suppressed \acrlong{bdd}}

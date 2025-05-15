@@ -1,10 +1,87 @@
 \chapter{Defining Design Requirements}
+\label{ch:design-requirements}
+
+The persistent limitations of current \acrshort{pra} tools, as detailed in the preceding chapters, motivate a set of explicit design requirements for a comprehensive PRA platform. These requirements are intended to ensure that future tools are interoperable and technically robust and scalable. This chapter formalizes these requirements, providing a foundation for the architectural and implementation solutions described in subsequent chapters.
+
 \section{Compatibility}
+\label{sec:compatibility}
+
 \subsection{Model Exchange}
-\subsection{Solver\/Quantifier Support}
+\label{subsec:model-exchange}
+
+A comprehensive PRA tool must support robust model exchange to address the fragmentation of model formats and the prevalence of proprietary data structures. The following requirements are identified:
+
+\begin{itemize}
+    \item \textbf{Interoperability with Existing Formats:} The tool must provide import and export capabilities for widely used PRA model formats, including but not limited to CAFTA XML, FTREX FTP, SAPHSOLVE JSON, and OpenPSA XML. This ensures that users can leverage legacy models and collaborate across institutional boundaries.
+    \item \textbf{Translation Spanning Tree:} Rather than enforcing a single canonical intermediate representation, the tool should implement a translation spanning tree, enabling practical and maintainable conversion pathways among key formats. This approach minimizes integration overhead and reduces the risk of format lock-in.
+    \item \textbf{Round-Trip Fidelity:} Model translation routines must be validated through round-trip testing to ensure that essential model semantics and data integrity are preserved across conversions.
+    \item \textbf{Extensible Open Schema:} The long-term solution should include the development and adoption of an openly licensed, extensible schema (e.g., OpenPRA JSON) that accommodates both general probabilistic modeling and nuclear-specific regulatory requirements. The schema must support hierarchical, human-readable structures and be amenable to future extensions.
+\end{itemize}
+
+\subsection{Solver / Quantifier Support}
+\label{subsec:solver-support}
+
+Given the diversity of quantification algorithms and the need for both deterministic and stochastic analyses, the following requirements are established:
+
+\begin{itemize}
+    \item \textbf{Pluggable Solver Architecture:} The platform must support integration with multiple quantification engines, including both open-source (e.g., SCRAM) and proprietary solvers (e.g., SAPHSOLVE), via well-defined interfaces.
+    \item \textbf{Support for Multiple Quantification Methods:} The tool should enable users to select among exact, approximate, and Monte Carlo-based quantification methods, as appropriate for the model size and analysis objectives.
+    \item \textbf{Extensible Quantifier API:} The quantification interface must be extensible, allowing for the incorporation of new algorithms and optimization strategies without requiring disruptive changes to the core platform.
+    \item \textbf{Consistency and Reproducibility:} Quantification results must be consistent across supported solvers, with clear documentation of any differences in algorithmic assumptions or numerical precision.
+\end{itemize}
+
 \section{Scalability Targets}
+\label{sec:scalability-targets}
+
+To overcome the computational bottlenecks and memory limitations of legacy PRA tools, the following scalability targets are defined:
+
 \subsection{Model Size Targets}
+\label{subsec:model-size-targets}
+
+\begin{itemize}
+    \item \textbf{Large-Scale Model Support:} The platform must efficiently handle PRA models comprising at least $10^5$ basic events and $10^4$ top-level gates, including multi-hazard and multi-unit scenarios.
+    \item \textbf{Memory Management:} The system should employ memory-efficient data structures and support out-of-core computation for models exceeding available RAM.
+    \item \textbf{Shared Subtree Optimization:} The tool must recognize and exploit shared subtrees to avoid redundant computation and storage, particularly in multi-unit and multi-hazard models.
+\end{itemize}
+
 \subsection{Throughput Targets}
+\label{subsec:throughput-targets}
+
+\begin{itemize}
+    \item \textbf{High-Throughput Quantification:} The platform should achieve quantification rates of at least $10^3$ to $10^4$ model evaluations per hour for typical large-scale PRA models, leveraging parallel and distributed computing resources.
+    \item \textbf{Batch and Real-Time Modes:} Both batch processing (for large scenario sweeps) and real-time quantification (for operational decision support) must be supported.
+    \item \textbf{Scalable Task Scheduling:} The system must include a distributed queuing and worker-pool architecture to dynamically allocate computational tasks across available resources.
+\end{itemize}
+
 \subsection{Latency / Response-Time Targets}
+\label{subsec:latency-targets}
+
+\begin{itemize}
+    \item \textbf{Interactive Response:} For typical operational queries (e.g., top event probability, minimal cut set enumeration), the system should provide results within seconds to a few minutes, depending on model complexity.
+    \item \textbf{Predictable Latency:} The platform must provide predictable response times under varying loads, with mechanisms for prioritizing urgent analyses (e.g., during emergency response).
+    \item \textbf{Low-Latency Web Interface:} The web-based front end must be optimized for low-latency interaction, supporting real-time updates and visualization.
+\end{itemize}
+
 \subsection{Accuracy Targets}
+\label{subsec:accuracy-targets}
+
+\begin{itemize}
+    \item \textbf{Numerical Precision:} Quantification algorithms must support user-configurable precision, with default settings sufficient to resolve probabilities as low as $10^{-9}$.
+    \item \textbf{Error Estimation:} For approximate and Monte Carlo methods, the system must provide rigorous error bounds and convergence diagnostics, leveraging the law of large numbers and central limit theorem where applicable.
+    \item \textbf{Validation Against Benchmarks:} The platform must be validated against established benchmark models and reference results to ensure correctness and reliability.
+\end{itemize}
+
 \section{Considering Tradeoffs}
+\label{sec:tradeoffs}
+
+The design of a comprehensive PRA platform necessarily involves tradeoffs among compatibility, scalability, performance, and usability. Key considerations include:
+
+\begin{itemize}
+    \item \textbf{Interoperability vs. Innovation:} While broad compatibility with legacy formats and solvers is essential for adoption, excessive accommodation of outdated standards can impede the adoption of more efficient or expressive representations. The platform must balance backward compatibility with the ability to evolve.
+    \item \textbf{Performance vs. Transparency:} Highly optimized, parallelized algorithms may introduce complexity that reduces transparency or reproducibility. The system should provide clear documentation and, where possible, open-source implementations to facilitate verification and community trust.
+    \item \textbf{Automation vs. User Control:} Automated model translation, quantification, and reporting can reduce manual effort and error, but must not obscure critical modeling assumptions or prevent expert intervention when needed.
+    \item \textbf{Resource Utilization vs. Accessibility:} Leveraging high-performance computing resources can dramatically improve throughput and scalability, but may limit accessibility for users without access to such infrastructure. The platform should support both local and distributed deployment modes.
+    \item \textbf{Extensibility vs. Stability:} The architecture must be sufficiently modular to accommodate new quantification methods, model types, and user interfaces, while maintaining stability and backward compatibility for existing workflows.
+\end{itemize}
+
+In summary, the design requirements articulated in this chapter are directly informed by the limitations of current PRA tools and are intended to guide the development of a platform that is robust, scalable, and adaptable to the evolving needs of the PRA community. The subsequent chapters detail the architectural and implementation strategies adopted to meet these requirements.

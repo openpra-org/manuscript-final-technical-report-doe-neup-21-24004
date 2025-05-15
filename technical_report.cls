@@ -28,20 +28,6 @@
 \ProcessOptions
 \LoadClass{book}
 
-
-%% process authors and affiliations
-% \newcommand{\authors}[1]{%
-%   \author{\processauthors#1\relax}
-% }
-% \def\processauthors#1, #2\relax{%
-%   \ifx\relax#2\relax
-%     #1%
-%   \else
-%     #1 \and \\%
-%     \processauthors#2\relax
-%   \fi
-% }
-
 %% fonts
 % ----------------------------------
 % ----------------------------------
@@ -71,7 +57,7 @@
 %% hidden column
 \newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
 
-%% rotatign needs to be beforwe footnore
+%% rotating needs to be before footnote
 \usepackage{rotating}
 \usepackage{tablefootnote}
 
@@ -83,12 +69,17 @@
 \usepackage{graphicx}
 \usepackage{setspace}
 
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
 \usepackage{pgfplots}
 \usepackage{comment}
 \pgfplotsset{compat=1.18}
 
 \usepackage{wrapfig}
 \usepackage{subcaption} % in preamble
+\usepackage{caption}
 
 %% for appendices
 \usepackage[toc,page]{appendix}
@@ -198,7 +189,7 @@
 
 %% -------------------------------------------------------------------------- %%
 %% Headers/footers - page number
-\pagestyle{plain}
+% \pagestyle{plain}
 
 %% -------------------------------------------------------------------------- %%
 %% Vertical space around tables and figures, triple spacing
@@ -224,11 +215,63 @@
 }
 
 \usepackage{fancyhdr}
+% Facesheet macro
+% NCSU colors
+% \definecolor{ncsured}{RGB}{204,0,0}
+% \definecolor{ncsured}{RGB}{185,36,42}
+\definecolor{ncsured}{RGB}{153,0,0}
+\definecolor{ncsugray}{RGB}{230,230,230}
+
+% Default logo/graphic paths (user can override in main document)
+\providecommand{\ncsulogobw}{assets/logos/ncstate-brick-4x1-blk-rgb.eps}
+\providecommand{\ncsulogored}{assets/logos/ncstate-brick-4x1-red-rgb.eps}
+
+% Facesheet macro
+\newcommand{\makefacesheet}{
+  \thispagestyle{empty}
+  % Full-page red background
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[ncsured] (current page.south west) rectangle (current page.north east);
+    % Right-side vertical graphic (user provides)
+    % \node[anchor=north east, xshift=0cm, yshift=0cm] at (current page.north east) {\includegraphics[height=\paperheight]{\ncsurightgraphic}};
+    % Top left: NCSU logo (user provides)
+    % \node[anchor=north west, yshift=-1.5cm] at (current page.north west) {\includegraphics[height=4.8em]{\ncsulogobw}};
+  \end{tikzpicture}
+
+  % \begin{flushright}
+  %   {\sffamily\bfseries\Large\color{white}{\docid\par}}
+  % \end{flushright}
+  \begin{flushleft}
+  \vspace*{4em}
+  \includegraphics[height=3.5em]{\ncsulogobw}\par
+  % Main content (left-aligned, white text, with whitespace)
+  \vspace{8em}
+  \parbox{1.0\textwidth}{
+    % \RaggedRight
+    {\sffamily\bfseries\fontsize{22}{24}\selectfont\color{white}\MakeUppercase{\docsubtitle\par}}
+    \vspace{1em}
+    \rule{\textwidth}{4pt}\par
+    \vspace{4em}
+    {\sffamily\bfseries\fontsize{18}{18}\selectfont\color{white}{\@title\par}}
+  }
+  \end{flushleft}
+  \vfill
+  {\sffamily\bfseries\Large\color{white}{\docid\par}}
+  \vfill
+  \begin{flushright}
+  \sffamily\bfseries\fontsize{14}{14}\color{white}{\acrlong{pra} Group\\Department of Nuclear Engineering\par}
+  \end{flushright}
+
+  \null
+  \clearpage
+}
+
+% \usepackage{fancyhdr}
 \newcommand{\maketitlepage}{
      \thispagestyle{fancy}
      \fancyhf{} % sets both header and footer to nothing
      \renewcommand{\headrulewidth}{0pt}
-     \lhead{\includegraphics[height=2.4em]{assets/logos/ncstate-brick-4x1-red-rgb.eps}}
+     \lhead{\includegraphics[height=2.4em]{\ncsulogored}}
      \rhead{\docid \\ Revision \docrev}
 
      \setlength{\headheight}{28pt}
@@ -256,6 +299,7 @@
       \noindent\rule{\textwidth}{4pt}
       \ncsu@defaultspacing
       \setlength{\headsep}{0in}
+      \pagestyle{plain}
 }
 
 %% -------------------------------------------------------------------------- %%
@@ -327,36 +371,10 @@
 }
 
 
-
-% \newenvironment{aideclaration}
-% {\ncsu@dedbioack{\declarationtitle}}
-% % {%
-% %   \clearpage
-% %   \vspace*{\fill} % push content vertically to center
-% %   \begin{center} % horizontally center content
-% %     {\Large\bfseries \declarationtitle\par} % title formatting
-% %    \end{center}
-% % }
-% {%
-%   % \end{center}
-%   % \vspace*{\fill} % push content vertically to center
-%   \clearpage
-% }
-
-
-% \newcommand{\declarationtitle}{Declaration on the use of Generative Artificial Intelligence}
-% \newenvironment{aideclaration}
-% {\ncsu@dedbioack{\declarationtitle}}
-% {\clearpage}
-
-
-
 \newcommand{\abstracttitle}{Abstract}
 \newenvironment{abstract}
 {\ncsu@dedbioack{\abstracttitle}}
 {\clearpage}
-
-% {\endtitlepage \pagestyle{plain}}
 
 \newcommand{\makecopyrightpage}{
     \begin{titlepage}

@@ -7,7 +7,7 @@
 \def \docsubtitle{Final Technical Report}
 
 \def \docid{DOE-NEUP 21-24004}
-\def \docrev{v0.0.1}
+\def \docrev{v0.0.2}
 \def \docsrc{https://zenodo.org/doi/10.5281/zenodo.15313673}
 \def \docdoi{10.5281/zenodo.15313673}
 
@@ -51,7 +51,8 @@
 
 \usepackage{tikz}
 \usepackage{tikz-qtree}
-\usetikzlibrary{calc}
+\usetikzlibrary{shapes,arrows,arrows.meta,positioning,intersections, calc,graphs,graphdrawing,quotes,circuits.logic.US,fit,shadows,backgrounds}
+\usegdlibrary{layered}
 
 \usepackage{bytefield}
 \usepackage{rotating}
@@ -65,13 +66,10 @@
 \usepackage[backend=biber]{biblatex}
 \addbibresource{refs/my_software.bib}
 \addbibresource{refs/my_datasets.bib}
-
 \addbibresource{refs/my_reports.bib}
 \addbibresource{refs/my_articles.bib}
 \addbibresource{refs/my_papers.bib}
-
 \addbibresource{refs/my_thesis.bib}
-
 \addbibresource{refs/references_doc.bib}
 
 
