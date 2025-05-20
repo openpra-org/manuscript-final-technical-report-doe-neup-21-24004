@@ -28,6 +28,7 @@
 \ProcessOptions
 \LoadClass{book}
 
+
 %% fonts
 % ----------------------------------
 % ----------------------------------
@@ -39,6 +40,9 @@
 % \usepackage{verbatim,shellesc}
 % \ShellEscape{cp /usr/local/share/latexmk/LatexMk ./LatexMk-output}
 
+
+%% quirk: load tocloft before parskip to avoid warning "Package tocloft Warning: \@starttoc has already been redefined"
+\RequirePackage{tocloft}
 %% paragraph spacing
 \usepackage[skip=8pt]{parskip}
 %% No paragraph indenting
@@ -49,9 +53,8 @@
 \RequirePackage{booktabs}
 \RequirePackage{longtable}
 \RequirePackage{ltablex} % <- longtable w/ tabularX
-% \RequirePackage{ragged2e}
 \RequirePackage{tabularx}
-\RequirePackage{multirow} 
+\RequirePackage{multirow}
 \RequirePackage{pdflscape}
 \RequirePackage{makecell}
 \usepackage{array}
@@ -60,7 +63,7 @@
 
 %% rotating needs to be before footnote
 \usepackage{rotating}
-\usepackage{tablefootnote}
+% \usepackage{tablefootnote}
 
 \usepackage{algorithm}
 \usepackage{siunitx}
@@ -87,7 +90,6 @@
 \newtheorem{theorem}{Theorem}
 
 \RequirePackage{setspace}
-\RequirePackage{sectsty}
 \RequirePackage{titling}
 
 
@@ -97,7 +99,6 @@
 
 \RequirePackage{hyphenat}
 \RequirePackage{nolbreaks}
-\RequirePackage{tocloft}
 \RequirePackage{graphicx}
 \RequirePackage{datetime}
 \newdateformat{monthyeardate}{\monthname[\THEMONTH], \THEYEAR}
@@ -123,13 +124,13 @@
 %% -------------------------------------------------------------------------- %%
 %% Disposition format -- any titles, headings, section titles
 \newcommand{\ncsu@dispositionformat}{}
-\allsectionsfont{\ncsu@dispositionformat}
+% \allsectionsfont{\ncsu@dispositionformat}
 \providecommand{\dispositionformat}[1]{
     \renewcommand{\ncsu@dispositionformat}{#1}
-    \allsectionsfont{\ncsu@dispositionformat}
+    % \allsectionsfont{\ncsu@dispositionformat}
 }
 
-%% Heading/Chapter/Section format
+% %% Heading/Chapter/Section format
 \newcommand{\ncsu@headingformat}{\ncsu@dispositionformat}
 \providecommand{\headingformat}[1]{
     \renewcommand{\ncsu@headingformat}{\ncsu@dispositionformat #1}
@@ -164,7 +165,7 @@
 %                 footskip=\ncsu@footskip]{geometry}
 
 % January 2023 Update - Just set all margins to 1in
-\usepackage[margin=1in,showframe=false]{geometry}
+\usepackage[margin=1in,showframe=true]{geometry}
 % \usepackage[margin=0.5in, bottom=1in, top=1in]{geometry}
 
 \dispositionformat{\bfseries}            % bold and serif
@@ -193,7 +194,7 @@
 \setlength{\textfloatsep}{3\ncsu@lineheight}
 \setlength{\intextsep}{3\ncsu@lineheight}
 
-\usepackage[utf8]{inputenc}
+% \usepackage[utf8]{inputenc}
 % \RequirePackage{biblatex}
 
 \usepackage[acronym]{glossaries}
@@ -364,7 +365,8 @@
     \vspace{1em}
     \parbox{0.75\linewidth}{\small\BODY}
   \end{center}
-  \vspace*{\fill}
+  \vspace{\fill}
+  \clearpage
 }
 
 
@@ -390,7 +392,6 @@
 \renewcommand{\appendixtocname}{Appendix}
 
 %%% table of contents
-\RequirePackage{tocloft}
 \RequirePackage{listings}
 
 \setcounter{secnumdepth}{3}

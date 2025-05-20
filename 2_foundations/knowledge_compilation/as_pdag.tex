@@ -149,14 +149,14 @@ with the following properties:
 
 \begin{enumerate}
 \item \(\mathcal{B}\) is the set of \textbf{basic events}, each \(b\in \mathcal{B}\) failing with probability \(p(b)\).  These nodes have no incoming edges in \(\mathcal{M}\).  
-\item \(\mathcal{G}\) is the set of \textbf{\acrshort{ft} nodes}, each representing a gate or intermediate event in a fault tree.  For \(g\in \mathcal{G}\), the function
+\item \(\mathcal{G}\) is the set of \textbf{\acrlong{ft} nodes}, each representing a gate or intermediate event in a fault tree.  For \(g\in \mathcal{G}\), the function
 \[
 \pi_{F}(S,g)\;=\;\begin{cases}
 1, & \text{if fault-tree logic declares \(g\) fails under \(S\subseteq\mathcal{B}\)},\\
 0, & \text{otherwise}.
 \end{cases}
 \]
-\item \(\mathcal{E}\) is the set of \textbf{\acrshort{et} nodes}, each having zero or more outgoing edges.  If node \(e\) has children \(\{v_1,\dots,v_k\}\subset \mathcal{V}\), then the edges \(\{(e\to v_i)\}_{i=1}^k\) carry probabilities \(\theta_{e\to v_i}\ge 0\) summing to 1.  
+\item \(\mathcal{E}\) is the set of \textbf{\acrlong{et} nodes}, each having zero or more outgoing edges.  If node \(e\) has children \(\{v_1,\dots,v_k\}\subset \mathcal{V}\), then the edges \(\{(e\to v_i)\}_{i=1}^k\) carry probabilities \(\theta_{e\to v_i}\ge 0\) summing to 1.  
 \item \(\mathcal{A}\subseteq (\mathcal{V}\times \mathcal{V})\) is the set of directed edges.  An edge \((u\to v)\) can be:
   \begin{itemize}
   \item \(\mathrm{\acrshort{et}\to \acrshort{et}}\):  event-tree branching,  
