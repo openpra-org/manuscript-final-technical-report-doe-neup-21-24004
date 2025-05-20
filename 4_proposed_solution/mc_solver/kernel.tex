@@ -23,7 +23,7 @@ The essential steps to build and traverse these layers are:
       Within each layer, enforce an additional consistent ordering: (i)~variables appear before gates, (ii)~gates of different types can be grouped to facilitate specialized processing.  This step is not strictly required for correctness, but it can streamline subsequent stages such as kernel generation or partial evaluations.
 
     \item \emph{Traverse Layer by Layer:}  
-      A final pass iterates over each layer in ascending order.  Because all inputs of any node in layer \(d\) lie in layers \(< d\), the evaluation (or “kernel build”) for layer \(d\) can proceed after the entire set of layers \(0,\dots,d-1\) is processed.
+      A final pass iterates over each layer in ascending order.  Because all inputs of any node in layer \(d\) lie in layers \(< d\), the evaluation (or "kernel build") for layer \(d\) can proceed after the entire set of layers \(0,\dots,d-1\) is processed.
 \end{enumerate}
 
 This structure ensures a sound evaluation of the \acrshort{pdag}: no gate or variable is computed until after all of its inputs are finalized.
@@ -32,7 +32,7 @@ This structure ensures a sound evaluation of the \acrshort{pdag}: no gate or var
 
 \begin{enumerate}
     \item \textbf{Clear Previous State.}  
-      Any existing “visit” markers or stored depths in the \acrshort{pdag}-based data structures are reset to default values (e.g., zero or -1).
+      Any existing "visit" markers or stored depths in the \acrshort{pdag}-based data structures are reset to default values (e.g., zero or -1).
       
     \item \textbf{Depth Assignment by Recursion.}  
       A \texttt{compute\_depth} subroutine inspects each node:
