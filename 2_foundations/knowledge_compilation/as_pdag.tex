@@ -46,8 +46,8 @@ We partition \(\mathcal{V}\) into three principal categories:
 \item \textbf{Fault Tree (\acrshort{ft}) Nodes.}  Let \(\mathcal{G}\subset \mathcal{V}\) be the set of \emph{internal \acrshort{ft}-gates or intermediate \acrshort{ft}-events}, unified across \(\{\Phi_1,\dots,\Phi_N\}\).  
     \begin{itemize}
     \item Each \acrshort{ft} node \(g\in \mathcal{G}\) has one output event \(g\) (the node itself in the \acrshort{pdag}).  
-    \item The set of inputs to \(g\) may include basic events \(\mathcal{B}\) (e.g., component failures) and/or other \acrshort{ft} nodes \(\mathcal{G}\) (subsystem-level events). If \(g\) is the top event of \(\Phi_j\), then it may appear as an input into a \emph{different} \acrshort{ft}’s gate or an \acrshort{et} node.  
-    \item As with standard \acrshort{ft} logic, each gate has a type in \(\{\mathrm{AND},\,\mathrm{OR},\,\mathrm{VOT}(k/n),\,\ldots\}\).  Its output (failure state) is a Boolean function of its inputs’ failure states.
+    \item The set of inputs to \(g\) may include basic events \(\mathcal{B}\) (e.g., component failures) and/or other \acrshort{ft} nodes \(\mathcal{G}\) (subsystem-level events). If \(g\) is the top event of \(\Phi_j\), then it may appear as an input into a \emph{different} \acrshort{ft}'s gate or an \acrshort{et} node.  
+    \item As with standard \acrshort{ft} logic, each gate has a type in \(\{\mathrm{AND},\,\mathrm{OR},\,\mathrm{VOT}(k/n),\,\ldots\}\).  Its output (failure state) is a Boolean function of its inputs' failure states.
     \end{itemize}
 
 \item \textbf{Event Tree (\acrshort{et}) Nodes.}  Let \(\mathcal{E}\subset \mathcal{V}\) be the set of \emph{\acrshort{et}-nodes}, each referring either to an initiating event (IE) or to a functional event within some event tree \(\Gamma_i\).  
@@ -83,7 +83,7 @@ Each directed edge \((u,v)\in \mathcal{A}\) belongs to one of several categories
 
 \item \textbf{\acrshort{et} \(\to\) \acrshort{ft} edges. [Functional Events]}  These edges represent the case where an \acrshort{et} node \(u\in\mathcal{E}\) designates Check if subsystem \(\Phi_j\) has failed.  Formally, the next node \(v\in\mathcal{G}\) is the top event (or relevant subsystem event) in fault tree \(\Phi_j\).  The probability of \(v\) failing is not assigned directly on the edge but is computed via the logical structure of \(\Phi_j\).  
 
-\item \textbf{\acrshort{ft} \(\to\) \acrshort{ft} edges. [Transfer Gates]}  Such edges arise when the top event (or an intermediate gate) \(u\in\mathcal{G}\) of one fault tree is input to a gate \(v\in\mathcal{G}\) in another fault tree.  For instance, if \(\Phi_{1}\) captures the failure mode of a pump and \(\Phi_{2}\) captures the failure of a coolant subsystem that includes that same pump’s top event.  
+\item \textbf{\acrshort{ft} \(\to\) \acrshort{ft} edges. [Transfer Gates]}  Such edges arise when the top event (or an intermediate gate) \(u\in\mathcal{G}\) of one fault tree is input to a gate \(v\in\mathcal{G}\) in another fault tree.  For instance, if \(\Phi_{1}\) captures the failure mode of a pump and \(\Phi_{2}\) captures the failure of a coolant subsystem that includes that same pump's top event.  
 
 \item \textbf{\acrshort{ft} \(\to\) \acrshort{et} edges. [Initiating Events]}  Less common but still possible are edges that carry an outcome of a fault tree node \(u\in\mathcal{G}\) to an \acrshort{et} node \(v\in\mathcal{E}\).  For instance, an initiating event might depend on whether a certain subsystem fails, as computed by a separate \acrshort{ft} \(\Phi_j\). Support system \acrshort{ft}s are one such example.
 
@@ -95,7 +95,7 @@ Denote by \(\theta_{u\to v}\) the \emph{conditional probability} weighting an \a
 \quad
 \theta_{u \to v_i}\;\; \ge\;0.
 \]
-By contrast, \acrshort{ft}-type edges do not carry numerical probabilities directly.  Instead, a gate node \(v\in \mathcal{G}\) aggregates its inputs’ \emph{fail/success states} via Boolean logic (AND, OR, \(\mathrm{VOT}(k/n)\), etc.) to yield \(\pi_{\mathcal{M}}(S,v)\in\{0,1\}\), the node \(v\)’s failure state under a set \(S\) of basic-event failures.
+By contrast, \acrshort{ft}-type edges do not carry numerical probabilities directly.  Instead, a gate node \(v\in \mathcal{G}\) aggregates its inputs' \emph{fail/success states} via Boolean logic (AND, OR, \(\mathrm{VOT}(k/n)\), etc.) to yield \(\pi_{\mathcal{M}}(S,v)\in\{0,1\}\), the node \(v\)'s failure state under a set \(S\) of basic-event failures.
 
 \subsection{Semantics of the Unified Model}
 

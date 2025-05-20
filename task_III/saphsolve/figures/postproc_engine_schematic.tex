@@ -1,0 +1,25 @@
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      >=stealth,                   % arrow tip
+      every node/.style = {draw, rectangle,
+                           minimum width = 2.7cm,
+                           minimum height = 1cm,
+                           align = center}
+    ]
+    % Nodes
+    \node (jscutin)            {\acrshort{jscutin} File};
+    \node[right=of jscutin]    (engine) {Post-Processor};
+    \node[below=1.8cm of engine] (rulefile) {Rule File};
+    \node[right=of engine]     (calc)   {Probability\\Calculator};
+    \node[right=of calc]       (updated){Updated\\\acrshort{jscutin} File};
+
+    % Arrows
+    \draw[->] (jscutin) -- (engine);
+    \draw[->] (engine)  -- (calc);
+    \draw[->] (calc)    -- (updated);
+    \draw[->] (rulefile)-- (engine);
+  \end{tikzpicture}
+  \caption{Post-processing engine: schematic representation.}
+  \label{fig:postproc-engine-schematic}
+\end{figure}

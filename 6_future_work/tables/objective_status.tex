@@ -1,0 +1,60 @@
+\begin{landscape}
+\renewcommand{\arraystretch}{2.0}
+\begin{longtable}{@{}p{20em}p{5em}p{34em}@{}}
+\caption{Project Objectives: Status and Implementation Summary}
+\label{tab:objective-status}\\
+\textbf{Task} & \textbf{Status} & \textbf{Implementation Details} \\
+\midrule
+\endfirsthead
+
+\multicolumn{3}{c}{\textit{Continued: Project Objectives: Status and Implementation Summary}}\\
+\textbf{Task} & \textbf{Status} & \textbf{Implementation Details} \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+\multicolumn{3}{@{}l}{\textbf{Task 1: Literature Review, Benchmarking, and Profiling of Current PRA Tools}}\\
+\midrule
+Task 1.1: Create and Test PRA Model Structures & Completed & {Multiple PRA model structures (including generic and synthetic models) have been created and tested; model translation and validation workflows have been established.} \\
+Task 1.2: Benchmarking and Profiling of Current PRA Tools & Completed & {Comprehensive benchmarking and profiling of current PRA tools (e.g., SAPHIRE, SCRAM) have been performed, with results documented in benchmarking and optimization chapters.} \\
+Task 1.3: Evaluation of Risk Metrics for Multi-Hazard PRAs & Partially Completed & {Initial evaluation of risk metrics for multi-hazard PRAs has been performed; however, full integration of all multi-hazard metrics is pending.} \\
+Task 1.4: Evaluation of Data Structures Used in Current PRA Tools & Completed & {Data structures in current PRA tools have been evaluated, and recommendations for memory-efficient and scalable structures have been incorporated into the high throughput solutions.} \\
+
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Task 2: Design and Implementation}}\\
+\midrule
+Task 2.1: REST APIs for OpenPSA Models & Completed & {REST APIs have been developed and exposed to support quantification operations using SCRAM, which accepts models in OpenPSA XML format, as well as other solver executables.} \\
+Task 2.2: Heuristics for Model-Specific Optimizations & Partially Completed & {Some model-specific optimizations (e.g., shared subtree recognition, parallel quantification) are implemented; further heuristics for model structure and quantification remain under development.} \\
+Task 2.3: Design the Parallel and Distributed Web-Based Architecture & Completed & {The parallel and distributed web-based architecture is implemented, including distributed queuing, worker pools, and REST APIs.} \\
+Task 2.4: Algorithms for Practical Multi-Hazard Model Quantification & Partially Completed & {Algorithms for multi-hazard quantification are implemented for selected scenarios; full support for all hazard types and advanced quantification (e.g., correlated events, rare-event variance reduction) is pending.} \\
+
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Task 3: Testing and Benchmarking for Serial to Parallel Improvements}}\\
+\midrule
+Task 3.1: Source-code Regression Testing & Partially Completed & {Source-code regression testing is implemented for core modules; broader coverage and automated end-to-end testing are in progress.} \\
+Task 3.2: Testing Individual PRA Model Structures & Completed & {Individual PRA model structures have been tested using the implemented quantification engines and benchmarking datasets.} \\
+Task 3.3: Benchmarks for Multi-Hazard PRA Model & Partially Completed & {Benchmarks for multi-hazard PRA models have been initiated; comprehensive benchmarking across all supported hazard types is ongoing.} \\
+
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Task 4: Applications to Real World PRA Models}}\\
+\midrule
+Task 4.1: Case Study for Single Hazard PRA: Seismic PRA & Partially Completed & {Case studies for single-hazard PRA (e.g., seismic PRA) have been started, with initial results available; full validation and publication of complete case studies are pending.} \\
+Task 4.2: Case Study for Multi-Hazard PRA: Seismic and Wind PRA & Pending & {Case studies for multi-hazard PRA (e.g., seismic and wind) are planned but not yet implemented.} \\
+
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Task 5: Verification and Documentation}}\\
+\midrule
+Task 5.1: Automated Documentation Generation & Partially Completed & {Automated documentation generation is available for core APIs and modules; user guides, tutorials, and workflow documentation are under development.} \\
+Task 5.2: Verification & Partially Completed & {Verification against benchmark models and reference results is ongoing; additional verification, especially for new quantification engines (e.g., Monte Carlo solver) and multi-hazard models, is required.} \\
+
+\end{longtable}
+
+
+\begin{itemize}
+    \item \textbf{Completed}: The objective has been fully addressed and implemented as described in the project proposal.
+    \item \textbf{Partially Completed}: The objective has been addressed in part, but further work is required to meet the full scope or to address limitations identified in this chapter.
+    \item \textbf{Pending}: The objective has not yet been addressed and remains a target for future work.
+\end{itemize}
+\end{landscape}

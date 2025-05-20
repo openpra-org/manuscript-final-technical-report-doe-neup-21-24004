@@ -1,0 +1,58 @@
+\begin{figure}[H]
+  \centering
+    % -----------------------------------------------------------------
+    % New, light 5-colour pastel palette
+    % (RGB values taken from ColorBrewer, Pastel-1)
+    % -----------------------------------------------------------------
+    \definecolor{pComplement}{RGB}{251,180,174}   % pastel-red
+    \definecolor{pBasicEvt} {RGB}{179,205,227}   % pastel-blue
+    \definecolor{pModel}    {RGB}{204,235,197}   % pastel-green
+    \definecolor{pPhase}    {RGB}{222,203,228}   % pastel-purple
+    \definecolor{pEvtNum}   {RGB}{254,217,166}   % pastel-orange
+
+    % ---------------------------------------------------------------
+    % Convenience macro for rotated field labels (unchanged)
+    % ---------------------------------------------------------------
+    \newcommand{\bitlabel}[2]{%
+      \bitbox[]{#1}{% 
+        \raisebox{0pt}[4ex][0pt]{%
+          \turnbox{45}{\fontsize{8}{16}\selectfont#2}%
+        }%
+      }%
+    }
+
+
+    % ---------------------------------------------------------------
+    % Bit-field diagram
+    % ---------------------------------------------------------------
+    \begin{bytefield}[endianness=big,
+                      bitwidth=14pt,
+                      bitheight=\widthof{~BE~},
+                      boxformatting={\centering\small}]{32}
+    
+      % Row with field names
+      \bitlabel{1}{Complement} &
+      \bitlabel{1}{Basic Event Tag} \\
+    
+      \bitheader{0-31} \\
+    
+      % Row with symbolic field identifiers
+      \bitbox{1}[bgcolor=pComplement]{\rotatebox{90}{C}} &
+      \bitbox{1}[bgcolor=pBasicEvt]{\rotatebox{90}{BE}} &
+      \bitbox{5}[bgcolor=pModel]{MODEL TYPE} &
+      \bitbox{7}[bgcolor=pPhase]{PHASE} &
+      \bitbox{18}[bgcolor=pEvtNum]{EVENT IDENTIFIER} \\[1.2ex]
+    
+      % Row with an example 32-bit value
+      \bitheader{0-31} \\
+    
+      \bitbox{1}[bgcolor=pComplement]{0} &
+      \bitbox{1}[bgcolor=pBasicEvt]{0} &
+      \bitboxes*{1}[bgcolor=pModel]{00001} &
+      \bitboxes*{1}[bgcolor=pPhase]{0000001} &
+      \bitboxes*{1}[bgcolor=pEvtNum]{000000000000000011}
+    
+    \end{bytefield}
+  \caption{Bitwise Encoding Scheme for Mapping Event Information to a 32-bit Word.}
+  \label{fig:bit-dist-masked}
+\end{figure}

@@ -1,0 +1,65 @@
+\begin{table}[H]
+\centering
+\caption{Different representations of the same rule file for demonstration purposes.}
+\label{tab:rule-file-representations}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Representation} & \textbf{Rule File Excerpt} \\
+\midrule
+Name Representation &
+\begin{lstlisting}[language=,frame=none,basicstyle=\ttfamily\small]
+if ((~IE-LLOCA + ~IE-MLOCA + ~IE-SLOCA) *
+    (RCS-LOCA-CL1 * RCS-LOCA-CL2 +
+     RCS-LOCA-CL1 * RCS-LOCA-CL3 +
+     RCS-LOCA-CL1 * RCS-LOCA-CL4 +
+     RCS-LOCA-CL2 * RCS-LOCA-CL3 +
+     RCS-LOCA-CL2 * RCS-LOCA-CL4 +
+     RCS-LOCA-CL3 * RCS-LOCA-CL4)) then
+  DeleteRoot;
+endif
+\end{lstlisting}
+\\
+\midrule
+Decimal Representation &
+\begin{lstlisting}[language=,frame=none,basicstyle=\ttfamily\small]
+if 33816688 * 33816689 +
+   33816688 * 33816690 +
+   33816688 * 33816691 +
+   33816689 * 33816690 +
+   33816689 * 33816691 +
+   33816690 * 33816691 then
+  DeleteRoot;
+endif
+\end{lstlisting}
+\\
+\midrule
+Number Representation with Tag &
+\begin{lstlisting}[language=,frame=none,basicstyle=\ttfamily\small]
+if ((~<BE>68</BE> + ~<BE>489</BE> + ~<BE>3418</BE>) *
+    (<BE>112</BE> * <BE>113</BE> +
+     <BE>112</BE> * <BE>114</BE> +
+     <BE>112</BE> * <BE>115</BE> +
+     <BE>113</BE> * <BE>114</BE> +
+     <BE>113</BE> * <BE>115</BE> +
+     <BE>114</BE> * <BE>115</BE>)) then
+  DeleteRoot;
+endif
+\end{lstlisting}
+\\
+\midrule
+Number Representation without Tag &
+\begin{lstlisting}[language=,frame=none,basicstyle=\ttfamily\small]
+if ((~68 + ~489 + ~3418) *
+    (112 * 113 +
+     112 * 114 +
+     112 * 115 +
+     113 * 114 +
+     113 * 115 +
+     114 * 115)) then
+  DeleteRoot;
+endif
+\end{lstlisting}
+\\
+\bottomrule
+\end{tabular}
+\end{table}

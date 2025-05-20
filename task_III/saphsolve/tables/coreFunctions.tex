@@ -1,0 +1,16 @@
+\begin{table}[H]
+\centering 
+\caption{Core functions of the new post-processing engine in \acrshort{saphire}.}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Function}                  & \textbf{Description}                                                                                             \\ 
+\midrule
+\acrshort{jscutin} Parser                & Parses the \acrshort{jscutin} file containing \acrshort{mcs} and \acrlong{be}.                                  \\
+Rule File Parser                   & Reads user-defined rules; converts them to \acrshort{json}.                              \\
+Post-Processor                     & Applies Rule File logic to parsed \acrshort{jscutin}, filtering or modifying the \acrshort{mcs}.                   \\
+Probability Calculator             & Re-calculates sequence failure probabilities based on the updated \acrshort{mcs}.                                     \\
+\acrshort{jscutin} Writer                     & Outputs the final \acrshort{jscutin} file with revised probabilities and \acrshort{mcs}.                                \\ 
+\bottomrule
+\end{tabular}
+\label{tab:coreFunctions}
+\end{table}

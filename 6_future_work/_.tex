@@ -1,6 +1,15 @@
-\part{\color{blue}{Future Work}}
-
 \chapter{Directions for Ongoing and Future Research}
+
+\section{Project Objectives: Status Overview}
+
+To provide a transparent summary of progress, Table~\ref{tab:objective-status} compares the original project proposal objectives with their current status. For each objective, a brief description of what has been implemented is provided. This mapping is based on the implementation status; limitations, and future works are described at the end of this chapter.
+
+\input{6_future_work/tables/objective_status}
+
+\noindent
+This table provides explicit context for each objective, clarifying which features and capabilities are already available in the current platform and which remain as priorities for ongoing and future research. Detailed discussion of limitations and planned enhancements for each partially completed or pending objective is provided in the next section.
+
+\section{Limitations and Roadmap for Future Work}
 
 Despite substantial progress in the development of an open-source, parallel, and distributed web-based PRA platform, several important features and research objectives outlined in the original project proposal remain only partially realized. This chapter details the major limitations of the current implementation and delineates a comprehensive road map for future research and development. The following sections identify methodological and implementation gaps and propose targeted features to move the platform toward its intended vision.
 
@@ -10,7 +19,7 @@ The current platform lacks mechanisms for collaborative model development. Speci
 
 \begin{itemize}
     \item Implementing a complete user invitation and role assignment system to facilitate multi user collaboration.
-    \item Enabling real time collaborative editing and model sharing, with support for change tracking.
+    \item Enabling real time collaborative editing and model sharing, with support for tracking changes.
 \end{itemize}
 
 \paragraph{Version Control}
@@ -23,26 +32,23 @@ While basic model updates are supported, the absence of a fully featured version
 
 \paragraph{Extending the OpenPRA MEF Schema}
 
-Several PRA technical elements, such as internal flood/fire PRA, seismic PRA, and hazard screening, are not yet fully integrated in the OpenPRA MEF schema. Planned work includes:
-\begin{itemize}
-    \item Expanding the platform’s schema and analytical engines to cover all elements of the OpenPSA Model Exchange Format (MEF).
-    \item Ensuring interoperability across industry standard tools.
-\end{itemize}
+Several PRA technical elements, such as internal flood/fire PRA, seismic PRA, and hazard screening, are not yet fully integrated in the OpenPRA MEF schema. Planned work includes Expanding the JSON schema and the platform's analytical engines to support all elements of the non-LWR regulatory guidelines (RG 1.247). This is the first public release of the schema, obviously it will undergo continuous revisions. To demonstrate its full-scale application, complete PRA models derived from the MHTGR and EBR-II datasets will be published.
 
 \paragraph{Multi Solver Support}
 
 At present, the platform is limited to the HCLA, \texttt{scram} and \texttt{Saphsolve} quantification engines. To accommodate diverse user needs and industry standards, future releases will:
 \begin{itemize}
     \item Integrate additional solvers, such as \texttt{FTREX} and \texttt{XFTA}, into the distributed worker nodes.
-    \item Develop a solver interface to facilitate the addition of new quantification engines.
+    \item Develop guidelines on node wrappers and API design for PRA tool development teams to enable the integration of third-party quantification engines with OpenPRA.
 \end{itemize}
 
 \paragraph{Guidance for Model Structure and Quantification}
 
-Although various model structures have been tested, optimal configurations for speed, accuracy, and memory usage remain undetermined. Future research will:
+Although a variety of model structures have been explored, optimal configurations for speed, accuracy, and memory usage remain undetermined. Future work will:
 \begin{itemize}
-    \item Develop and publish best practice guidelines for model construction, including recommendations for tree sizing, gate usage, and linkage strategies.
+    \item Develop and publish best-practice guidelines for model construction, including recommendations for tree sizing, gate usage, and linkage strategies.
     \item Establish acceptance criteria and truncation limits for multi-hazard models.
+    \item Provide detailed guidance on quantification methods and uncertainty analysis.
 \end{itemize}
 
 \paragraph{Adaptive Job Scheduling}
@@ -53,25 +59,24 @@ The current distributed queue system lacks dynamic, resource aware scheduling. T
 
 Handling very large models remains a challenge, particularly with respect to data persistence and network overhead. Planned improvements include:
 \begin{itemize}
-    \item Offloading bulk data (e.g., large models, cut sets) to scalable object storage solutions such as S3 buckets.
-    \item Optimizing data sharding and caching strategies to minimize latency and maximize throughput.
+    \item Offload bulk data (e.g., large models, cut sets) to scalable object storage solutions such as S3 buckets, passing only references to the data (in the form of URIs) between services to minimize data transfer overhead.
+    \item Integrate STXXL \cite{stxxl_external_memory} as a plug-in replacement for \acrshort{stl} containers to enable disk-backed caching and compression for large data objects, supporting computations that exceed available RAM without custom compression logic.
 \end{itemize}
 
 \paragraph{Monte Carlo Solver}
 
 The current Monte Carlo solver under-represents rare events and does not support correlated or dependent event sampling. Future research will focus on:
-
 \begin{itemize}
-    \item Developing variance reduction techniques to improve the accuracy of rare event quantification.
-    \item Implementing algorithms for sampling correlated and dependent events, with rigorous validation against analytical benchmarks.
+    \item Implement adaptive variance reduction techniques (e.g., importance sampling or stratified sampling) to improve rare event quantification, and validate these methods against analytical benchmarks for accuracy and efficiency.
+    \item Develop and integrate algorithms for sampling correlated and dependent events, with validation performed by comparing Monte Carlo results to known analytical solutions on benchmark models.
 \end{itemize}
 
-\paragraph{Verification and Testing}
+\paragraph{Testing}
 
-The current verification framework does not yet provide best practice guidelines or optimal modeling strategies. Future work will:
+The existing verification framework requires substantial expansion to ensure robustness across all layers of the platform. Future work will:
 \begin{itemize}
-    \item Expand the automated test suite to cover a broader range of model types and quantification scenarios.
-    \item Develop and disseminate best practice guidelines for model construction, quantification, and uncertainty analysis.
+    \item Broaden the automated test suite to cover a wider range of model types and quantification scenarios.
+    \item Conduct additional functional and end-to-end testing of the web-based front-end components, backend business logic, and the distributed system related services.
 \end{itemize}
 
 \paragraph{Documentation and Community Adoption}
@@ -80,13 +85,21 @@ To facilitate broader adoption and community engagement, future releases will pr
 
 \paragraph{Interoperability and Standardization}
 
-To ensure compatibility with industry tools and standards, we will develop import/export utilities and enhance existing model converters to enable seamless data exchange with both commercial and open-source PRA platforms.
+To ensure compatibility with industry tools and standards, import/export utilities will be developed and integrated into OpenPRA, and model translation capabilities will be enhanced by extending the PRAcciolini tool to support additional PRA formats. Furthermore, round-trip fidelity testing will be performed to ensure accurate translations between commercial and open-source PRA platforms without requiring a single canonical intermediate representation.
 
 Addressing the limitations outlined above is essential for realizing the full potential of the proposed PRA platform. The future work described in this chapter will not only close existing gaps but also position the platform as a industry ready solution for real time, risk informed decision support in nuclear power plant operations. Continued collaboration with industry partners, comprehensive benchmarking, and community driven development will be critical to achieving these objectives.
 
+\section{Conclusion}
+
+The development of an open-source, parallel, and distributed web-based \acrshort{pra} platform, as presented in this report, represents a significant advancement in the state of the art for risk-informed operational decision support in nuclear power plant environments. The platform integrates modern software engineering practices, scalable distributed computing, and a flexible data schema to address the evolving needs of PRA practitioners and researchers.
+
+The project has successfully delivered a functional prototype that demonstrates the feasibility of high-throughput, web-based PRA quantification and model management. Key achievements include the implementation of distributed queuing and worker pool architectures, the integration of multiple quantification engines including the data-parallel Monte Carlo solver, and the establishment of a modular, extensible Model Exchange Format (MEF). Comprehensive benchmarking and profiling of existing PRA tools have informed the design and optimization of the platform, ensuring that it meets or exceeds current performance and scalability requirements for a range of PRA model types.
+
+Despite these accomplishments, several critical challenges remain. The current implementation does not yet fully realize the vision of multi-user collaboration, version control, comprehensive multi-hazard model support, or adaptive resource management. The Monte Carlo solver, while functional, requires further development to accurately quantify rare events and model dependencies. Additionally, the platform's verification, documentation, and interoperability features must be expanded to facilitate broader adoption and integration with industry-standard tools. The limitations and future work identified in this report provide a clear and actionable roadmap for the continued evolution of the platform.
+
+In summary, the work presented herein establishes a strong foundation for a next-generation PRA platform that is open, extensible, and capable of supporting real-time, risk-informed decision making in nuclear power plant operations. The ongoing and future research directions outlined in this report are essential for realizing the platform's full potential and for fostering a collaborative, transparent, and industry-ready ecosystem for PRA model development and analysis. Continued collaboration with stakeholders, rigorous benchmarking, and a commitment to open-source principles will be critical to the platform's long-term success and impact.
+
 \begin{comment}
-\section{Adaptive Scheduling for Real-Time PRA}
 \section{Advanced Uncertainty Propagation}
 \section{Variance Reduction Techniques}
-\section{Integration with Industry Tools and Standards}
 \end{comment}

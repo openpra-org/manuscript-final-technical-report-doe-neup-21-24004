@@ -92,7 +92,7 @@ Work-item \((i_x,i_y,i_z)\) is responsible for \emph{exactly one} bit-pack:
     \item Load the \(p^{\text{th}}\) bit-pack of batch \(b\) from
           \texttt{buffer}.
     \item Compute \(c=\mathrm{popcount}(\text{bitpack})\).
-    \item Reduce the \(c\)’s belonging to the same work-\emph{group} in
+    \item Reduce the \(c\)'s belonging to the same work-\emph{group} in
           shared memory (tree reduction or \texttt{reduce\_over\_group}).
     \item One designated leader performs
           \(\texttt{atomic\_add}(\texttt{num\_one\_bits},\,\text{group\_sum})\).
@@ -111,7 +111,7 @@ the host reads back \texttt{num\_one\_bits} and executes the purely
 serial routine shown in Algorithm~\ref{alg:update_stats}.
 
 \begin{algorithm}[H]
-\caption{Post-processing of a single node’s tally}
+\caption{Post-processing of a single node's tally}
 \label{alg:update_stats}
 \begin{algorithmic}[1]
   \Require

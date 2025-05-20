@@ -1,17 +1,20 @@
 \section{SAPHSOLVE Optimizations}
 \label{sec:saphsolve_optimizations}
 
-\acrshort{saphsolve} was instrumented for profiling using the Intel VTune toolkit, which revealed major performance bottlenecks in two functions, \texttt{MergeInputs} and \texttt{InternalSetIntersectionEmpty}, respectively.
+The SAPHSOLVE engine was subjected to detailed performance profiling using the Intel VTune toolkit, which identified two primary bottlenecks: the \texttt{MergeInputs} and \texttt{InternalSetIntersectionEmpty} functions. The same targeted optimizations applied earlier—parallelization and architectural modernization—were implemented to address these hotspots.
 
-\subsection{Parallelization Hotspots}
+\paragraph{Parallelization Hotspots}
 \label{sec:saphsolve_opt}
-The module containing the function \texttt{MergeInputs} was refactored to enable parallel execution through the \acrfull{dppl} \cite{Delphi}. Although some effort was made to merge these code changes upstream, substantial The ultimate decision to incorporate this enhancement lies with the \acrshort{saphire} development team.
 
-\subsection{Using Machine-Native Word Size}
+The module containing the function \texttt{MergeInputs} was refactored to enable parallel execution through the \acrfull{dppl} \cite{Delphi}. While initial code changes were developed and partially merged upstream, the final decision to incorporate these enhancements into the production SAPHSOLVE codebase rests with the SAPHIRE development team.
+
+\paragraph{Using Machine-Native Word Size}
+
 The function \texttt{InternalSetIntersectionEmpty} was ported from the now legacy 32-bit to 64-bit in order to enlarge the available address space, remove \textsf{DWORD} pointer arithmetic, improve cache alignment, and to simplify external \texttt{CALL}s with the new 64-bit \acrfull{abi}.
 
-\subsection{Measuring Speedup}
-We measure the speed-up by benchmarking against one fault tree (\texttt{ft\_310}) from our synthetic fault tree dataset. Running the test for a range of truncation sizes of the \acrshort{mcs} yields the results summarized in Table~\ref{tbl:setlib_speedup}.  On average, a speed-up of $\,\bar S = 1.43\,$ is achieved.
+\paragraph{Measuring Speedup}
+
+Benchmarking was conducted using a representative synthetic fault tree (\texttt{ft\_310}) across a range of minimal cut set truncation sizes. The results, summarized in Table~\ref{tbl:setlib_speedup}, indicate an average speedup of $\bar S = 1.43$ when comparing the 64-bit implementation to the original 32-bit version. The speedup increases with larger truncation sizes, reflecting the growing benefits of improved memory management and cache utilization as problem size scales.
 
 \input{task_III/saphsolve/tables/32_to_64_speedup}
 
@@ -19,7 +22,7 @@ Re-profiling with Intel VTune on the same fault tree shows the expected redistri
 
 \input{task_III/saphsolve/tables/vtune_profile}
 
-\subsection{Limitations and Outstanding Questions}
+\paragraph{Limitations and Outstanding Questions}
 \label{sec:limitations_saphsolve}
 
 \begin{enumerate}

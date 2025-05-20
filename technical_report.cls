@@ -36,8 +36,8 @@
 
 \usepackage{xcolor}
 
-% \usepackage{verbatim,shellesc}
-% \ShellEscape{cp /usr/local/share/latexmk/LatexMk ./LatexMk}
+\usepackage{verbatim,shellesc}
+\ShellEscape{cp /usr/local/share/latexmk/LatexMk ./LatexMk}
 
 %% paragraph spacing
 \usepackage[skip=8pt]{parskip}
@@ -48,7 +48,8 @@
 \RequirePackage{siunitx}
 \RequirePackage{booktabs}
 \RequirePackage{longtable}
-\RequirePackage{ragged2e}
+\RequirePackage{ltablex} % <- longtable w/ tabularX
+% \RequirePackage{ragged2e}
 \RequirePackage{tabularx}
 \RequirePackage{multirow} 
 \RequirePackage{pdflscape}
@@ -68,10 +69,6 @@
 \usepackage{amsmath, amsfonts, amssymb}
 \usepackage{graphicx}
 \usepackage{setspace}
-
-\usepackage{pifont}% http://ctan.org/pkg/pifont
-\newcommand{\cmark}{\ding{51}}%
-\newcommand{\xmark}{\ding{55}}%
 
 \usepackage{pgfplots}
 \usepackage{comment}
@@ -416,7 +413,7 @@
 \renewcommand{\cftaftertoctitle}{\hspace*{\fill}}
 
 \renewcommand{\listfigurename}{List of Figures}
-\settowidth{\cftfignumwidth}{Figure 00.00}
+\settowidth{\cftfignumwidth}{Figure 00.000}
 \renewcommand{\cftfigpresnum}{Figure }
 \newcommand{\reportlistoffigures}{%
     \singlespacing%
@@ -453,6 +450,9 @@
     \clearpage%
     \ncsu@defaultspacing%
 }
+
+\renewcommand{\cftlottitlefont}{\hfill\ncsu@headingformat}
+\renewcommand{\cftafterlottitle}{\hfill}
 %% headers
 %Header styles
 % \usepackage{fancyhdr}

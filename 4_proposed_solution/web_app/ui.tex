@@ -7,11 +7,11 @@ The web-based front-end of OpenPRA is designed to address the existing gaps in t
 \begin{itemize}
 \item \textbf{User friendly interface:} Provides an intuitive, browser-based \acrshort{ui} with built-in visualization tools, lowering the barrier for users of all technical backgrounds.
 \item \textbf{Web based access:} Allows secure access via \acrshort{https} without client installation, supporting remote workflows.
-\item \textbf{Open source platform:} Freely available and community‑driven, promoting transparency, collaboration, and continuous improvement.
+\item \textbf{Open source platform:} Freely available and community-driven, promoting transparency, collaboration, and continuous improvement.
 \item \textbf{Collaborative environment:} Enables multiple users to work concurrently on the same \acrshort{pra} model, improving teamwork and efficiency across multiple teams.
 \item \textbf{Version control:} Records changes to a model, persists revision history, and supports version rollback whenever a prior state must be restored.  
 \item \textbf{Support for a wide range of risk models:} Provides editors for event trees, fault trees, Markov chains, Bayesian networks, and other formalisms, enabling analysts to choose a risk model that best represents their system.  
-\item \textbf{Choice of quantification engines:} Integrates multiple built‑in and third‑party solvers so analysts can select an algorithm most suitable for their use case.  
+\item \textbf{Choice of quantification engines:} Integrates multiple built-in and third-party solvers so analysts can select an algorithm most suitable for their use case.  
 \item \textbf{Interoperability:} Serializes models to the standardized OpenPRA \acrshort{mef} \acrshort{json} format, ensuring seamless data exchange with external tools and workflows.
 \item \textbf{Customizability:} Allows users to tailor the interface, workflows, and analysis parameters to their specific project requirements.
 \end{itemize}
@@ -40,39 +40,39 @@ Aside from data analysis, each of the listed analysis modes supports the analysi
   \item \textbf{System analysis:} Uses modeling techniques such as fault tree analysis and reliability block diagrams to evaluate overall system performance under failure and hazard conditions.
   \item \textbf{Human reliability analysis:} Assesses the impact of active and latent human errors on system safety using an \acrshort{hra} methodology extended from Phoenix.
   \item \textbf{Mechanistic source term analysis:} Models and assesses the release mechanisms of hazardous materials during an accident to determine source terms.
-  \item \textbf{Radiological consequence analysis:} Models dispersion and assesses exposure of radioactive materials post‑accident to quantify potential radiological impacts on workers and the public.
-  \item \textbf{Uncertainty analysis:} Applies parametric, non‑parametric, and Monte Carlo sampling methods to assess uncertainties in risk assessment inputs and outputs.
-  \item \textbf{Risk integration analysis:} Integrates results from individual analyses and models overall system risk as frequency‑consequence curves for a comprehensive risk profile.
+  \item \textbf{Radiological consequence analysis:} Models dispersion and assesses exposure of radioactive materials post-accident to quantify potential radiological impacts on workers and the public.
+  \item \textbf{Uncertainty analysis:} Applies parametric, non-parametric, and Monte Carlo sampling methods to assess uncertainties in risk assessment inputs and outputs.
+  \item \textbf{Risk integration analysis:} Integrates results from individual analyses and models overall system risk as frequency-consequence curves for a comprehensive risk profile.
 \end{itemize}
 
 \input{4_proposed_solution/web_app/plots/analysis_modes_types}
 
 \input{4_proposed_solution/web_app/plots/data_analysis}
 
-The front-end supports a wide array of risk models, each designed to address specific components of the analysis types outlined earlier. Figure \ref{fig:risk_models} shows such four risk models. 
+The front-end supports a wide array of risk models, each designed to address specific components of the analysis types outlined earlier. Figures \ref{fig:esd_editor} through \ref{fig:bn_editor} show such four risk models. 
 
 \begin{itemize}
   \item \textbf{Initiating events:} Models and assesses potential triggers using master logic diagrams, \acrshort{fmea}, and heat balance fault trees for internal or external failures (e.g., equipment failures, human errors, natural disasters) that can shift the system into accident sequences.
-  \item \textbf{Event sequence diagrams:} Provides compressed‑notation diagrams with support for cycles to model and analyze complex, temporally arranged phenomena following an initiating event.
+  \item \textbf{Event sequence diagrams:} Provides compressed-notation diagrams with support for cycles to model and analyze complex, temporally arranged phenomena following an initiating event.
   \item \textbf{Event trees:} Uses node and branch based diagrams to model and analyze possible sequences of events leading to specific outcomes, assessing the likelihood and consequences of each pathway.
   \item \textbf{Fault trees:} Employs Boolean gate and basic event based diagrams to model combinations of component failures and analyze their contributions to overall system failure.
   \item \textbf{Markov chains:} Applies probabilistic state transition models to analyze system reliability and availability over time through discrete states and transitions.
   \item \textbf{Bayesian networks:} Constructs directed graph models of probabilistic dependencies to analyze uncertain variables and their interactions within complex systems.
-  \item \textbf{Probabilistic model checkers:} Integrates dual‑graph error propagation models to model and analyze the propagation of faults, errors, and failures through a cyber‑physical system.
-  \item \textbf{Consequence models:} Links end states of event sequences with categorized outcomes (e.g., radiological doses, financial losses) and integrates them into frequency‑consequence curves for comprehensive risk evaluation.
+  \item \textbf{Probabilistic model checkers:} Integrates dual-graph error propagation models to model and analyze the propagation of faults, errors, and failures through a cyber-physical system.
+  \item \textbf{Consequence models:} Links end states of event sequences with categorized outcomes (e.g., radiological doses, financial losses) and integrates them into frequency-consequence curves for comprehensive risk evaluation.
 \end{itemize}
 
 \input{4_proposed_solution/web_app/plots/risk_models}
 
-OpenPRA currently uses \acrshort{hcla} as its default analyzer but is transitioning to the scram engine, with plans to phase out \acrfull{hcla} due to its proprietary license. To support advanced users, developers, and industry partners, OpenPRA offers \acrfull{api}s, tooling, and integration guides for adding custom or third‑party engines enabling on‑premise deployments and accommodating specific licensing requirements. Users can choose among multiple quantification engines when solving risk models. The front‑end provides interfaces for the following solvers:
+OpenPRA currently uses \acrshort{hcla} as its default analyzer but is transitioning to the scram engine, with plans to phase out \acrfull{hcla} due to its proprietary license. To support advanced users, developers, and industry partners, OpenPRA offers \acrfull{api}s, tooling, and integration guides for adding custom or third-party engines enabling on-premise deployments and accommodating specific licensing requirements. Users can choose among multiple quantification engines when solving risk models. The front-end provides interfaces for the following solvers:
 
 \begin{itemize}
-  \item \textbf{scram:} A command‑line tool for quantifying models specified in the OpenPSA \acrshort{mef} \acrshort{xml} schema. It implements \acrshort{bdd} for exact probability calculations, \acrshort{mocus}, along with \acrshort{mcub} and \acrshort{rea}, and \acrshort{zdd}, and supports uncertainty analysis via Monte Carlo simulation, importance analysis, and common cause failure groups (CCFGs).
-  \item \textbf{XFTA:} Provides advanced fault tree quantification algorithms including cut‑set enumeration, \acrshort{mcs} generation, and importance analysis and implements \acrshort{bdd}, \acrshort{mocus}, and \acrshort{zdd} in version 2 and above.
+  \item \textbf{scram:} A command-line tool for quantifying models specified in the OpenPSA \acrshort{mef} \acrshort{xml} schema. It implements \acrshort{bdd} for exact probability calculations, \acrshort{mocus}, along with \acrshort{mcub} and \acrshort{rea}, and \acrshort{zdd}, and supports uncertainty analysis via Monte Carlo simulation, importance analysis, and common cause failure groups (CCFGs).
+  \item \textbf{XFTA:} Provides advanced fault tree quantification algorithms including cut-set enumeration, \acrshort{mcs} generation, and importance analysis and implements \acrshort{bdd}, \acrshort{mocus}, and \acrshort{zdd} in version 2 and above.
   \item \textbf{Saphsolve:} The proprietary engine behind \acrshort{saphire}, supporting event tree analysis, fault tree analysis, and uncertainty analysis through its suite of quantification algorithms.
   \item \textbf{PRAQuant:} The default, proprietary fault tree quantification engine in Phoenix Architect, optimized for detailed fault tree analysis.
   \item \textbf{FTREX:} An optional, proprietary Phoenix Architect engine for fault tree quantification that offers additional algorithm choices.
-  \item \textbf{Custom quantification engines:} Enables users to develop and integrate custom engines written in C++, Python, Java, etc. via OpenPRA’s \acrfull{api}s, allowing tailored quantification workflows.
+  \item \textbf{Custom quantification engines:} Enables users to develop and integrate custom engines written in C++, Python, Java, etc. via OpenPRA's \acrfull{api}s, allowing tailored quantification workflows.
 \end{itemize}
 
 \input{4_proposed_solution/web_app/plots/quantification_results}

@@ -1,19 +1,7 @@
 \subsubsection{Probabilistic Sentential Decision Diagrams (PSDD)}
 \label{sec:psdd}
 
-A \acrfull{psdd} is a tractable representation for a probability distribution over a set of propositional variables subject to logical constraints.  In essence, a \acrshort{psdd} is a parameterized \acrfull{sdd} in which each node is assigned a well-defined local distribution.  By construction, the \acrshort{psdd}’s global distribution respects a given \emph{base theory} (i.e., a propositional formula representing constraints), assigns zero probability to every assignment violating that theory, and factors the remaining assignments according to a hierarchical decomposition.
-
-% this is incorrect, vtree defines \acrshort{sdd}, not in parallel
-% To define a \acrshort{psdd} precisely, one must first choose:
-% \begin{enumerate}
-% \item A \emph{vtree}, which is a full binary tree whose leaves are in bijection with the set of variables.  The internal nodes of the vtree determine how variables are split and combined at different levels of the diagram.
-% \item A \emph{normalized \acrshort{sdd}} encoding the same propositional constraints as the original theory.  An \acrshort{sdd} is built from \emph{decision nodes} and \emph{terminal} (leaf) nodes:
-% \begin{itemize}
-% \item A \emph{decision node} has elements of the form $(p_i, s_i)$, each comprising two $sub-$SDDs: a \emph{prime}$p_i$ and a \emph{sub}$s_i$.
-% \item A \emph{terminal node} is simply a literal (e.g., $X$, $\neg X$) or a constant ($\top$ or $\bot$).
-% \end{itemize}
-% Normalization requires that each decision node’s primes refer to one vtree subtree and subs refer to a disjoint subtree, reflecting how variables are partitioned at each vtree node.
-% \end{enumerate}
+A \acrfull{psdd} is a tractable representation for a probability distribution over a set of propositional variables subject to logical constraints.  In essence, a \acrshort{psdd} is a parameterized \acrfull{sdd} in which each node is assigned a well-defined local distribution.  By construction, the \acrshort{psdd}'s global distribution respects a given \emph{base theory} (i.e., a propositional formula representing constraints), assigns zero probability to every assignment violating that theory, and factors the remaining assignments according to a hierarchical decomposition.
 
 \begin{definition}[Normalized \acrshort{sdd}]
 Given a \emph{vtree}, $v$, over variables ${X_1, ... , X_n}$, an normalized \acrshort{sdd} over $T$ is defined recursively as follows:
@@ -52,7 +40,7 @@ Each node $n$ in a \acrshort{psdd} induces a local distribution $\Pr_n(\cdot)$ o
 \item The probability contributed by prime node~$p_i$ on its variables.
 \item The probability contributed by sub node~$s_i$ on its (disjoint) variables.
 \end{enumerate}
-Summing across all primes yields $\Pr_n$ at that node.  By construction, the \emph{root} node’s distribution~$\Pr_r$ then covers all variables and zeroes out any assignments that do not satisfy the base theory.
+Summing across all primes yields $\Pr_n$ at that node.  By construction, the \emph{root} node's distribution~$\Pr_r$ then covers all variables and zeroes out any assignments that do not satisfy the base theory.
 
 \begin{theorem}[Base Property \cite{darwiche_knowledge_2002}]
 \label{thm:psdd-base}
@@ -65,7 +53,7 @@ If a \acrshort{psdd} node $n$ is normalized for vtree node~$v$, then $\Pr_n(x)=0
 \]
 where $[,p_i]$ is the logical content of prime $p_i$.  This ensures that local parameters align with global $\Pr(\cdot)$ in a transparent, compositional way.
 
-\paragraph{Context-Specific Independence.} Due to the vtree-based factorization, \acrshort{psdd}s capture rich \emph{context-specific independences} \cite{boutilier_context-specific_2013}.  At high level, once we know the node’s context (which is a partial assignment or formula), certain subsets of variables become conditionally independent of the rest.  These independence statements can be read directly from the \acrshort{psdd} structure, generalizing common conditional-independence ideas in Bayesian or Markov networks.
+\paragraph{Context-Specific Independence.} Due to the vtree-based factorization, \acrshort{psdd}s capture rich \emph{context-specific independences} \cite{boutilier_context-specific_2013}.  At high level, once we know the node's context (which is a partial assignment or formula), certain subsets of variables become conditionally independent of the rest.  These independence statements can be read directly from the \acrshort{psdd} structure, generalizing common conditional-independence ideas in Bayesian or Markov networks.
 
 \paragraph{Inference and Tractability.} A central advantage of \acrshort{psdd}s is that computing $(\Pr_r(e)$ for any evidence~$e$ can be done in time linear in the size of the \acrshort{psdd}.  This incremental algorithm proceeds bottom-up through each node, locally aggregating evidence contributions and summing accordingly.  Moreover, once node-level evidence statistics are available, one can also efficiently compute single-variable or pairwise marginals using a second top-down pass.
 

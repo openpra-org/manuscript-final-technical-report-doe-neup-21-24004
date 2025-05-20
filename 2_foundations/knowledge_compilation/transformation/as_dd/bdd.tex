@@ -13,7 +13,7 @@ A \acrlong{bdd} for $f$ is a tuple $B =\bigl(N,n_0,V,E,T\bigr)$ with the followi
 \item $E \subseteq N \times {0,1} \times N$ is the edge set. Each internal node $u$ has two labeled edges, $(u,0,v_0)$ and $(u,1,v_1)$, indicating the next node in the diagram if $x_i=0$ or $x_i=1$ at node $u$.
 \item $T$ is a mapping that assigns the value $0$ or $1$ to each terminal node of $B$.
 \end{enumerate}
-For any input $a = (a_1,a_2,\dots,a_n)\in\{0,1\}^n$ one identifies a unique path from $n_0$ to a terminal node by at each internal node following the edge labeled by the tested variable’s value in $a$. The value of $f(a)$ is given by the terminal node reached, as encoded by $T$.
+For any input $a = (a_1,a_2,\dots,a_n)\in\{0,1\}^n$ one identifies a unique path from $n_0$ to a terminal node by at each internal node following the edge labeled by the tested variable's value in $a$. The value of $f(a)$ is given by the terminal node reached, as encoded by $T$.
 \end{definition}
 
 \noindent\textbf{Interpretation.} Each internal node corresponds to a variable test: if the variable is $0$ (i.e.\ $\text{false}$), follow the \emph{0-edge}, and if it is 1 $(\text{true})$, follow the \emph{1-edge}. Eventually, one reaches a sink node labeled $\text{false}=0$ or $\text{true}=1$.

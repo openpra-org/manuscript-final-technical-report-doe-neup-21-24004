@@ -1,10 +1,10 @@
 \begin{algorithm}[H]
-\caption{Pseudocode for the proposed PRA model pre‐processor}
+\caption{Pseudocode for the proposed PRA model pre-processor}
 \label{alg:preprocessor}
 \begin{algorithmic}[1]
 \Procedure{PreProcessModel}{input\_files, threshold $\theta$, percentage $p$}
 \State Parse each of the \texttt{input\_files}
-\State Gather all basic‐event failure probabilities into list $\mathcal{P}$
+\State Gather all basic-event failure probabilities into list $\mathcal{P}$
 \State Set counter $c \leftarrow 0$
 \ForAll{$r \in \mathcal{P}$}
 \If{$r < \theta$}

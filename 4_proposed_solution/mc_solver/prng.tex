@@ -24,7 +24,7 @@ Compared to older recurrence-based \acrshort{rng}s such as linear congruential g
   \qquad
   \mathbf{K} = (K_0, K_1).
 \]
-The four elements \(\{S_0, S_1, S_2, S_3\}\) collectively represent the counter, e.g., \((x_0, x_1, x_2, x_3)\). The two key elements \((K_0, K_1)\) are used to tweak the generator’s sequence. A single invocation of Philox-4x32-10 transforms \(\mathbf{S}\) into four new 32-bit outputs after ten rounds of mixing. At each round, the algorithm:
+The four elements \(\{S_0, S_1, S_2, S_3\}\) collectively represent the counter, e.g., \((x_0, x_1, x_2, x_3)\). The two key elements \((K_0, K_1)\) are used to tweak the generator's sequence. A single invocation of Philox-4x32-10 transforms \(\mathbf{S}\) into four new 32-bit outputs after ten rounds of mixing. At each round, the algorithm:
 \begin{enumerate}
     \item Multiplies two of the state words by fixed “magic constants” to create partial products.
     \item Takes the high and low 32-bit portions of those 64-bit products.
@@ -41,18 +41,18 @@ and there are \(\mathrm{R} = 10\) rounds. Thus, each Philox invocation is asympt
 Our implementation follows the standard 10-round approach for generating one block of four 32-bit random words, also called Philox-4x32-10. Let \(M_{\mathrm{A}}=0xD2511F53\), \(M_{\mathrm{B}}=0xCD9E8D57\) be the multipliers, and let \((K_0, K_1)\) be the key which is updated each round by \(\mathrm{W32A}=0x9E3779B9\) and \(\mathrm{W32B}=0xBB67AE85\). The function \(\text{Hi}(\cdot)\) returns the high 32 bits of a 64-bit product, and \(\text{Lo}(\cdot)\) returns the low 32 bits. Because each call produces four 32-bit pseudo-random words, Philox-4x32-10 is particularly convenient for batched sampling. If only a single 32-bit word is needed, one can still call the function and discard the excess words; however, many applications consume all four outputs (e.g., to produce four floating-point variates).
 
 \begin{algorithm}[ht]
-  \caption{Philox‑4x32‑10}\label{alg:philox}
+  \caption{Philox-4x32-10}\label{alg:philox}
   \begin{algorithmic}[1]
     %------------------------------------------------------------
-    \Require Four 32‑bit counters $(S_0,S_1,S_2,S_3)$,
+    \Require Four 32-bit counters $(S_0,S_1,S_2,S_3)$,
             key $(K_0,K_1)$
     \Ensure  Transformed counters $(S_0,S_1,S_2,S_3)$
     %------------------------------------------------------------
     \Statex
     %--------------------- Philox_Round -------------------------
     \Procedure{Philox\_Round}{$(S_0,S_1,S_2,S_3),\,(K_0,K_1)$}
-      \State $P_0 \gets M_{\text{A}}\times S_0$ \Comment{64‑bit product}
-      \State $P_1 \gets M_{\text{B}}\times S_2$ \Comment{64‑bit product}
+      \State $P_0 \gets M_{\text{A}}\times S_0$ \Comment{64-bit product}
+      \State $P_1 \gets M_{\text{B}}\times S_2$ \Comment{64-bit product}
       \State $T_0 \gets \mathrm{Hi}(P_1)\,\oplus\,S_1\,\oplus\,K_0$
       \State $T_1 \gets \mathrm{Lo}(P_1)$
       \State $T_2 \gets \mathrm{Hi}(P_0)\,\oplus\,S_3\,\oplus\,K_1$
@@ -96,12 +96,12 @@ In our implementation, each call to Philox-4x32-10 yields 128 bits of randomness
 Repeating these steps for multiple rounds of 4 bits each can fill a 16-bit or 32-bit \(\mathrm{bitpack}\) variable with many Bernoulli indicators. Then it can be stored into an array at a single index, reducing memory overhead by constant factor of $N$. 
 
 \begin{algorithm}[H]
-  \caption{Bit‑packing of four Bernoulli samples into a 4‑bit block}
+  \caption{Bit-packing of four Bernoulli samples into a 4-bit block}
   \label{alg:four_bit_pack}
   \begin{algorithmic}[1]
     %------------------------------------------------------------
-    \Require Probability $p\in[0,1]$, random 32‑bit words $(r_0,r_1,r_2,r_3)$
-    \Ensure  4‑bit integer bits containing the four Bernoulli draws
+    \Require Probability $p\in[0,1]$, random 32-bit words $(r_0,r_1,r_2,r_3)$
+    \Ensure  4-bit integer bits containing the four Bernoulli draws
     %------------------------------------------------------------
     \Procedure{FourBitPack}{$p,(r_0,r_1,r_2,r_3)$}
       \State bits $\gets 0$
