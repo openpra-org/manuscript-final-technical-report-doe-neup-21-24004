@@ -36,8 +36,8 @@
 
 \usepackage{xcolor}
 
-\usepackage{verbatim,shellesc}
-\ShellEscape{cp /usr/local/share/latexmk/LatexMk ./LatexMk}
+% \usepackage{verbatim,shellesc}
+% \ShellEscape{cp /usr/local/share/latexmk/LatexMk ./LatexMk-output}
 
 %% paragraph spacing
 \usepackage[skip=8pt]{parskip}
