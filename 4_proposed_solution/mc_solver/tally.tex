@@ -23,7 +23,7 @@ entire simulation.  The present section formalises that process and outlines
 an implementation-agnostic, data-parallel algorithm that realises it on modern
 accelerators.
 
-\subsection{Statistical objectives}
+\subsection{Statistical Objectives}
 \label{subsec:tally_objective}
 
 For every node \(v\) we wish to estimate, after \(T\) Monte-Carlo iterations,
@@ -39,10 +39,12 @@ For every node \(v\) we wish to estimate, after \(T\) Monte-Carlo iterations,
   s_v \;=\; \text{total \# of one-bits observed for node \(v\)}.
 \]
 
-Under the usual independence assumptions the sampling distribution of
+Under the usual independence assumptions, the sampling distribution of
 \(\widehat{p}_v\) is asymptotically
-\(\mathcal{N}\!\bigl(p_v,\,
-  \tfrac{p_v(1-p_v)}{T\,N}\bigr)\).
+\[
+\mathcal{N}\!\bigl(p_v,\,
+  \tfrac{p_v(1-p_v)}{T\,N}\bigr)
+\]
 Hence
 
 \[
@@ -67,7 +69,7 @@ The tally routine therefore needs to maintain only the scalar
 \(s_v\) while the simulation is running; the derived statistics can be updated
 in-place whenever a user requests intermediate results or at a fixed cadence.
 
-\subsection{Parallel accumulation algorithm}
+\subsection{Parallel Accumulation Algorithm}
 
 The accumulation kernel is invoked on a three-dimensional
 \texttt{nd\_range}, chosen such that
@@ -101,10 +103,7 @@ Work-item \((i_x,i_y,i_z)\) is responsible for \emph{exactly one} bit-pack:
 The reduction ensures only one atomic operation per group, greatly reducing
 contention when \(P\) is large.
 
-We present platform-neutral pseudocode that encapsulates the above logic while remaining agnostic to the underlying API.
-
-\paragraph{Host-side control.}
-After each Monte-Carlo iteration the host enqueues \textsc{TallyKernel} with a
+We present platform-neutral pseudocode that encapsulates the above logic while remaining agnostic to the underlying API. After each Monte-Carlo iteration the host enqueues \textsc{TallyKernel} with a
 fresh \texttt{iteration} counter.  When either (i)~a user requests
 intermediate statistics or (ii)~a pre-set reporting interval is reached,
 the host reads back \texttt{num\_one\_bits} and executes the purely
@@ -136,7 +135,7 @@ and \(T\,N(1-\widehat{p})\) both exceed roughly 10; otherwise an exact
 Clopper-Pearson interval can be substituted with no change to the running
 sum logic.
 
-\subsection{Correctness and complexity}
+\subsection{Correctness and Complexity}
 
 \textbf{Work-item cost.}
 Each work-item performs one \(\mathrm{popcount}\) and

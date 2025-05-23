@@ -51,31 +51,32 @@ The fault trees provide detailed logical models of system and component failures
 
 The PRA models explicitly represent the main systems and their associated subsystems as shown in Table~\ref{tab:mhtgr-sscs}.
 
+\renewcommand{\arraystretch}{1.5}
 \begin{table}[H]
     \centering
     \caption{Main systems and subsystems in the MHTGR PRA model}
     \label{tab:mhtgr-sscs}
-    \begin{tabular}{p{7cm} p{8.5cm}}
+    \begin{tabular}{p{0.4\textwidth} p{0.55\textwidth}}
         \toprule
         \textbf{Main system} & \textbf{Subsystems} \\
         \midrule
-        Heat transport system & Reactor core, Reactor internals, Vessels and ducts, Helium purification, Helium storage and transfer \\
-        Shutdown cooling system & Steam and water dump, Pressure relief, Main and bypass steam, Feedwater and condensate \\
+        Heat transport system & Reactor core, Reactor internals, Vessels \& ducts, Helium purification, Helium storage \& transfer \\
+        Shutdown cooling system & Steam \& water dump, Pressure relief, Main \& bypass steam, Feedwater \& condensate \\
         Reactor cavity cooling system & Service water, Reactor plant cooling water, Turbine building closed cooling water, Circulating water \\
-        Plant protection and instrumentation system & Plant control, Data, and instrumentation, Radiation monitoring \\
+        Plant protection \& instrumentation system & Plant control, Data, \& instrumentation, Radiation monitoring \\
         Electrical power supply & Class 1E uninterruptible power supply, Non-Class 1E ac distribution, Class 1E dc power \\
-        Other & Instrument and service air, Heater drains and condensate returns, Condensate polishing, Vessel support \\
+        Other & Instrument \& service air, Heater drains \& condensate returns, Condensate polishing, Vessel support \\
         \bottomrule
     \end{tabular}
 \end{table}
 
 The model includes 170 basic events, each representing a distinct failure mode, and approximately 100 repair events to account for system recovery and restoration processes. These events are parameterized by either mean failure frequency or mean probability, as appropriate for the component type and operational context. Table~\ref{tab:mhtgr-basic-event-types} provides representative categories of basic events. Each fault tree is typically decomposed into 5 to 15 subsystems depending on the complexity of the system under consideration.
 
-\begin{table}[H]
+\begin{table}
     \centering
     \caption{Representative categories of basic events}
     \label{tab:mhtgr-basic-event-types}
-    \begin{tabular}{p{6cm} p{10cm}}
+    \begin{tabular}{ll}
         \toprule
         \textbf{Component/subsystem} & \textbf{Failure modes} \\
         \midrule
@@ -95,4 +96,5 @@ The model includes 170 basic events, each representing a distinct failure mode, 
     \end{tabular}
 \end{table}
 
+\renewcommand{\arraystretch}{1.0}
 The models are structured to support both qualitative and quantitative risk analyses, enabling the identification of dominant risk contributors, evaluation of system reliability, and assessment of the effectiveness of design features and operational strategies. The extensive coverage of SSCs, basic events, and repair events ensures that the models are suitable for both regulatory and design optimization purposes.

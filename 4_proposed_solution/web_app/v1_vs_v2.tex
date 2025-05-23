@@ -1,11 +1,16 @@
-\subsection{Key Differences from v1 to v2}
+\subsection{Key Differences between v1 and v2}
 \label{sec:distinguish-v1-v2}
 This subsection provides a concise overview of the differences between the original OpenPRA \textit{v1} application and the updated \textit{v2} application as developed in this study, without repeating the extensive details offered in previous sections.
 
-\paragraph{Overview of the v1 Application}
 The \textit{v1} app introduced the concept of a web-based \acrshort{pra} platform, embedding \acrshort{hcla} \cite{hcla_cmd} as its default solver. Originally, it aimed to demonstrate how an online tool could integrate event sequence diagrams, fault trees, and Bayesian networks under a single interface. However, its reliance on a largely closed-source back end and limited extensibility restricted broader collaboration and support for high-performance computing. Figures \ref{fig:cutsets_uncertainty} through \ref{fig:ttf_cdf} illustrate the various types of quantification supported by HCLA.
 
-\paragraph{Overview of the v2 Application}
+The \textit{v2} system replaces the legacy monolithic application with a monorepo based architecture. The \textit{v2} codebase supports container orchestration, simplifying deployment, scaling, and maintenance. Whereas \textit{v1} ran all logic in a single back-end process, \textit{v2} separates model editing services from resource intensive solver workloads by offloading computations to a distributed job queue managed by a dedicated broker. In place of the earlier SQL database, \textit{v2} employs a fully distributed \acrfull{nosql} datastore with advanced sharding, enabling efficient storage and retrieval of large-scale PRA models and analysis results.
+
+Whereas \textit{v1} depended on the proprietary \acrshort{hcla} engine for quantification, \textit{v2} adopts the open-source \texttt{scram} solver as its default, eliminating barriers that previously hindered external collaboration. The new architecture also supports modular plug-ins for alternative engines such as \texttt{XFTA}, \texttt{Saphsolve} etc. so that teams can choose solvers that match their modeling paradigms or licensing requirements. Complementing this extensibility, \textit{v2} introduces a more flexible schema that ensures interoperability with third party tools and enforces consistent data validation across the platform.
+
+While \textit{v1} app handled quantification operations adequately for single-user or light workloads, \textit{v2} app is engineered for high throughput under concurrent use. It is capable of executing multiple large models in parallel and thereby shortening overall runtimes. It can also leverage optional GPU acceleration and multi-core CPU strategies such as data-parallel Monte Carlo sampling and parallel computing algorithms to speed up advanced tasks like probability and uncertainty estimation.
+
+Finally, \textit{v2} has transitioned away from the restricted licensing of \textit{v1} toward a more open development model. \textit{v2} encourages researchers and industry experts to customize and expand the code base. \textit{GitHub} or comparable platforms host the source code, enabling issue tracking, pull requests, and community plugins. The switch to open licensing simplifies collaborative usage of the newly introduced \acrshort{json}-based \acrshort{mef} for exchanging models globally.
 
 \begin{comment}
 The \textit{v2} update was driven by the need to improve openness, scalability, and solver flexibility. Three major goals encapsulate these objectives:
@@ -19,11 +24,3 @@ The \textit{v2} update was driven by the need to improve openness, scalability, 
 \subsubsection{Solver Integration and Model Exchange}
 \subsubsection{Performance and Scalability Enhancements}
 \end{comment}
-
-The \textit{v2} system replaces the legacy monolithic application with a monorepo based architecture. The \textit{v2} codebase supports container orchestration, simplifying deployment, scaling, and maintenance. Whereas \textit{v1} ran all logic in a single back-end process, \textit{v2} separates model editing services from resource intensive solver workloads by offloading computations to a distributed job queue managed by a dedicated broker. In place of the earlier SQL database, \textit{v2} employs a fully distributed NoSQL datastore with advanced sharding, enabling efficient storage and retrieval of large-scale PRA models and analysis results.
-
-Whereas \textit{v1} depended on the proprietary \acrshort{hcla} engine for quantification, \textit{v2} adopts the open-source \texttt{scram} solver as its default, eliminating barriers that previously hindered external collaboration. The new architecture also supports modular plug-ins for alternative engines such as \texttt{XFTA}, \texttt{Saphsolve} etc. so that teams can choose solvers that match their modeling paradigms or licensing requirements. Complementing this extensibility, \textit{v2} introduces a more flexible schema that ensures interoperability with third party tools and enforces consistent data validation across the platform.
-
-While \textit{v1} app handled quantification operations adequately for single-user or light workloads, \textit{v2} app is engineered for high throughput under concurrent use. It is capable of executing multiple large models in parallel and thereby shortening overall runtimes. It can also leverage optional GPU acceleration and multi-core CPU strategies such as data-parallel Monte Carlo sampling and parallel computing algorithms to speed up advanced tasks like probability and uncertainty estimation.
-
-Finally, \textit{v2} has transitioned away from the restricted licensing of \textit{v1} toward a more open development model. \textit{v2} encourages researchers and industry experts to customize and expand the code base. \textit{GitHub} or comparable platforms host the source code, enabling issue tracking, pull requests, and community plugins. The switch to open licensing simplifies collaborative usage of the newly introduced \acrshort{json}-based \acrshort{mef} for exchanging models globally.

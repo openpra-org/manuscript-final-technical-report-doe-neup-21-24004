@@ -1,6 +1,6 @@
-\subsection{\color{blue}{D-dNNF}}
+\subsection{Decomposable Negation Normal Form (DNNF)}
 
-Decomposable Negation Normal Form (DNNF) is a central target language in knowledge compilation, representing a significant refinement of Negation Normal Form (NNF). In NNF, every propositional sentence is represented as a directed acyclic graph (DAG): leaves are labeled by literals (variables or their negations) or by the constants \texttt{true}/\texttt{false}, while internal nodes are labeled by conjunction ($\wedge$) or disjunction ($\vee$) operations. NNF allows unrestricted subformula structure as long as negations only appear at the literal level, but on its own does not provide tractability for key reasoning tasks unless $\text{P} = \text{NP}$.
+\acrfull{dnnf} is a central target language in knowledge compilation, representing a significant refinement of Negation Normal Form (NNF). In NNF, every propositional sentence is represented as a directed acyclic graph (DAG): leaves are labeled by literals (variables or their negations) or by the constants \texttt{true}/\texttt{false}, while internal nodes are labeled by conjunction ($\wedge$) or disjunction ($\vee$) operations. NNF allows unrestricted subformula structure as long as negations only appear at the literal level, but on its own does not provide tractability for key reasoning tasks unless $\text{P} = \text{NP}$.
 
 \subsubsection{Definition of DNNF and Related Forms}
 A formula is in \textbf{DNNF} if it is in NNF and satisfies the \emph{decomposability} property: at every conjunction ($\wedge$-node), the conjuncts mention disjoint sets of variables. Formally, if a conjunction node has children $\varphi_1, \ldots, \varphi_m$, then $\mathrm{Var}(\varphi_i) \cap \mathrm{Var}(\varphi_j) = \emptyset$ for all $i \neq j$. This property enables efficient independent evaluation of circuit branches.
@@ -56,5 +56,4 @@ Empirical results show a clear advantage for DNNF and d-DNNF in both size and co
     \item Diagnostic and enumeration queries are more efficient on DNNF than OBDD, due to reduced circuit size and higher tractability.
 \end{itemize}
 
-\subsubsection{Summary}
-DNNF and its subclasses, notably d-DNNF and structured d-DNNF, provide a foundational set of tractable languages in knowledge compilation, balancing high succinctness with strong support for key inference queries. Their compilation is practical for many instances, and empirical results show clear advantages over OBDDs on core AI tasks such as model-based diagnosis and model enumeration. SDDs and structured d-DNNFs offer further tractable transformations at some cost in succinctness.
+\acrshort{dnnf} and its subclasses, notably \acrshort{d-dnnf} and \acrshort{sd-dnnf}, provide a foundational set of tractable languages in knowledge compilation, balancing high succinctness with strong support for key inference queries. Their compilation is practical for many instances, and empirical results show clear advantages over OBDDs. SDDs and structured d-DNNFs offer further tractable transformations at some cost in succinctness.

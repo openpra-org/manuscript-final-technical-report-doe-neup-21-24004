@@ -1,4 +1,4 @@
-\subsection{\color{blue}{Knowledge Compilation}}
+\subsection{Knowledge Compilation}
 Casting \acrshort{pra} model as \acrshort{pdag} allows to view the model a set of boolean propositional statements. Thus, any question that can be asked about the system, can be seen as a general reasoning (queries or transformations) over the knowledge base, defined by the propositional statements. A common approach to dealing with such problems is knowledge compilation.
 
 Knowledge Compilation has emerged as a significant direction of research for addressing the computational intractability inherent in general propositional reasoning tasks. This approach, which has a long tradition in reasoning Artificial Intelligence, was notably structured and analyzed in the work of Darwiche and Marquis. KC fundamentally involves splitting the reasoning process into two distinct phases:
@@ -8,14 +8,16 @@ Knowledge Compilation has emerged as a significant direction of research for add
 \end{enumerate}
 The primary rationalization behind this two-phase approach is to \textbf{shift as much of the computational overhead as possible into the off-line compilation phase}. While the compilation step itself can be computationally hard, this initial cost is amortized over the potentially large number of subsequent on-line queries. This amortized cost makes the overall reasoning process more efficient when multiple queries are anticipated on the same knowledge base.
 
-\subsection{\color{blue}{Negation Normal Form (NNF)}}
+\subsection{Negation Normal Form (NNF)}
+The field of knowledge compilation operates primarily on a subset of boolean expression that conform to a set of properties. In general, imposition of more properties results increased tractability of the queries, i.e. answering questions becomes easier, however, at the cost of the size of boolean expression. The primary ``workhorse'' of Knowledge compilation is \acrfull{nnf}.
+
 Boolean \acrfull{nnf} is a syntactic restriction for Boolean formulas such that negations (NOT operators) are applied only directly to variables and not to compound subformulas. Formally, a Boolean formula is in \acrshort{nnf} if it is built from variables, their negations, conjunctions (AND), and disjunctions (OR), where NOT appears only as part of literals.
 
 A boolean expression in \acrshort{nnf} can be represented as a rooted directed acyclic graph, \acrshort{dag}. The leaf of the graph correspond to constants (0, 1) or literals ($a$, $\neg b$), presented in the expression. The internal nodes of the \acrshort{dag} correspond to AND ($\land$) and OR ($\lor$) gates. Internal gates cannot be associated with NOT gates.
 
-In the context of knowledge compilation, \acrshort{nnf} serves as a foundational target language. Knowledge bases compiled into \acrshort{nnf} allow efficient model checking and form the basis for further restricted normal forms like \acrfull{cnf}, \acrfull{dnf}, \acrfull{dnnf}, or \acrfull{d-dnnf}. \acrshort{nnf} enables subsequent transformations and reasoning tasks to be performed with well-bounded complexity, as it ensures logical negation is "pushed down" to the leaves of the formula's parse tree, simplifying subsequent manipulations.
+In the context of knowledge compilation, \acrshort{nnf} serves as a foundational target language. Knowledge bases compiled into \acrshort{nnf} allow efficient model checking and form the basis for further restricted normal forms like \acrfull{cnf}, \acrfull{dnf}, \acrfull{dnnf}, or \acrfull{d-dnnf}. \acrshort{nnf} enables subsequent transformations and reasoning tasks to be performed with well-bounded complexity, as it ensures logical negation is ``pushed down'' to the leaves of the formula's parse tree, simplifying subsequent manipulations.
 
-\subsubsection{\color{blue}{Properties of NNF}}
+\subsubsection{Properties of NNF}
  \acrshort{nnf}s can be classified based on adherence to particular properties/restrictions. The set of  \acrshort{nnf}s that adhere to a set of properties defines a representational language, $L$ in Table \ref{tbl:kc_language_properties}.
 
 \paragraph{Decomposability}
@@ -36,11 +38,20 @@ An \acrshort{nnf} is smooth if, at every disjunction ($\lor$) gate, all children
 \paragraph{Flatness}
 An \acrshort{nnf} is flat if the circuit/tree has height at most two: the root is an AND or OR, and the children are literals or simple conjunction/disjunctions of literals. Both \acrshort{cnf} and \acrshort{dnf} are examples of \acrfull{f-nnf}: In \acrshort{cnf}, the root is AND, its children are ORs of literals (clauses); in \acrshort{dnf}, the root is OR, its children are ANDs of literals (terms). Flatness restricts structural complexity and further subclasses are defined by additional properties: for instance, \acrshort{cnf} requires each clause to have no repeated variables, and \acrshort{dnf} requires each term to have unique variables.
 
+\subsubsection{Summary}
+The following sections explore common target languages that find uses in Knowledge Compilation and can be used in \acrshort{pra}. For each selected language we note it's main properties, construction algorithms, and tractable queries available for this languages. We focus on the following:
+\begin{enumerate}
+    \item \acrshort{cnf} --- the most well-studied form, ubiquitous in solving SAT problem.
+    \item \acrshort{dnf} --- a form that naturally renders itself for \acrlong{et} analysis and acts as a precursor for more sophisticated essential prime implicant search.
+    \item \acrshort{bdd}, \acrshort{zdd}, \acrshort{sdd} --- most tractable target languages, featured in the majority of practical applications.
+\end{enumerate}
+This is not an exhaustive list. It's intention is to provide a summary of rigorous formalism that can find uses in \acrfull{pra}.
+
 \input{2_foundations/knowledge_compilation/transformation/classes}
 
 \begin{landscape}
 \begin{longtable}{@{}lccccccc@{}}
-\caption{Properties of selected target languages.}%
+\caption[Properties of selected target languages.]{Properties of selected target languages.}
 \label{tbl:kc_language_properties}\\
 \toprule
 \textbf{Property} & \textbf{NNF} & \textbf{CNF} & \textbf{DNF} & \textbf{DNNF} & \textbf{d-DNNF} & \textbf{SDD} & \textbf{ROBDD} \\
@@ -68,7 +79,6 @@ Flat                        &  & $\top$ & $\top$ &  &  &  &  \\
 \textbf{Query Type} & & & & & & & \\
 \midrule
 % Succinctness                & Universal & Universal & Universal & Universal & Less succinct & Similar to d-DNNF & Least succinct \\
-Expectation           & ? & ? & ? & ? & ? & ? & ? \\
 Consistency (CO)            & NP-c & coNP-c & polytime & polytime & polytime & polytime & polytime \\
 Model Enumeration (ME)      & NP-c & poly-delay & poly-delay & poly-delay & poly-delay & poly-delay & poly-delay \\
 Model Counting (CT)         & \#P-hard & \#P-hard & \#P-hard & \#P-hard & polytime & polytime & polytime \\
@@ -76,77 +86,11 @@ Equivalence (EQ)            & coNP-c & coNP-c & coNP-c & coNP-c & coNP-c & polyt
 Conditioning                & polytime & polytime & polytime & polytime & polytime & polytime & polytime \\
 Forgetting                  & coNP-c. & coNP-c. & coNP-c. & coNP-c. & coNP-c. & polytime & NP-hard \\
 Boolean Combination         & polytime & polytime & polytime & polytime & polytime & polytime & polytime \\
+\multicolumn{8}{l}{%
+  \begin{tabular}[t]{@{}l@{}}
+    $*$: SDD equivalence: polytime when compressed with a fixed vtree.\\
+    $\dagger$: OBDD equivalence: polytime with fixed variable order.\\
+  \end{tabular}}\\
+\bottomrule
 \end{longtable}
 \end{landscape}
-
-% \begin{longtable}{@{}lp{0.142\textwidth}p{0.142\textwidth}p{0.142\textwidth}p{0.142\textwidth}p{0.142\textwidth}p{0.142\textwidth}@{}}
-% \keepXColumns
-% \begin{tabularx}{\textwidth}{@{}l*{6}{X}@{}}
-% \caption{Properties of selected target languages.}%
-% \label{tbl:kc_language_properties}\\
-% \toprule
-% \textbf{Form} & \textbf{Decomposable} & \textbf{Deterministic} & \textbf{Smooth} & \textbf{Structured Decomposability} & \textbf{Strong Determinism} & \textbf{Flat} \\
-% \midrule
-% \endfirsthead
-
-% \multicolumn{7}{c}{\textit{Continued: Properties of selected target languages.}}\\
-% \toprule
-% \textbf{Form} & \textbf{Decomposable} & \textbf{Deterministic} & \textbf{Smooth} & \textbf{Structured Decomposability} & \textbf{Strong Determinism} & \textbf{Flat} \\
-% \midrule
-% \endhead
-
-% \endfoot
-% \bottomrule
-% \endlastfoot
-
-% NNF    & $\bot$ & $\bot$ & $\bot$ & $\bot$ & $\bot$ & $\bot$ \\
-% CNF    & $\bot$ & $\bot$ & $\bot$ & $\bot$ & $\bot$ & $\top$ \\
-% DNF    & $\top$ & $\top$ & $\bot$ & $\bot$ & $\bot$ & $\top$ \\
-% DNNF   & $\top$ & $\bot$ & $\bot$ & $\bot$ & $\bot$ & $\bot$ \\
-% d-DNNF & $\top$ & $\top$ & $\bot$ & $\bot$ & $\bot$ & $\bot$ \\
-% SDD    & $\top$ & $\top$ & $\top$ & $\top$ & $\top$ & $\bot$ \\
-% OBDD   & $\top$ & $\top$ & $\top$ & $\top$ & $\top$ & $\bot$ \\
-
-% \end{tabularx}
-
-% \begin{landscape}
-% \begin{table}[ht]
-%     \centering
-%     \begin{tabularx}{1.3\textwidth}{XXXXXXXXX}
-%     \toprule
-%         Language & Succinctness & Consistency (CO) & Model Enumeration (ME) & Model Counting (CT) & Equivalence (EQ) & Conditioning & Forgetting & Boolean Combination \\ 
-%     \midrule
-%         CNF & Universal & coNP-c & poly-delay & \#P-hard & coNP-c & polytime & coNP-c. & polytime \\ \hline
-%         DNF & Universal & polytime & poly-delay & \#P-hard & coNP-c & polytime & coNP-c. & polytime \\ \hline
-%         NNF & Universal & NP-c & NP-c & \#P-hard & coNP-c & polytime & coNP-c. & polytime \\ \hline
-%         DNNF & Universal & polytime & poly-delay & \#P-hard & coNP-c & polytime & coNP-c. & polytime \\ \hline
-%         d-DNNF & Less succinct & polytime & poly-delay & polytime & coNP-c & polytime & coNP-c. & polytime \\ \hline
-%         SDD & Similar to d-DNNF & polytime & poly-delay & polytime & polytime* & polytime & polytime & polytime \\ \hline
-%         OBDD & Least succinct & polytime & poly-delay & polytime & polytime† & polytime & NP-hard & polytime \\ 
-%     \bottomrule
-%     \end{tabularx}
-%     \caption{Complexity in time for queries based on various target languages.}
-% \end{table}
-% \end{landscape}
-
-% \begin{table}
-%     \centering
-%     \begin{tabularx}{\textwidth}{XXXXXXXXX}
-%         \toprule
-%         Formalism & Succinctness (Relative) & Flatness & Smoothness & Determinism & Decomposability & Polytime Model Enumeration (ME) & Polytime Model Counting (CT) & Polytime Essential Prime Implicant Generation (EPI) \\ \midrule
-%         \acrshort{nnf} & Most succinct (equally succinct to CO-LSNNF) & $\circ$ & $\circ$ & $\circ$ & $\circ$ & $\circ$ (unless P=NP) & $\circ$ (unless P=NP) & $\bullet$ \\
-%         \acrshort{dnf} & Less succinct than \acrshort{dnnf}, \acrshort{d-dnnf}, etc. & $\surd$ & $\circ$ & $\circ$ & $\surd$ (is a subset of \acrshort{dnnf}) & $\surd$ & $\circ$ (unless P=NP) & $\bullet$ \\
-%         \acrshort{cnf} & Less succinct than MODS & $\surd$ & $\circ$ & $\circ$ & $\circ$ & $\circ$ (unless P=NP) & $\circ$ (unless P=NP) & $\bullet$ \\
-%         \acrshort{dnnf} & More succinct than \acrshort{d-dnnf}, OBDD, \acrshort{dnf} etc. & $\circ$ (nested) & $\circ$ & $\circ$ & $\surd$ & $\surd$ & $\circ$ (unless P=NP) & $\bullet$ \\
-%         \acrshort{d-dnnf} & Less succinct than \acrshort{dnnf}, more than OBDD, MODS & $\circ$ (nested) & $\circ$ (not required for all) & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\bullet$ \\
-%         SDD & Strict subset of \acrshort{d-dnnf} & $\circ$ (nested) & $\circ$ (not required for all) & $\surd$ (subset of \acrshort{d-dnnf}) & $\surd$ (subset of \acrshort{d-dnnf}) & $\surd$ & $\surd$ & $\bullet$ \\
-%         OBDD & Less succinct than \acrshort{dnnf}, \acrshort{d-dnnf}, more than OBDD<, MODS & $\circ$ (can be deep) & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\bullet$ \\
-%         \bottomrule
-%     \end{tabularx}
-%     \caption{$\surd$ - satisfied, $\circ$ - not satisfied.}
-% \end{table}
-
-% \input{2_foundations/knowledge_compilation/table_summary}
-
-% \paragrah{Succinctness}
-% For any two representation languages L₁ and L₂, L₁ is less succinct than L₂ if some Boolean function has exponentially larger representation in L₁ than in L₂, with L₂ able to simulate L₁ formulas by at most a polynomial growth. Formally, L₁ <ₛ L₂. Increasing representational restrictions--by enforcing decomposability, determinism, and smoothness--generally decreases succinctness (increases size). The ordering for some common languages is: MODS <ₛ OBDD <ₛ FBDD <ₛ d-DNNF <ₛ DNNF, where each step to the right is more succinct (space-efficient) but possibly less tractable for certain operations. SDDs ``sit between'' OBDD and d-DNNF.

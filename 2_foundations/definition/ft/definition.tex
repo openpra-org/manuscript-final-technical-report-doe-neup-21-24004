@@ -18,13 +18,13 @@ A convenient formalization, explained in detail in \cite{ruijters_fault_2015}, t
 \begin{itemize}
 \item \(\mathcal{B}\) is the set of basic events. 
 \item \(\mathcal{G}\) is the set of gates or internal nodes.
-\item \(T: \mathcal{G} \to \text{GateTypes}\) assigns a gate type (AND, OR, \(k/n\), etc.) to each gate in \(\mathcal{G}\).  
-\item \(I: \mathcal{G} \to \mathcal{P}(\mathcal{B} \cup \mathcal{G})\) specifies the input set of each gate, i.e.\ which events (basic or intermediate) feed into that gate.  
+\item \(T \to \text{GateTypes}\): assigns a gate type (AND, OR, \(k/n\), etc.) to each gate in \(\mathcal{G}\).  
+\item \(I \to \mathcal{P}(\mathcal{B} \cup \mathcal{G})\): specifies the input set of each gate, i.e.\ which events (basic or intermediate) feed into that gate.  
 \end{itemize}
 
 The graph is \emph{acyclic} and has a unique root (the top event \(t\)) that is reachable from all other nodes. If an element is the input to multiple gates, it may be drawn once and connected multiple times or duplicated visually; either way, the logical semantics remain the same.
 
-To interpret a fault tree, we examine which higher-level events fail when a subset \(S\) of basic events have failed. Denote by \(\pi_F(S, e)\) the \emph{failure state} (0 or 1) of element \(e\) given a set \(S\subseteq \mathcal{B}\) of failed basic events. Then:
+Interpreting a fault tree involves examining which higher-level events fail when a subset $S$ of basic events has failed. Let $\pi_F(S, e)$ denote the failure state (0 or 1) of element $e$ when the set $S \subseteq \mathcal{B}$ of basic events has failed. Then:
 
 \begin{itemize}
 \item For each basic event \(b \in \mathcal{B}\):
@@ -47,7 +47,7 @@ To interpret a fault tree, we examine which higher-level events fail when a subs
     \bigvee_{i=1}^k \pi_F(S, x_i),
     & \;\text{if }T(g)=\mathrm{OR},\\[1.2em]
   \displaystyle
-    1 \;-\; \pi_F(S, x_1),
+    1 \;-\; \pi_F(S, x_i),
     & \;\text{if }T(g)=\mathrm{NOT} \text{ (single input)},\\[1.2em]
   \displaystyle
     \sum_{i=1}^k \pi_F(S,x_i)\;\ge\;k,
@@ -58,4 +58,5 @@ To interpret a fault tree, we examine which higher-level events fail when a subs
   \end{cases}
   \]
 \end{itemize}
-The top event \(t\) (i.e., \(\mathrm{TE}\)) is a gate in \(\mathcal{G}\); we often write simply \(\pi_F(S)\) to mean whether the top event fails under the set \(S\) of failed \acrshort{be}s.
+
+The top event $t$ (i.e., $\mathrm{TE}$) is a gate in $\mathcal{G}$; it is common to write simply $\pi_F(S)$ to denote whether the top event fails under the set $S$ of failed \acrshort{be}s.

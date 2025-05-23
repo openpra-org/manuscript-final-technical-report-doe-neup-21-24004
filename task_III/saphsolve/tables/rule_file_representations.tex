@@ -6,7 +6,7 @@
 \toprule
 \textbf{Representation} & \textbf{Rule File Excerpt} \\
 \midrule
-Name Representation &
+Name &
 \begin{lstlisting}[language=,frame=none,basicstyle=\ttfamily\small]
 if ((~IE-LLOCA + ~IE-MLOCA + ~IE-SLOCA) *
     (RCS-LOCA-CL1 * RCS-LOCA-CL2 +
@@ -20,7 +20,7 @@ endif
 \end{lstlisting}
 \\
 \midrule
-Decimal Representation &
+Decimal &
 \begin{lstlisting}[language=,frame=none,basicstyle=\ttfamily\small]
 if 33816688 * 33816689 +
    33816688 * 33816690 +
@@ -33,7 +33,7 @@ endif
 \end{lstlisting}
 \\
 \midrule
-Number Representation with Tag &
+Number w/ Tag &
 \begin{lstlisting}[language=,frame=none,basicstyle=\ttfamily\small]
 if ((~<BE>68</BE> + ~<BE>489</BE> + ~<BE>3418</BE>) *
     (<BE>112</BE> * <BE>113</BE> +
@@ -47,7 +47,7 @@ endif
 \end{lstlisting}
 \\
 \midrule
-Number Representation without Tag &
+Number w/o Tag &
 \begin{lstlisting}[language=,frame=none,basicstyle=\ttfamily\small]
 if ((~68 + ~489 + ~3418) *
     (112 * 113 +

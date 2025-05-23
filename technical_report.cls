@@ -165,7 +165,7 @@
 %                 footskip=\ncsu@footskip]{geometry}
 
 % January 2023 Update - Just set all margins to 1in
-\usepackage[margin=1in,showframe=true]{geometry}
+\usepackage[margin=1in,showframe=false]{geometry}
 % \usepackage[margin=0.5in, bottom=1in, top=1in]{geometry}
 
 \dispositionformat{\bfseries}            % bold and serif
