@@ -18,7 +18,7 @@ and the truncated approximation, which sums only over the minimal cut sets in $\
 \[
 \Pr_{T}\bigl[X_t = 1\bigr]
 =
-\sum_{C ,\in, \mathrm{MCS}(T)} \prod_{b \in C} p(b).
+\sum_{C \in \mathrm{MCS}(T)} \prod_{b \in C} p(b).
 \]
 Then the \emph{error} associated with truncation up to $(T)$ is
 \begin{equation}\label{eq:truncation_error_definition}
@@ -32,10 +32,10 @@ Under the assumption that failures are sufficiently rare and interactions among 
 \begin{equation}\label{eq:truncation_error_bound}
 \bigl|\Delta(T)\bigr|
 \le
-\sum_{C ,\in, \mathrm{MCS}\setminus \mathrm{MCS}(T)}
+\sum_{C \in \mathrm{MCS}\setminus \mathrm{MCS}(T)}
 \prod_{b \in C} p(b).
 \end{equation}
-In practice, computing $(\Delta(T))$ or its bound usually requires identifying and evaluating all minimal cut sets outside $(\mathrm{MCS}(T))$, which may still be tractable if the omitted sets are large, unlikely, or both. Consequently, choosing a suitable truncation parameter $(T)$ (by size or probability threshold) ensures that the unaccounted failure modes contribute negligibly to the overall system unreliability.
+In practice, computing $\Delta(T)$ or its bound usually requires identifying and evaluating all minimal cut sets outside $\mathrm{MCS}(T)$, which may still be tractable if the omitted sets are large, unlikely, or both. Consequently, choosing a suitable truncation parameter, $T$ (by size or probability threshold), ensures that the unaccounted failure modes contribute negligibly to the overall system unreliability.
 
 \subsubsection{The Min-Cut Upper Bound}
 Another method for bounding the probability of a top event interprets system failure as the union of all minimal cut set (MCS) failures. The most direct upper bound is obtained by applying the union bound (Boole's inequality), which states that the probability of the union of events is no greater than the sum of their individual probabilities. For a set of minimal cut sets $\mathcal{C} = \{C_1, C_2, \ldots, C_m\}$, where each $C_i$ is a set of basic events, the union bound yields:
